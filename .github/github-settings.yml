@@ -1,0 +1,17 @@
+name: GitHub
+url: https://github.com/aevalo/aevalo
+documentation: https://github.com/aevalo/aevalo/tree/main/doc/engineering
+
+issues:
+  enabled: true
+  template: .github/ISSUE_TEMPLATE/bug_report.md
+
+discussions:
+  enabled: true
+  category: General
+
+wiki:
+  enabled: false
+
+pages:
+  enabled: false

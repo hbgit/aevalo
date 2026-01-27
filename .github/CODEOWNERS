@@ -1,0 +1,44 @@
+# Proprietários do Código - Aevalo
+
+# Este arquivo define quem é responsável por diferentes partes do projeto
+# Mais informações: https://docs.github.com/pt/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Padrão global - qualquer mudança requer review dos mantenedores
+* @aevalo/maintainers
+
+# Documentação
+/doc/ @aevalo/maintainers
+/README.md @aevalo/maintainers
+/CONTRIBUTING.md @aevalo/maintainers
+
+# Configurações de segurança
+/SECURITY.md @aevalo/security
+.github/ @aevalo/maintainers
+
+# Arquivos de configuração
+.gitignore @aevalo/maintainers
+package.json @aevalo/maintainers
+Cargo.toml @aevalo/maintainers
+
+# Uncomment quando o projeto tiver estrutura real
+
+# # Backend (Rust)
+# /backend/ @aevalo/backend-team
+# /backend/src/auth/ @aevalo/backend-team @aevalo/security
+# /backend/src/api/ @aevalo/backend-team
+# /backend/src/db/ @aevalo/backend-team
+# /backend/src/llm/ @aevalo/backend-team @aevalo/ai-team
+
+# # Frontend (Vue.js)
+# /frontend/ @aevalo/frontend-team
+# /frontend/src/components/dashboard/ @aevalo/frontend-team
+# /frontend/src/components/surveys/ @aevalo/frontend-team
+# /frontend/src/auth/ @aevalo/frontend-team
+
+# # Testes
+# /tests/ @aevalo/maintainers @aevalo/backend-team @aevalo/frontend-team
+# /backend/tests/ @aevalo/backend-team
+# /frontend/tests/ @aevalo/frontend-team
+
+# # CI/CD
+# /.github/workflows/ @aevalo/devops-team
