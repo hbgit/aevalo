@@ -10,47 +10,47 @@ Documentação da máquina de estados finitos (FSM) que representa o fluxo de a�
 stateDiagram-v2
     [*] --> NotAuthenticated: Início
 
-    NotAuthenticated --> Authenticated: Login com<br/>email/password
-    NotAuthenticated --> NotAuthenticated: Tenta acessar<br/>(redirecionado)
+    NotAuthenticated --> Authenticated: Login
+    NotAuthenticated --> NotAuthenticated: Tenta acessar (redirecionado)
 
     Authenticated --> Dashboard: Entra na aplicação
 
-    Dashboard --> EmptyState: Primeira vez<br/>(n == 0)
-    Dashboard --> DashboardNormal: Retorno<br/>(n > 0)
+    Dashboard --> EmptyState: Primeira vez (n=0)
+    Dashboard --> DashboardNormal: Retorno (n>0)
 
-    EmptyState --> CreateMode: Clica em<br/>"Criar Avaliação"
-    DashboardNormal --> ListViewing: Visualiza lista<br/>de avaliações
-    DashboardNormal --> CreateMode: Clica em<br/>"Criar Avaliação"
+    EmptyState --> CreateMode: Criar Avaliação
+    DashboardNormal --> ListViewing: Visualiza lista
+    DashboardNormal --> CreateMode: Criar Avaliação
 
-    ListViewing --> SelectingEvaluation: Seleciona<br/>avaliação
+    ListViewing --> SelectingEvaluation: Seleciona avaliação
 
-    SelectingEvaluation --> ViewingEvaluation: Abre para<br/>visualizar
-    SelectingEvaluation --> EditingEvaluation: Abre para<br/>editar
+    SelectingEvaluation --> ViewingEvaluation: Visualizar
+    SelectingEvaluation --> EditingEvaluation: Editar
 
-    ViewingEvaluation --> Dashboard: Volta ao<br/>dashboard
+    ViewingEvaluation --> Dashboard: Volta ao dashboard
 
     EditingEvaluation --> Dashboard: Cancela edição
 
-    CreateMode --> SelectingMethod: Escolhe<br/>método
+    CreateMode --> SelectingMethod: Escolhe método
 
-    SelectingMethod --> TemplateMode: Seleciona<br/>template curado
-    SelectingMethod --> AIMode: Seleciona<br/>assistido por IA
+    SelectingMethod --> TemplateMode: Template curado
+    SelectingMethod --> AIMode: Assistido por IA
 
-    TemplateMode --> TemplatePreview: Carrega template<br/>e exibe preview
+    TemplateMode --> TemplatePreview: Carrega template
 
-    AIMode --> GeneratingAI: Envia descrição<br/>ao LLM
-    GeneratingAI --> AIStream: Aguarda geração<br/>em streaming
-    AIStream --> AIPreview: Recebe items<br/>gerados
+    AIMode --> GeneratingAI: Envia descrição
+    GeneratingAI --> AIStream: Aguarda geração
+    AIStream --> AIPreview: Recebe items
 
-    TemplatePreview --> CustomizingItems: Pode customizar<br/>items
-    AIPreview --> CustomizingItems: Pode customizar<br/>items
+    TemplatePreview --> CustomizingItems: Customizar
+    AIPreview --> CustomizingItems: Customizar
 
-    CustomizingItems --> CustomizingItems: Edita items<br/>e valida
-    CustomizingItems --> PublishingEvaluation: Clica em<br/>"Publicar"
-    CustomizingItems --> CreateMode: Cancela e<br/>recomeça
+    CustomizingItems --> CustomizingItems: Edita e valida
+    CustomizingItems --> PublishingEvaluation: Publicar
+    CustomizingItems --> CreateMode: Cancela
 
     PublishingEvaluation --> Saving: Salva no BD
-    Saving --> LinkGeneration: Gera link<br/>público
+    Saving --> LinkGeneration: Gera link público
 
     LinkGeneration --> Sharing: Link pronto
 

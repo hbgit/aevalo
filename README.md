@@ -18,6 +18,9 @@ Potencializamos a coleta de feedbacks transformando descrições simples em aval
 - 🗺️ **[Roadmap](doc/engineering/roadmap.md)** - Plano de desenvolvimento (4 fases)
 - 📝 **[Descrição do Produto](doc/engineering/desc.md)** - Proposta e diferenciais
 - 🛠️ **[Especificação Técnica](doc/engineering/techdesign.md)** - Arquitetura e stack
+- 📐 **[Diagramas UML](doc/engineering/uml/seq_diagram.md)** - Diagramas de sequência do sistema
+- 🏗️ **[Diagrama de Classes](doc/engineering/uml/class_diagram.md)** - Estrutura de classes UML
+- 🔄 **[Máquina de Estados](doc/engineering/fsm/fsm_user.md)** - FSM das ações do usuário
 
 ### Padrões e Segurança
 - 💬 **[Código de Conduta](CODE_OF_CONDUCT.md)** - Padrões comunitários
