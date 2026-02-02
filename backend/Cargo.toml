@@ -1,0 +1,61 @@
+[package]
+name = "aevalo-backend"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# Web Framework
+axum = "0.7"
+tokio = { version = "1", features = ["full"] }
+tower = "0.4"
+tower-http = { version = "0.5", features = ["trace", "cors"] }
+
+# GraphQL
+async-graphql = "0.12"
+async-graphql-axum = "0.12"
+
+# Database
+sqlx = { version = "0.7", features = ["runtime-tokio-native-tls", "postgres", "uuid", "chrono", "json"] }
+supabase = { version = "0.1", optional = true }
+
+# Authentication
+jsonwebtoken = "9"
+bcrypt = "0.15"
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# UUID and DateTime
+uuid = { version = "1.0", features = ["v4", "serde"] }
+chrono = { version = "0.4", features = ["serde"] }
+
+# Environment
+dotenv = "0.15"
+tracing = "0.1"
+tracing-subscriber = "0.3"
+
+# Error Handling
+anyhow = "1.0"
+thiserror = "1.0"
+
+# Utils
+regex = "1.10"
+validator = { version = "0.16", features = ["derive"] }
+
+# AI Integration
+openai-api = { version = "0.1", optional = true }
+reqwest = { version = "0.11", features = ["json"] }
+
+# Monitoring
+prometheus = "0.13"
+
+[features]
+default = []
+
+[dev-dependencies]
+tokio-test = "0.4"
+
+[[bin]]
+name = "server"
+path = "src/main.rs"
