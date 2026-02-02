@@ -46,13 +46,14 @@ Para suportar os modelos do *MeasuringU*, o schema de dados deve ser polimórfic
 
 ### Stack Adotada
 
-Essa é uma escolha de stack extremamente performática e moderna. O uso de **Rust** no backend garante segurança de memória e velocidade incomparável, enquanto o **Vue.js** oferece uma reatividade fluida para o dashboard. O **Supabase** acelera o desenvolvimento ao fornecer autenticação e banco de dados pronto para uso, e a **Gemini API** é a escolha nativa para integração de IA de última geração. Para observabilidade e monitoramento, **Prometheus** coleta métricas de performance e disponibilidade, enquanto **Grafana** fornece dashboards visuais para análise em tempo real. A orquestração de containers é gerenciada por **Docker** e **Docker Compose**, garantindo ambientes consistentes entre desenvolvimento, staging e produção. O pipeline de CI/CD é automatizado pelo **Jenkins**, proporcionando builds, testes e deploys contínuos com pipelines declarativos e integração nativa com Docker.
+Essa é uma escolha de stack extremamente performática e moderna. O uso de **Rust** no backend garante segurança de memória e velocidade incomparável, enquanto o **Vue.js** com **Tailwind CSS** oferece uma reatividade fluida e um sistema de design consistente para o dashboard, servido com **Nginx** para entrega eficiente dos assets. O **Supabase** acelera o desenvolvimento ao fornecer autenticação e banco de dados pronto para uso, e a **Gemini API** é a escolha nativa para integração de IA de última geração. Para observabilidade e monitoramento, **Prometheus** coleta métricas de performance e disponibilidade, enquanto **Grafana** fornece dashboards visuais para análise em tempo real. A orquestração de containers é gerenciada por **Docker** e **Docker Compose**, garantindo ambientes consistentes entre desenvolvimento, staging e produção. O pipeline de CI/CD é automatizado pelo **Jenkins**, proporcionando builds, testes e deploys contínuos com pipelines declarativos e integração nativa com Docker. A API utiliza **GraphQL** (via **Async-GraphQL** em Rust) como camada de query, permitindo que o frontend solicite apenas os campos necessários (ex: título ou perguntas específicas) sem trazer a avaliação inteira do banco, otimizando largura de banda e performance.
 
 Ao adotar essa stack específica, podemos implementar melhorias de engenharia que não seriam viáveis em stacks convencionais:
 
 * **Type Safety End-to-End:** Utilizar o compartilhamento de tipos entre o Rust (backend) e o Vue (via TypeScript) para garantir que a estrutura das escalas (Likert, Fixed Sum, etc.) nunca quebre entre o banco e o front.
 * **Edge Computing com Supabase:** Utilizar *Edge Functions* para gatilhos rápidos de notificações ou validações leves, deixando o backend em Rust para o processamento pesado de dados e IA.
 * **Streaming de Respostas da IA:** Aproveitar a velocidade do Rust para fazer o *stream* das sugestões da Gemini API em tempo real para o Vue, criando uma experiência de interface muito mais dinâmica para o usuário.
+* **Otimização de Queries:** GraphQL (Async-GraphQL) permite que o frontend solicite apenas os campos específicos (título, perguntas, respostas filtradas) sem trazer a avaliação completa, reduzindo consumo de banda e melhorando latência em operações de busca por termos específicos.
 * **Segurança de Concorrência:** O Rust garantirá que, em avaliações com centenas de colaboradores simultâneos, não existam *race conditions* no cálculo dos resultados das escalas.
 * **Observabilidade Completa:** Prometheus integrado ao backend Rust captura métricas de latência, throughput e erros, enquanto Grafana exibe dashboards customizados com alertas para SLAs críticos.
 * **Portabilidade e Isolamento:** Docker containeriza cada serviço (backend, Prometheus, Grafana) garantindo ambientes idênticos em dev/prod, enquanto Docker Compose orquestra a stack completa com uma única configuração declarativa, facilitando deploys e rollbacks.
@@ -64,8 +65,10 @@ Ao adotar essa stack específica, podemos implementar melhorias de engenharia qu
 
 | Camada | Tecnologia | Função Principal | Vantagem Estratégica |
 | --- | --- | --- | --- |
-| **Frontend** | **Vue.js (Vite)** | Interface do Usuário e Dashboards Interativos. | Reatividade superior e facilidade na criação de componentes para as escalas complexas. |
+| **Frontend** | **Vue.js (Vite) + Tailwind CSS** | Interface do Usuário e Dashboards Interativos. | Reatividade superior, utilitários de estilo e consistência visual para as escalas complexas. |
+| **Web Server** | **Nginx** | Servir assets estáticos do frontend e fazer proxy reverso. | Alta performance, cache eficiente e controle fino de headers. |
 | **Backend** | **Rust (Axum/Actix)** | API Core e Lógica de Negócio de alta performance. | Performance extrema, segurança de memória e execução eficiente de algoritmos de análise. |
+| **Query Language** | **GraphQL (Async-GraphQL)** | Camada de query flexível para solicitar apenas campos necessários. | Reduz transferência de dados, evita over-fetching, e permite buscas otimizadas por título ou conteúdo de perguntas. |
 | **IA Engine** | **Gemini API** | Geração de itens de avaliação e síntese de resultados. | Integração nativa de modelos multimodais com alta janela de contexto para descrições complexas. |
 | **Banco de Dados** | **Supabase (PostgreSQL)** | Persistência de dados, Auth e Realtime. | SQL robusto para relações complexas entre categorias, com camada de Auth e Row Level Security (RLS) nativa. |
 | **Comunicação** | **JSON / gRPC** | Protocolo de troca de dados entre Front e Back. | Latência mínima e estruturação rígida de dados para as metodologias do MeasuringU. |
@@ -81,11 +84,12 @@ Ao adotar essa stack específica, podemos implementar melhorias de engenharia qu
 
 1. **Definição do Schema (Supabase):** Criamos as tabelas de `evaluations`, `questions` e `responses` com RLS para que um usuário nunca veja a avaliação do outro.
 2. **Desenvolvimento do Core (Rust):** Implementamos os validadores matemáticos para as escalas (ex: somatório da *Fixed Sum* e matriz de preferência da *Paired Comparison*).
-3. **Integração IA (Gemini):** Criamos o serviço que recebe a descrição do usuário e retorna um `struct` de Rust mapeado para os modelos de avaliação.
-4. **Interface Reativa (Vue):** Construímos o Dashboard que consome a API do Rust e utiliza as bibliotecas do Supabase para atualizações em tempo real quando um colaborador submete uma resposta.
-5. **Observabilidade (Prometheus + Grafana):** Instrumentamos o backend Rust com métricas customizadas (tempo de resposta da IA, taxa de erro por endpoint, uso de recursos) exportadas para Prometheus, e configuramos dashboards no Grafana para monitoramento contínuo de SLAs e alertas proativos.
-6. **Containerização (Docker + Compose):** Criamos Dockerfiles otimizados para cada serviço (multi-stage build para Rust, layers cacheadas para Vue) e um `docker-compose.yml` que orquestra backend, Prometheus, Grafana e serviços auxiliares, com volumes persistentes para dados e networking configurado para comunicação inter-container.
-7. **CI/CD (Jenkins):** Configuramos pipelines declarativos que, a cada push no repositório, executam: build dos containers Docker, testes unitários e de integração, análise estática de código (linting), deploy automatizado para staging, validação de health checks, e promoção para produção mediante aprovação, com rollback automático em caso de falhas.
+3. **Camada GraphQL (Async-GraphQL):** Definimos o schema GraphQL para permitir queries otimizadas (ex: `evaluations(search: "term") { id title questions { content } }`), permitindo buscas eficientes sem trazer dados desnecessários.
+4. **Integração IA (Gemini):** Criamos o serviço que recebe a descrição do usuário e retorna um `struct` de Rust mapeado para os modelos de avaliação.
+5. **Interface Reativa (Vue):** Construímos o Dashboard que consome a API GraphQL do Rust e utiliza as bibliotecas do Supabase para atualizações em tempo real quando um colaborador submete uma resposta. Queries GraphQL optimizadas garantem que apenas os campos necessários sejam transferidos.
+6. **Observabilidade (Prometheus + Grafana):** Instrumentamos o backend Rust com métricas customizadas (tempo de resposta da IA, taxa de erro por endpoint, latência de queries GraphQL, uso de recursos) exportadas para Prometheus, e configuramos dashboards no Grafana para monitoramento contínuo de SLAs e alertas proativos.
+7. **Containerização (Docker + Compose):** Criamos Dockerfiles otimizados para cada serviço (multi-stage build para Rust, layers cacheadas para Vue) e um `docker-compose.yml` que orquestra backend com GraphQL, Prometheus, Grafana e serviços auxiliares, com volumes persistentes para dados e networking configurado para comunicação inter-container.
+8. **CI/CD (Jenkins):** Configuramos pipelines declarativos que, a cada push no repositório, executam: build dos containers Docker, testes unitários e de integração (incluindo testes do schema GraphQL), análise estática de código (linting), deploy automatizado para staging, validação de health checks, e promoção para produção mediante aprovação, com rollback automático em caso de falhas.
 
 ---
 
@@ -94,7 +98,8 @@ Ao adotar essa stack específica, podemos implementar melhorias de engenharia qu
 ```mermaid
 graph TB
     subgraph "Frontend Layer"
-        Vue["🖥️ Vue.js + Vite<br/>(Dashboard UI)"]
+        Vue["🖥️ Vue.js + Vite + Tailwind CSS<br/>(Dashboard UI)"]
+        Nginx["🌐 Nginx<br/>(Web Server)"]
     end
     
     subgraph "CI/CD & Deployment"
@@ -104,7 +109,7 @@ graph TB
     end
     
     subgraph "Backend Layer"
-        Rust["⚡ Rust Backend<br/>(Axum/Actix)"]
+        Rust["⚡ Rust Backend<br/>(Axum/Actix + Async-GraphQL)"]
         Gemini["🤖 Gemini API<br/>(LLM Engine)"]
     end
     
@@ -122,7 +127,8 @@ graph TB
     end
     
     %% Frontend to Backend
-    Vue -->|API Calls<br/>JSON/gRPC| Rust
+    Vue -->|Assets Build| Nginx
+    Nginx -->|GraphQL Queries<br/>Optimized Fields| Rust
     
     %% Backend to Data
     Rust -->|Query/Auth| Supabase
@@ -157,7 +163,7 @@ graph TB
     classDef monitoring fill:#ff8a3d,stroke:#333,stroke-width:2px,color:#fff
     classDef repo fill:#181717,stroke:#333,stroke-width:2px,color:#fff
     
-    class Vue frontend
+    class Vue,Nginx frontend
     class Rust,Gemini backend
     class Supabase data
     class Jenkins,Docker,Compose devops
