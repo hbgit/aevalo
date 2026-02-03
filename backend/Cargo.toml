@@ -1,57 +1,53 @@
 [package]
 name = "aevalo-backend"
 version = "0.1.0"
-edition = "2021"
+edition = "2024" # Agora você pode usar a nova edição!
 
 [dependencies]
-# Web Framework
-axum = "0.7"
-tokio = { version = "1", features = ["full"] }
-tower = "0.4"
-tower-http = { version = "0.5", features = ["trace", "cors"] }
+# Web Framework - Versões estáveis e modernas
+axum = "0.8" 
+tokio = { version = "1.43", features = ["full"] }
+tower = "0.5"
+tower-http = { version = "0.6", features = ["trace", "cors"] }
 
-# GraphQL
-async-graphql = "0.12"
-async-graphql-axum = "0.12"
+# GraphQL - Usando versão mais recente compatível com Edition 2024
+async-graphql = "7.0"
+async-graphql-axum = "7.0"
 
-# Database
-sqlx = { version = "0.7", features = ["runtime-tokio-native-tls", "postgres", "uuid", "chrono", "json"] }
-supabase = { version = "0.1", optional = true }
+# Database - SQLx 0.8 com melhorias em performance e tipos
+sqlx = { version = "0.8", features = ["runtime-tokio-native-tls", "postgres", "uuid", "chrono", "json"] }
+postgrest = "1.6" 
 
 # Authentication
-jsonwebtoken = "9"
-bcrypt = "0.15"
+jsonwebtoken = "9.3"
+bcrypt = "0.16"
 
 # Serialization
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 
 # UUID and DateTime
-uuid = { version = "1.0", features = ["v4", "serde"] }
+uuid = { version = "1.11", features = ["v4", "serde"] }
 chrono = { version = "0.4", features = ["serde"] }
 
-# Environment
-dotenv = "0.15"
+# Environment & Logging
+dotenvy = "0.15" 
 tracing = "0.1"
-tracing-subscriber = "0.3"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 
 # Error Handling
 anyhow = "1.0"
-thiserror = "1.0"
+thiserror = "2.0" # Aproveitando as melhorias da v2.0
 
 # Utils
-regex = "1.10"
-validator = { version = "0.16", features = ["derive"] }
+regex = "1.11"
+validator = { version = "0.20", features = ["derive"] }
 
-# AI Integration
-openai-api = { version = "0.1", optional = true }
-reqwest = { version = "0.11", features = ["json"] }
+# AI Integration (Gemini utiliza reqwest)
+reqwest = { version = "0.13", features = ["json", "stream"] }
 
 # Monitoring
 prometheus = "0.13"
-
-[features]
-default = []
 
 [dev-dependencies]
 tokio-test = "0.4"
