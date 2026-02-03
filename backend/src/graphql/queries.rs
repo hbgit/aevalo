@@ -1,41 +1,112 @@
-use async_graphql::Object;
+use async_graphql::{Context, Object, Result};
 use uuid::Uuid;
+use crate::models::*;
 
 #[derive(Default)]
 pub struct QueryRoot;
 
 #[Object]
 impl QueryRoot {
-    /// Get evaluation by ID with optimized fields
-    /// Example: { evaluation(id: "uuid") { id title questions { id content } } }
-    async fn evaluation(&self, #[graphql(desc = "Evaluation ID")] id: String) -> Option<String> {
-        // TODO: Implement evaluation query
-        Some(format!("Evaluation: {}", id))
+    /// Get current authenticated user
+    async fn me(&self, ctx: &Context<'_>) -> Result<User> {
+        // TODO: Get user from auth context
+        Err("Not implemented".into())
     }
 
-    /// Search evaluations by title or question content
-    /// Example: { evaluations(search: "term") { id title } }
+    /// Get user by ID
+    async fn user(&self, id: Uuid) -> Result<Option<User>> {
+        // TODO: Query user from database
+        Err("Not implemented".into())
+    }
+
+    /// Get evaluation by ID
+    async fn evaluation(&self, id: Uuid) -> Result<Option<Evaluation>> {
+        // TODO: Query evaluation from database
+        Err("Not implemented".into())
+    }
+
+    /// List evaluations with filters
     async fn evaluations(
         &self,
-        #[graphql(desc = "Search term")] search: Option<String>,
-        #[graphql(desc = "Category ID filter")] category_id: Option<String>,
-        #[graphql(desc = "Status filter")] status: Option<String>,
-        #[graphql(desc = "Pagination limit")] limit: Option<i32>,
-        #[graphql(desc = "Pagination offset")] offset: Option<i32>,
-    ) -> Vec<String> {
-        // TODO: Implement evaluations query with GraphQL optimization
-        vec!["Evaluation 1".to_string(), "Evaluation 2".to_string()]
+        user_id: Option<Uuid>,
+        category_id: Option<Uuid>,
+        status: Option<EvaluationStatus>,
+        limit: Option<i32>,
+        offset: Option<i32>,
+    ) -> Result<Vec<Evaluation>> {
+        // TODO: Query evaluations with filters
+        Ok(vec![])
     }
 
-    /// Get user's categories
-    async fn categories(&self, #[graphql(desc = "User ID")] user_id: String) -> Vec<String> {
-        // TODO: Implement categories query
-        vec![]
+    /// Get category by ID
+    async fn category(&self, id: Uuid) -> Result<Option<Category>> {
+        // TODO: Query category from database
+        Err("Not implemented".into())
     }
 
-    /// Get analytics for a closed evaluation
-    async fn analytics(&self, #[graphql(desc = "Evaluation ID")] evaluation_id: String) -> Option<String> {
-        // TODO: Implement analytics query
-        Some(format!("Analytics for {}", evaluation_id))
+    /// List user's categories
+    async fn categories(&self, user_id: Uuid) -> Result<Vec<Category>> {
+        // TODO: Query categories
+        Ok(vec![])
+    }
+
+    /// Get questions for an evaluation
+    async fn questions(&self, evaluation_id: Uuid) -> Result<Vec<Question>> {
+        // TODO: Query questions ordered by order field
+        Ok(vec![])
+    }
+
+    /// Get question by ID
+    async fn question(&self, id: Uuid) -> Result<Option<Question>> {
+        // TODO: Query question
+        Err("Not implemented".into())
+    }
+
+    /// Get responses for an evaluation
+    async fn responses(&self, evaluation_id: Uuid) -> Result<Vec<Response>> {
+        // TODO: Query responses
+        Ok(vec![])
+    }
+
+    /// Get responses for a specific question
+    async fn question_responses(&self, question_id: Uuid) -> Result<Vec<Response>> {
+        // TODO: Query question responses
+        Ok(vec![])
+    }
+
+    /// Get public link by UUID
+    async fn public_link(&self, uuid: String) -> Result<Option<PublicLink>> {
+        // TODO: Query public link and validate
+        Err("Not implemented".into())
+    }
+
+    /// Get collaborators for an evaluation
+    async fn collaborators(&self, evaluation_id: Uuid) -> Result<Vec<Collaborator>> {
+        // TODO: Query collaborators
+        Ok(vec![])
+    }
+
+    /// Get analytics result for an evaluation
+    async fn analytics(&self, evaluation_id: Uuid) -> Result<Option<AnalyticsResult>> {
+        // TODO: Calculate or retrieve analytics
+        Err("Not implemented".into())
+    }
+
+    /// Get statistics for a question
+    async fn question_statistics(&self, question_id: Uuid) -> Result<Option<Statistics>> {
+        // TODO: Calculate statistics from responses
+        Err("Not implemented".into())
+    }
+
+    /// List available templates
+    async fn templates(&self) -> Result<Vec<Template>> {
+        // TODO: Query templates
+        Ok(vec![])
+    }
+
+    /// Get template by ID
+    async fn template(&self, id: Uuid) -> Result<Option<Template>> {
+        // TODO: Query template
+        Err("Not implemented".into())
     }
 }
