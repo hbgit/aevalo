@@ -1,5 +1,4 @@
-use async_graphql::{Context, Object, Result};
-use uuid::Uuid;
+use async_graphql::{Context, Object, Result, ID};
 use crate::models::*;
 
 #[derive(Default)]
@@ -8,19 +7,19 @@ pub struct QueryRoot;
 #[Object]
 impl QueryRoot {
     /// Get current authenticated user
-    async fn me(&self, ctx: &Context<'_>) -> Result<User> {
+    async fn me(&self, _ctx: &Context<'_>) -> Result<User> {
         // TODO: Get user from auth context
         Err("Not implemented".into())
     }
 
     /// Get user by ID
-    async fn user(&self, id: Uuid) -> Result<Option<User>> {
+    async fn user(&self, id: ID) -> Result<Option<User>> {
         // TODO: Query user from database
         Err("Not implemented".into())
     }
 
     /// Get evaluation by ID
-    async fn evaluation(&self, id: Uuid) -> Result<Option<Evaluation>> {
+    async fn evaluation(&self, id: ID) -> Result<Option<Evaluation>> {
         // TODO: Query evaluation from database
         Err("Not implemented".into())
     }
@@ -28,8 +27,8 @@ impl QueryRoot {
     /// List evaluations with filters
     async fn evaluations(
         &self,
-        user_id: Option<Uuid>,
-        category_id: Option<Uuid>,
+        user_id: Option<ID>,
+        category_id: Option<ID>,
         status: Option<EvaluationStatus>,
         limit: Option<i32>,
         offset: Option<i32>,
@@ -39,37 +38,37 @@ impl QueryRoot {
     }
 
     /// Get category by ID
-    async fn category(&self, id: Uuid) -> Result<Option<Category>> {
+    async fn category(&self, id: ID) -> Result<Option<Category>> {
         // TODO: Query category from database
         Err("Not implemented".into())
     }
 
     /// List user's categories
-    async fn categories(&self, user_id: Uuid) -> Result<Vec<Category>> {
+    async fn categories(&self, user_id: ID) -> Result<Vec<Category>> {
         // TODO: Query categories
         Ok(vec![])
     }
 
     /// Get questions for an evaluation
-    async fn questions(&self, evaluation_id: Uuid) -> Result<Vec<Question>> {
+    async fn questions(&self, evaluation_id: ID) -> Result<Vec<Question>> {
         // TODO: Query questions ordered by order field
         Ok(vec![])
     }
 
     /// Get question by ID
-    async fn question(&self, id: Uuid) -> Result<Option<Question>> {
+    async fn question(&self, id: ID) -> Result<Option<Question>> {
         // TODO: Query question
         Err("Not implemented".into())
     }
 
     /// Get responses for an evaluation
-    async fn responses(&self, evaluation_id: Uuid) -> Result<Vec<Response>> {
+    async fn responses(&self, evaluation_id: ID) -> Result<Vec<Response>> {
         // TODO: Query responses
         Ok(vec![])
     }
 
     /// Get responses for a specific question
-    async fn question_responses(&self, question_id: Uuid) -> Result<Vec<Response>> {
+    async fn question_responses(&self, question_id: ID) -> Result<Vec<Response>> {
         // TODO: Query question responses
         Ok(vec![])
     }
@@ -81,19 +80,19 @@ impl QueryRoot {
     }
 
     /// Get collaborators for an evaluation
-    async fn collaborators(&self, evaluation_id: Uuid) -> Result<Vec<Collaborator>> {
+    async fn collaborators(&self, evaluation_id: ID) -> Result<Vec<Collaborator>> {
         // TODO: Query collaborators
         Ok(vec![])
     }
 
     /// Get analytics result for an evaluation
-    async fn analytics(&self, evaluation_id: Uuid) -> Result<Option<AnalyticsResult>> {
+    async fn analytics(&self, evaluation_id: ID) -> Result<Option<AnalyticsResult>> {
         // TODO: Calculate or retrieve analytics
         Err("Not implemented".into())
     }
 
     /// Get statistics for a question
-    async fn question_statistics(&self, question_id: Uuid) -> Result<Option<Statistics>> {
+    async fn question_statistics(&self, question_id: ID) -> Result<Option<Statistics>> {
         // TODO: Calculate statistics from responses
         Err("Not implemented".into())
     }
@@ -105,7 +104,7 @@ impl QueryRoot {
     }
 
     /// Get template by ID
-    async fn template(&self, id: Uuid) -> Result<Option<Template>> {
+    async fn template(&self, id: ID) -> Result<Option<Template>> {
         // TODO: Query template
         Err("Not implemented".into())
     }

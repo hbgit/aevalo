@@ -1,6 +1,6 @@
 // Type definitions and models for database entities
 
-use async_graphql::{SimpleObject, Enum, InputObject};
+use async_graphql::{SimpleObject, Enum, InputObject, ID};
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 use sqlx::FromRow;
@@ -194,7 +194,7 @@ pub struct CreateCategoryInput {
 
 #[derive(Debug, InputObject)]
 pub struct CreateEvaluationInput {
-    pub category_id: Option<Uuid>,
+    pub category_id: Option<ID>,
     pub title: String,
     pub description: Option<String>,
     pub scale_type: ScaleType,
@@ -202,7 +202,7 @@ pub struct CreateEvaluationInput {
 
 #[derive(Debug, InputObject)]
 pub struct CreateQuestionInput {
-    pub evaluation_id: Uuid,
+    pub evaluation_id: ID,
     pub text: String,
     pub scale_type: ScaleType,
     pub metadata: String, // JSON as string
@@ -210,8 +210,8 @@ pub struct CreateQuestionInput {
 
 #[derive(Debug, InputObject)]
 pub struct CreateResponseInput {
-    pub question_id: Uuid,
-    pub evaluation_id: Uuid,
+    pub question_id: ID,
+    pub evaluation_id: ID,
     pub respondent_id: String,
     pub answer_value: String, // JSON as string
 }

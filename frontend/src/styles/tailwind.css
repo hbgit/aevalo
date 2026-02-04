@@ -2,21 +2,242 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom component styles */
+/* ==================== BASE STYLES ==================== */
+
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-900;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold;
+  }
+}
+
+/* ==================== CUSTOM COMPONENTS ==================== */
+
 @layer components {
+  /* Buttons */
   .btn-primary {
-    @apply px-4 py-2 rounded-lg bg-primary text-white font-semibold hover:bg-opacity-90 transition-all;
+    @apply px-4 py-2 rounded-lg bg-primary text-white font-semibold hover:bg-primary/90 active:bg-primary/80 transition-all shadow-sm hover:shadow-md;
   }
 
   .btn-secondary {
-    @apply px-4 py-2 rounded-lg bg-secondary text-white font-semibold hover:bg-opacity-90 transition-all;
+    @apply px-4 py-2 rounded-lg bg-secondary text-white font-semibold hover:bg-secondary/90 active:bg-secondary/80 transition-all shadow-sm hover:shadow-md;
   }
 
+  .btn-ghost {
+    @apply px-4 py-2 rounded-lg text-slate-700 hover:bg-slate-100 active:bg-slate-200 transition-colors font-medium;
+  }
+
+  .btn-icon {
+    @apply h-9 w-9 rounded-full flex items-center justify-center text-slate-600 hover:text-primary border border-slate-200 hover:border-primary transition-colors;
+  }
+
+  /* Cards */
   .card {
-    @apply rounded-lg border border-gray-200 bg-white shadow-sm hover:shadow-md transition-shadow;
+    @apply rounded-2xl border border-slate-200 bg-white shadow-sm hover:shadow-md transition-shadow;
   }
 
+  .card-lg {
+    @apply rounded-2xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md transition-shadow;
+  }
+
+  /* Form Inputs */
   .input-base {
-    @apply px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary;
+    @apply px-4 py-2.5 border border-slate-200 rounded-lg bg-slate-50 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition-all;
+  }
+
+  .input-rounded {
+    @apply px-4 py-2.5 border border-slate-200 rounded-full bg-slate-50 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition-all;
+  }
+
+  /* Status Badges */
+  .badge {
+    @apply inline-block px-2.5 py-1 rounded-full text-xs font-semibold;
+  }
+
+  .badge-success {
+    @apply badge bg-emerald-100 text-emerald-700;
+  }
+
+  .badge-warning {
+    @apply badge bg-amber-100 text-amber-700;
+  }
+
+  .badge-danger {
+    @apply badge bg-red-100 text-red-700;
+  }
+
+  .badge-info {
+    @apply badge bg-blue-100 text-blue-700;
+  }
+
+  .badge-secondary {
+    @apply badge bg-slate-100 text-slate-700;
+  }
+
+  /* Hero Section */
+  .hero {
+    @apply rounded-2xl bg-gradient-to-r from-primary via-purple-600 to-accent text-white p-8 shadow-lg;
+  }
+
+  /* Stats Cards */
+  .stat-card {
+    @apply bg-white/10 rounded-xl px-4 py-3 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all;
+  }
+
+  .stat-card-primary {
+    @apply bg-white/15 rounded-xl px-4 py-3 backdrop-blur-sm border border-white/20;
+  }
+
+  /* Table Styles */
+  .table-header {
+    @apply bg-slate-50 border-b border-slate-200 text-left text-xs uppercase tracking-wide text-slate-500 font-semibold;
+  }
+
+  .table-row {
+    @apply border-b border-slate-200 hover:bg-slate-50 transition-colors;
+  }
+
+  .table-cell {
+    @apply py-4 px-1;
+  }
+
+  /* Category Badge Icon */
+  .category-icon {
+    @apply h-9 w-9 rounded-lg flex items-center justify-center text-lg;
+  }
+
+  /* Alert/Tip Box */
+  .alert-box {
+    @apply rounded-2xl border p-5 flex gap-3;
+  }
+
+  .alert-tip {
+    @apply alert-box border-orange-200 bg-orange-50;
+  }
+
+  .alert-tip .icon {
+    @apply h-9 w-9 rounded-lg bg-secondary text-white flex items-center justify-center flex-shrink-0;
+  }
+
+  /* Analytics Chart Container */
+  .chart-container {
+    @apply rounded-2xl border border-slate-200 bg-white p-6;
+  }
+
+  /* Pagination */
+  .pagination-btn {
+    @apply h-8 w-8 rounded-lg border border-slate-200 text-sm font-medium hover:border-primary hover:text-primary transition-colors;
+  }
+
+  .pagination-btn.active {
+    @apply bg-primary text-white border-primary;
+  }
+
+  /* Search Input */
+  .search-input {
+    @apply w-full rounded-full border border-slate-200 bg-slate-50 px-4 py-2.5 pl-11 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary;
+  }
+
+  /* Header Bar */
+  .header-bar {
+    @apply bg-white border-b border-slate-200 sticky top-0 z-10 shadow-sm;
+  }
+
+  /* Hero Stats Grid */
+  .hero-stat {
+    @apply space-y-1;
+  }
+
+  .hero-stat-label {
+    @apply text-xs uppercase tracking-wide text-purple-200 font-medium;
+  }
+
+  .hero-stat-value {
+    @apply text-3xl font-bold;
+  }
+
+  /* Hover Effects */
+  .hover-lift {
+    @apply transition-all hover:shadow-lg hover:-translate-y-1;
+  }
+
+  .hover-shadow {
+    @apply transition-shadow hover:shadow-lg;
+  }
+
+  /* Section Titles */
+  .section-title {
+    @apply text-sm font-bold text-slate-900;
+  }
+
+  .section-subtitle {
+    @apply text-xs text-slate-500;
+  }
+
+  /* Line Clamp */
+  .line-clamp-1 {
+    @apply overflow-hidden text-ellipsis whitespace-nowrap;
+  }
+
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-4 {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+/* ==================== ANIMATIONS ==================== */
+
+@layer utilities {
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-out;
+  }
+
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .animate-slide-in-right {
+    animation: slideInRight 0.3s ease-out;
+  }
+
+  .text-truncate {
+    @apply truncate;
   }
 }

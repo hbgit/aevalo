@@ -11,7 +11,7 @@ tower = "0.5"
 tower-http = { version = "0.6", features = ["trace", "cors"] }
 
 # GraphQL - Usando versão mais recente compatível com Edition 2024
-async-graphql = "7.0"
+async-graphql = { version = "7.0", features = ["chrono", "uuid"] }
 async-graphql-axum = "7.0"
 
 # Database - SQLx 0.8 com melhorias em performance e tipos
