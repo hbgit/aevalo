@@ -55,9 +55,17 @@ where
 }
 
 pub fn generate_token(user_id: &str) -> Result<String, String> {
+    generate_token_with_ttl(user_id, Duration::hours(24))
+}
+
+pub fn generate_refresh_token(user_id: &str) -> Result<String, String> {
+    generate_token_with_ttl(user_id, Duration::days(7))
+}
+
+fn generate_token_with_ttl(user_id: &str, ttl: Duration) -> Result<String, String> {
     let now = Utc::now();
     let iat = now.timestamp();
-    let exp = (now + Duration::hours(24)).timestamp();
+    let exp = (now + ttl).timestamp();
 
     let claims = Claims {
         sub: user_id.to_string(),

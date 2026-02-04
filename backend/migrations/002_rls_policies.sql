@@ -75,6 +75,17 @@ ON evaluations
 FOR SELECT
 USING (user_id = current_user_id());
 
+CREATE POLICY evaluations_select_collaborator
+ON evaluations
+FOR SELECT
+USING (
+    EXISTS (
+        SELECT 1 FROM collaborators c
+        WHERE c.evaluation_id = evaluations.id
+          AND c.user_id = current_user_id()
+    )
+);
+
 CREATE POLICY evaluations_select_public
 ON evaluations
 FOR SELECT
@@ -114,6 +125,17 @@ USING (
         SELECT 1 FROM evaluations e
         WHERE e.id = questions.evaluation_id
           AND e.user_id = current_user_id()
+    )
+);
+
+CREATE POLICY questions_select_collaborator
+ON questions
+FOR SELECT
+USING (
+    EXISTS (
+        SELECT 1 FROM collaborators c
+        WHERE c.evaluation_id = questions.evaluation_id
+          AND c.user_id = current_user_id()
     )
 );
 

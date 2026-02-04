@@ -118,16 +118,38 @@ pub async fn get_evaluation(
     State(db): State<PgPool>,
     Path(eval_id): Path<Uuid>,
     AuthUser { id: user_id }: AuthUser,
-) -> Result<(StatusCode, Json<EvaluationDetail>), AppError> {
+) -> Result<(StatusCode, Json<EvaluationAccessResponse>), AppError> {
     let evaluation = sqlx::query_as::<_, Evaluation>(
-        "SELECT * FROM evaluations WHERE id = $1 AND user_id = $2"
+        "SELECT * FROM evaluations WHERE id = $1"
     )
     .bind(eval_id)
-    .bind(user_id)
     .fetch_optional(&db)
     .await
     .map_err(|e| AppError::DatabaseError(e.to_string()))?
     .ok_or(AppError::NotFound("Evaluation not found".to_string()))?;
+
+    let (role, can_edit) = if evaluation.user_id == user_id {
+        ("OWNER".to_string(), true)
+    } else {
+        let collaborator_role: Option<(String,)> = sqlx::query_as(
+            "SELECT role::text FROM collaborators WHERE evaluation_id = $1 AND user_id = $2"
+        )
+        .bind(eval_id)
+        .bind(user_id)
+        .fetch_optional(&db)
+        .await
+        .map_err(|e| AppError::DatabaseError(e.to_string()))?;
+
+        match collaborator_role {
+            Some((role,)) => {
+                let can_edit = role == "OWNER" || role == "EDITOR";
+                (role, can_edit)
+            }
+            None => {
+                return Err(AppError::AuthError("Access denied".to_string()));
+            }
+        }
+    };
 
     let questions = sqlx::query_as(
         "SELECT id, evaluation_id, order, text, scale_type, metadata FROM questions 
@@ -138,16 +160,51 @@ pub async fn get_evaluation(
     .await
     .map_err(|e| AppError::DatabaseError(e.to_string()))?;
 
-    Ok((StatusCode::OK, Json(EvaluationDetail {
-        evaluation,
+    Ok((StatusCode::OK, Json(EvaluationAccessResponse {
+        evaluation: EvaluationView::from(evaluation),
         questions,
+        role,
+        can_edit,
     })))
 }
 
 #[derive(Debug, Serialize)]
-pub struct EvaluationDetail {
-    pub evaluation: Evaluation,
+pub struct EvaluationAccessResponse {
+    pub evaluation: EvaluationView,
     pub questions: Vec<QuestionDetail>,
+    pub role: String,
+    pub can_edit: bool,
+}
+
+#[derive(Debug, Serialize)]
+pub struct EvaluationView {
+    pub id: Uuid,
+    pub category_id: Option<Uuid>,
+    pub title: String,
+    pub description: Option<String>,
+    pub status: EvaluationStatus,
+    pub scale_type: ScaleType,
+    pub created_at: chrono::DateTime<chrono::Utc>,
+    pub updated_at: chrono::DateTime<chrono::Utc>,
+    pub published_at: Option<chrono::DateTime<chrono::Utc>>,
+    pub closed_at: Option<chrono::DateTime<chrono::Utc>>,
+}
+
+impl From<Evaluation> for EvaluationView {
+    fn from(e: Evaluation) -> Self {
+        Self {
+            id: e.id,
+            category_id: e.category_id,
+            title: e.title,
+            description: e.description,
+            status: e.status,
+            scale_type: e.scale_type,
+            created_at: e.created_at,
+            updated_at: e.updated_at,
+            published_at: e.published_at,
+            closed_at: e.closed_at,
+        }
+    }
 }
 
 #[derive(Debug, Serialize, sqlx::FromRow)]
