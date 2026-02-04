@@ -14,8 +14,8 @@ pub enum AppError {
     #[error("Not found: {0}")]
     NotFound(String),
 
-    #[error("Internal server error")]
-    InternalServerError,
+    #[error("Internal server error: {message}")]
+    InternalServerError { message: String },
 
     #[error("GraphQL error: {0}")]
     GraphQLError(String),
@@ -28,8 +28,9 @@ impl AppError {
             AppError::AuthError(_) => 401,
             AppError::ValidationError(_) => 400,
             AppError::DatabaseError(_) => 500,
-            AppError::InternalServerError => 500,
+            AppError::InternalServerError { .. } => 500,
             AppError::GraphQLError(_) => 400,
         }
     }
 }
+
