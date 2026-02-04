@@ -388,7 +388,7 @@ pub async fn close_evaluation(
     State(db): State<PgPool>,
     Path(eval_id): Path<Uuid>,
     AuthUser { id: user_id }: AuthUser,
-) -> Result<(StatusCode, Json<serde_json::json::Value>), AppError> {
+) -> Result<(StatusCode, Json<serde_json::Value>), AppError> {
     // Verify ownership
     sqlx::query("SELECT id FROM evaluations WHERE id = $1 AND user_id = $2")
         .bind(eval_id)

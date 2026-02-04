@@ -271,7 +271,7 @@ fn compute_numeric_statistics(responses: &[(serde_json::Value,)]) -> Statistics 
     // Create distribution histogram
     let mut distribution = serde_json::Map::new();
     for value in &values {
-        let key = format!("{}", value as i32);
+        let key = format!("{}", *value as i32);
         let count = distribution
             .get(&key)
             .and_then(|v| v.as_i64())

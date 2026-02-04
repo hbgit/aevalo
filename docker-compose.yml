@@ -16,6 +16,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - aevalo_net
 
   # Rust Backend
   backend:
@@ -38,6 +40,11 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      aevalo_net:
+        aliases:
+          - backend
+          - aevalo-backend
 
   # Vue.js Frontend with Nginx
   frontend:
@@ -54,6 +61,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - aevalo_net
 
   # Prometheus for Monitoring
   prometheus:
@@ -67,6 +76,8 @@ services:
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
+    networks:
+      - aevalo_net
 
   # Grafana for Dashboards
   grafana:
@@ -81,8 +92,14 @@ services:
       - "3001:3000"
     depends_on:
       - prometheus
+    networks:
+      - aevalo_net
 
 volumes:
   postgres_data:
   prometheus_data:
   grafana_data:
+
+networks:
+  aevalo_net:
+    driver: bridge

@@ -13,7 +13,6 @@ use axum::{
 use sqlx::postgres::PgPoolOptions;
 use tower_http::cors::CorsLayer;
 use tracing::info;
-use std::sync::Arc;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -70,7 +69,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .route("/public/eval/:uuid/stats", get(handlers::public::get_public_stats))
         
         .layer(CorsLayer::permissive())
-        .with_state(Arc::new(pool));
+        .with_state(pool);
 
     // Start server
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await?;

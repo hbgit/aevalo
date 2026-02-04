@@ -218,7 +218,7 @@ pub async fn get_response_stats(
         "SELECT COUNT(DISTINCT respondent_id) FROM responses WHERE evaluation_id = $1"
     )
     .bind(eval_id)
-    .fetch_one(db)
+    .fetch_one(&db)
     .await
     .map_err(|e| AppError::DatabaseError(e.to_string()))?;
 
@@ -227,7 +227,7 @@ pub async fn get_response_stats(
         "SELECT COUNT(*) FROM questions WHERE evaluation_id = $1"
     )
     .bind(eval_id)
-    .fetch_one(db)
+    .fetch_one(&db)
     .await
     .map_err(|e| AppError::DatabaseError(e.to_string()))?;
 

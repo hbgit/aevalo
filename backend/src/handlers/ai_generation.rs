@@ -62,9 +62,11 @@ async fn call_gemini_api(
 
     let client = reqwest::Client::new();
     let response = client
-        .post("https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent")
+        .post(format!(
+            "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key={}",
+            api_key
+        ))
         .header("Content-Type", "application/json")
-        .query(&[("key", api_key.as_str())])
         .json(&serde_json::json!({
             "contents": [{
                 "parts": [{

@@ -2,7 +2,6 @@
 // Handles JWT token generation and validation
 
 use axum::{
-    async_trait,
     extract::FromRequestParts,
     http::{header, request::Parts},
 };
@@ -25,7 +24,6 @@ pub struct AuthUser {
     pub id: Uuid,
 }
 
-#[async_trait]
 impl<S> FromRequestParts<S> for AuthUser
 where
     S: Send + Sync,
