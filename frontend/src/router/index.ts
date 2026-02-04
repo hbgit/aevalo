@@ -17,6 +17,12 @@ const routes = [
     name: 'CreateEvaluation',
     component: () => import('../pages/CreateEvaluation.vue'),
   },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import('../pages/Login.vue'),
+    meta: { layout: 'auth' },
+  },
 ]
 
 const router = createRouter({
