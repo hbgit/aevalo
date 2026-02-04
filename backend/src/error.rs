@@ -1,3 +1,7 @@
+use axum::http::StatusCode;
+use axum::response::{IntoResponse, Response};
+use axum::Json;
+use serde_json::json;
 use thiserror::Error;
 
 #[derive(Error, Debug)]
@@ -31,6 +35,19 @@ impl AppError {
             AppError::InternalServerError { .. } => 500,
             AppError::GraphQLError(_) => 400,
         }
+    }
+}
+
+impl IntoResponse for AppError {
+    fn into_response(self) -> Response {
+        let status = StatusCode::from_u16(self.status_code())
+            .unwrap_or(StatusCode::INTERNAL_SERVER_ERROR);
+
+        let body = Json(json!({
+            "error": self.to_string(),
+        }));
+
+        (status, body).into_response()
     }
 }
 

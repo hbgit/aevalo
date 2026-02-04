@@ -1,15 +1,57 @@
 // Authentication module
 // Handles JWT token generation and validation
 
+use axum::{
+    async_trait,
+    extract::FromRequestParts,
+    http::{header, request::Parts},
+};
 use chrono::{Duration, Utc};
-use jsonwebtoken::{encode, decode, Header, Validation, EncodingKey, DecodingKey};
+use jsonwebtoken::{decode, encode, DecodingKey, EncodingKey, Header, Validation};
 use serde::{Deserialize, Serialize};
+use uuid::Uuid;
+
+use crate::error::AppError;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Claims {
     pub sub: String, // User ID
     pub iat: i64,
     pub exp: i64,
+}
+
+#[derive(Debug, Clone)]
+pub struct AuthUser {
+    pub id: Uuid,
+}
+
+#[async_trait]
+impl<S> FromRequestParts<S> for AuthUser
+where
+    S: Send + Sync,
+{
+    type Rejection = AppError;
+
+    async fn from_request_parts(
+        parts: &mut Parts,
+        _state: &S,
+    ) -> Result<Self, Self::Rejection> {
+        let auth_header = parts
+            .headers
+            .get(header::AUTHORIZATION)
+            .and_then(|value| value.to_str().ok())
+            .ok_or_else(|| AppError::AuthError("Missing Authorization header".to_string()))?;
+
+        let token = auth_header
+            .strip_prefix("Bearer ")
+            .ok_or_else(|| AppError::AuthError("Invalid Authorization header".to_string()))?;
+
+        let claims = verify_token(token).map_err(AppError::AuthError)?;
+        let user_id = Uuid::parse_str(&claims.sub)
+            .map_err(|_| AppError::AuthError("Invalid token subject".to_string()))?;
+
+        Ok(AuthUser { id: user_id })
+    }
 }
 
 pub fn generate_token(user_id: &str) -> Result<String, String> {

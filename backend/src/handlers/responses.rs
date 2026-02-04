@@ -11,6 +11,7 @@ use uuid::Uuid;
 use chrono::Utc;
 
 use crate::error::AppError;
+use crate::modules::auth::AuthUser;
 
 #[derive(Debug, Deserialize)]
 pub struct SubmitResponseRequest {
@@ -112,7 +113,7 @@ pub async fn submit_responses(
 pub async fn get_responses(
     State(db): State<PgPool>,
     Path(eval_id): Path<Uuid>,
-    user_id: Uuid,
+    AuthUser { id: user_id }: AuthUser,
 ) -> Result<(StatusCode, Json<Vec<ResponseDetail>>), AppError> {
     // Verify ownership
     sqlx::query("SELECT id FROM evaluations WHERE id = $1 AND user_id = $2")
@@ -201,7 +202,7 @@ async fn validate_answers(
 pub async fn get_response_stats(
     State(db): State<PgPool>,
     Path(eval_id): Path<Uuid>,
-    user_id: Uuid,
+    AuthUser { id: user_id }: AuthUser,
 ) -> Result<(StatusCode, Json<ResponseStats>), AppError> {
     // Verify ownership
     sqlx::query("SELECT id FROM evaluations WHERE id = $1 AND user_id = $2")
