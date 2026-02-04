@@ -23,6 +23,12 @@ const routes = [
     component: () => import('../pages/Login.vue'),
     meta: { layout: 'auth' },
   },
+  {
+    path: '/register',
+    name: 'Register',
+    component: () => import('../pages/Register.vue'),
+    meta: { layout: 'auth' },
+  },
 ]
 
 const router = createRouter({
