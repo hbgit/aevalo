@@ -74,6 +74,27 @@ chmod +x test-api.sh
 ### Teste Manual com Curl
 Veja exemplos em **API-EXAMPLES.json**
 
+---
+
+## 🗄️ Banco de Dados (Seed + Consulta)
+
+### Executar seed com dados fake
+
+```bash
+chmod +x scripts/seed_db.sh
+./scripts/seed_db.sh
+```
+
+### Listar dados via Docker
+
+```bash
+docker exec -i aevalo-db psql -U aevalo -d aevalo_db -c "\\dt"
+```
+
+```bash
+docker exec -i aevalo-db psql -U aevalo -d aevalo_db -c "SELECT COUNT(*) FROM users;"
+```
+
 --- 
 
 🎊 **Bem-vindo ao Aevalo Backend!** 🎊
