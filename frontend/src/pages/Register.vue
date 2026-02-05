@@ -1,15 +1,15 @@
 <template>
   <div class="min-h-screen bg-slate-100 flex items-center justify-center px-4 py-10">
     <div class="w-full max-w-sm bg-white rounded-3xl shadow-xl overflow-hidden">
-      <div class="bg-gradient-to-r from-orange-500 via-rose-500 to-purple-600 px-8 pt-10 pb-12 text-center text-white">
-        <div class="mx-auto h-16 w-16 rounded-2xl bg-white/20 backdrop-blur flex items-center justify-center">
+      <div class="bg-gradient-to-r from-orange-500 via-rose-500 to-purple-600 px-8 pt-8 pb-7 text-center text-white">
+        <div class="mx-auto h-14 w-16 rounded-2xl bg-white/20 backdrop-blur flex items-center justify-center">
           <span class="text-2xl font-semibold">A</span>
         </div>
         <h1 class="mt-4 text-2xl font-semibold">Aevalo</h1>
-        <p class="text-sm text-white/80">Avaliações inteligentes para seu negócio</p>
+        <p class="text-sm text-white/80 font-semibold">Avaliações inteligentes para seu negócio</p>
       </div>
 
-      <div class="px-8 pb-8 -mt-8">
+      <div class="px-8 pb-8">
         <div class="mt-6">
           <h2 class="text-xl font-semibold text-slate-900">Criar sua conta</h2>
           <p class="text-sm text-slate-500 mt-1">Junte-se ao Aevalo e comece agora</p>
