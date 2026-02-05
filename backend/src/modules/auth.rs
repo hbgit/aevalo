@@ -3,7 +3,7 @@
 
 use axum::{
     extract::FromRequestParts,
-    http::{header, request::Parts},
+    http::{header, request::Parts, HeaderMap},
 };
 use chrono::{Duration, Utc};
 use jsonwebtoken::{decode, encode, DecodingKey, EncodingKey, Header, Validation};
@@ -34,22 +34,29 @@ where
         parts: &mut Parts,
         _state: &S,
     ) -> Result<Self, Self::Rejection> {
-        let auth_header = parts
-            .headers
-            .get(header::AUTHORIZATION)
-            .and_then(|value| value.to_str().ok())
-            .ok_or_else(|| AppError::AuthError("Missing Authorization header".to_string()))?;
+        if let Some(user) = parts.extensions.get::<AuthUser>() {
+            return Ok(user.clone());
+        }
 
-        let token = auth_header
-            .strip_prefix("Bearer ")
-            .ok_or_else(|| AppError::AuthError("Invalid Authorization header".to_string()))?;
-
-        let claims = verify_token(token).map_err(AppError::AuthError)?;
-        let user_id = Uuid::parse_str(&claims.sub)
-            .map_err(|_| AppError::AuthError("Invalid token subject".to_string()))?;
-
-        Ok(AuthUser { id: user_id })
+        auth_user_from_headers(&parts.headers)
     }
+}
+
+pub fn auth_user_from_headers(headers: &HeaderMap) -> Result<AuthUser, AppError> {
+    let auth_header = headers
+        .get(header::AUTHORIZATION)
+        .and_then(|value| value.to_str().ok())
+        .ok_or_else(|| AppError::AuthError("Missing Authorization header".to_string()))?;
+
+    let token = auth_header
+        .strip_prefix("Bearer ")
+        .ok_or_else(|| AppError::AuthError("Invalid Authorization header".to_string()))?;
+
+    let claims = verify_token(token).map_err(AppError::AuthError)?;
+    let user_id = Uuid::parse_str(&claims.sub)
+        .map_err(|_| AppError::AuthError("Invalid token subject".to_string()))?;
+
+    Ok(AuthUser { id: user_id })
 }
 
 pub fn generate_token(user_id: &str) -> Result<String, String> {
