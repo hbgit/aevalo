@@ -2,7 +2,7 @@
   <div id="app" class="min-h-screen bg-slate-50">
     <template v-if="!isAuthLayout">
       <header class="bg-white border-b border-slate-200 sticky top-0 z-10">
-      <div class="max-w-7xl mx-auto px-4 py-3 flex items-center gap-4">
+      <div class="max-w-7xl mx-auto px-4 py-3 flex items-center gap-6">
         <div class="flex items-center gap-2">
           <div class="h-9 w-9 rounded-xl bg-gradient-to-br from-primary to-accent text-white font-bold flex items-center justify-center">
             E
@@ -13,7 +13,7 @@
           </div>
         </div>
 
-        <div class="flex-1 max-w-2xl">
+        <div class="flex-1">
           <SearchBar placeholder="Buscar avaliações, categorias ou conteúdo" />
         </div>
 

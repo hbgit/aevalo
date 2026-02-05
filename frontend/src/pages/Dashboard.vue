@@ -17,8 +17,8 @@
           </div>
         </div>
 
-        <div class="flex flex-wrap gap-4">
-          <div class="bg-white/10 rounded-xl px-4 py-3 w-48">
+        <div class="grid grid-cols-2 gap-4">
+          <div class="bg-white/10 rounded-xl px-4 py-3">
             <div class="flex items-center justify-between">
               <p class="text-[11px] uppercase tracking-wide text-purple-200">Prazo mais próximo</p>
               <span class="text-[10px] px-2 py-0.5 rounded-full bg-secondary/80">Urgente</span>
@@ -29,25 +29,24 @@
               <span class="text-lg text-purple-100">dias</span>
             </div>
           </div>
-          <div class="bg-white/10 rounded-xl px-4 py-3 w-48">
+          <div class="bg-white/10 rounded-xl px-4 py-3">
             <p class="text-[11px] uppercase tracking-wide text-purple-200">Avaliadores ativos</p>
             <div class="flex items-center gap-2 mt-3">
               <span class="text-2xl">👥</span>
               <p class="text-3xl font-bold">47</p>
             </div>
           </div>
-          <div class="bg-white/10 rounded-xl px-4 py-3 w-48">
+          <div class="bg-white/10 rounded-xl px-4 py-3">
             <p class="text-[11px] uppercase tracking-wide text-purple-200">Taxa de conclusão</p>
             <div class="flex items-center gap-2 mt-3">
               <span class="text-2xl">📊</span>
               <p class="text-3xl font-bold">89%</p>
             </div>
           </div>
-        </div>
-
-        <div class="bg-white/15 rounded-xl px-4 py-3 w-28 text-center">
-          <p class="text-[11px] uppercase tracking-wide text-purple-200 font-medium">Abertas</p>
-          <p class="text-4xl font-bold mt-2">12</p>
+          <div class="bg-white/15 rounded-xl px-4 py-3 text-center">
+            <p class="text-[11px] uppercase tracking-wide text-purple-200 font-medium">Abertas</p>
+            <p class="text-4xl font-bold mt-2">12</p>
+          </div>
         </div>
       </div>
     </section>
