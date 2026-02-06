@@ -23,9 +23,9 @@ CASCADE;
 -- 50 users
 INSERT INTO users (email, password_hash, name)
 SELECT
-  format('user%02s@aevalo.dev', gs),
+  'user' || lpad(gs::text, 2, '0') || '@aevalo.dev',
   crypt('Password123!', gen_salt('bf')),
-  format('User %s', gs)
+  'User ' || lpad(gs::text, 2, '0')
 FROM generate_series(1, 50) AS gs;
 
 -- 10 categories

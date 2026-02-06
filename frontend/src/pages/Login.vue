@@ -20,7 +20,12 @@
           <p class="text-sm text-slate-500 mt-1">Entre com suas credenciais para continuar</p>
         </div>
 
-        <form class="mt-6 space-y-4">
+        <!-- Error Message -->
+        <div v-if="errorMessage" class="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">
+          {{ errorMessage }}
+        </div>
+
+        <form @submit.prevent="handleLogin" class="mt-6 space-y-4">
           <div>
             <label class="block text-sm font-medium text-slate-700 mb-2">Email</label>
             <div class="relative">
@@ -31,9 +36,11 @@
                 </svg>
               </span>
               <input
+                v-model="email"
                 type="email"
                 placeholder="seu.email@exemplo.com"
                 class="w-full border border-slate-200 rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+                required
               />
             </div>
           </div>
@@ -47,11 +54,17 @@
                 </svg>
               </span>
               <input
+                v-model="password"
                 type="password"
                 placeholder="••••••••"
                 class="w-full border border-slate-200 rounded-xl pl-10 pr-10 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+                required
               />
-              <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400">
+              <button 
+                type="button" 
+                @click="showPassword = !showPassword"
+                class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400"
+              >
                 <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                   <path d="M10 3c4.418 0 8 4 8 7s-3.582 7-8 7-8-4-8-7 3.582-7 8-7zm0 2c-3.21 0-6 3-6 5s2.79 5 6 5 6-3 6-5-2.79-5-6-5zm0 2a3 3 0 110 6 3 3 0 010-6z" />
                 </svg>
@@ -61,17 +74,30 @@
 
           <div class="flex items-center justify-between text-sm">
             <label class="inline-flex items-center gap-2 text-slate-600">
-              <input type="checkbox" class="h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary" />
+              <input v-model="rememberMe" type="checkbox" class="h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary" />
               Lembrar de mim
             </label>
             <a href="#" class="text-primary font-semibold">Esqueceu a senha?</a>
           </div>
 
-          <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 rounded-xl flex items-center justify-center gap-2">
-            Entrar
-            <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414-1.414L13.586 11H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-            </svg>
+          <button 
+            type="submit" 
+            :disabled="isLoading"
+            class="w-full bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300 text-white font-semibold py-3 rounded-xl flex items-center justify-center gap-2 transition-colors"
+          >
+            <span v-if="!isLoading">
+              Entrar
+              <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414-1.414L13.586 11H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+              </svg>
+            </span>
+            <span v-else class="flex items-center gap-2">
+              <svg class="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Entrando...
+            </span>
           </button>
         </form>
 
@@ -99,3 +125,73 @@
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const email = ref('')
+const password = ref('')
+const showPassword = ref(false)
+const rememberMe = ref(false)
+const isLoading = ref(false)
+const errorMessage = ref('')
+
+const handleLogin = async () => {
+  if (!email.value || !password.value) {
+    errorMessage.value = 'Por favor, preencha email e senha'
+    return
+  }
+
+  isLoading.value = true
+  errorMessage.value = ''
+
+  try {
+    const response = await fetch('http://localhost:3000/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: email.value,
+        password: password.value
+      })
+    })
+
+    if (!response.ok) {
+      const error = await response.json()
+      throw new Error(error.error || 'Erro ao fazer login')
+    }
+
+    const data = await response.json()
+
+    // Armazenar tokens no localStorage
+    localStorage.setItem('auth_token', data.token)
+    localStorage.setItem('refresh_token', data.refresh_token)
+
+    // Armazenar preferência de "lembrar de mim"
+    if (rememberMe.value) {
+      localStorage.setItem('remember_email', email.value)
+    } else {
+      localStorage.removeItem('remember_email')
+    }
+
+    // Redirecionar para dashboard
+    await router.push('/dashboard')
+  } catch (error) {
+    errorMessage.value = error instanceof Error ? error.message : 'Erro ao conectar com o servidor'
+    console.error('Login error:', error)
+  } finally {
+    isLoading.value = false
+  }
+}
+
+// Restaurar email se "lembrar de mim" estava ativo
+const savedEmail = localStorage.getItem('remember_email')
+if (savedEmail) {
+  email.value = savedEmail
+  rememberMe.value = true
+}
+</script>
