@@ -1,5 +1,4 @@
-// Authentication module
-// Handles JWT token generation and validation
+//! Authentication module for user validation and JWT handling
 
 use axum::{
     extract::FromRequestParts,
@@ -12,16 +11,32 @@ use uuid::Uuid;
 
 use crate::error::AppError;
 
-#[derive(Debug, Serialize, Deserialize)]
+/// JWT Claims structure
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Claims {
     pub sub: String, // User ID
+    pub email: String,
     pub iat: i64,
     pub exp: i64,
 }
 
+impl Claims {
+    /// Checks if token is expired
+    pub fn is_expired(&self) -> bool {
+        chrono::Utc::now().timestamp() > self.exp
+    }
+
+    /// Gets time remaining until expiry in seconds
+    pub fn time_remaining(&self) -> i64 {
+        (self.exp - chrono::Utc::now().timestamp()).max(0)
+    }
+}
+
+/// Authenticated user context
 #[derive(Debug, Clone)]
 pub struct AuthUser {
     pub id: Uuid,
+    pub email: String,
 }
 
 impl<S> FromRequestParts<S> for AuthUser
@@ -42,6 +57,7 @@ where
     }
 }
 
+/// Extracts authenticated user from request headers
 pub fn auth_user_from_headers(headers: &HeaderMap) -> Result<AuthUser, AppError> {
     let auth_header = headers
         .get(header::AUTHORIZATION)
@@ -56,24 +72,28 @@ pub fn auth_user_from_headers(headers: &HeaderMap) -> Result<AuthUser, AppError>
     let user_id = Uuid::parse_str(&claims.sub)
         .map_err(|_| AppError::AuthError("Invalid token subject".to_string()))?;
 
-    Ok(AuthUser { id: user_id })
+    Ok(AuthUser { 
+        id: user_id,
+        email: claims.email,
+    })
 }
 
-pub fn generate_token(user_id: &str) -> Result<String, String> {
-    generate_token_with_ttl(user_id, Duration::hours(24))
+pub fn generate_token(user_id: &str, email: &str) -> Result<String, String> {
+    generate_token_with_ttl(user_id, email, Duration::hours(24))
 }
 
-pub fn generate_refresh_token(user_id: &str) -> Result<String, String> {
-    generate_token_with_ttl(user_id, Duration::days(7))
+pub fn generate_refresh_token(user_id: &str, email: &str) -> Result<String, String> {
+    generate_token_with_ttl(user_id, email, Duration::days(7))
 }
 
-fn generate_token_with_ttl(user_id: &str, ttl: Duration) -> Result<String, String> {
+fn generate_token_with_ttl(user_id: &str, email: &str, ttl: Duration) -> Result<String, String> {
     let now = Utc::now();
     let iat = now.timestamp();
     let exp = (now + ttl).timestamp();
 
     let claims = Claims {
         sub: user_id.to_string(),
+        email: email.to_string(),
         iat,
         exp,
     };

@@ -46,7 +46,7 @@ pub struct UpdateEvaluationRequest {
 /// Retrieve list of user's evaluations with count
 pub async fn list_evaluations(
     State(db): State<PgPool>,
-    AuthUser { id: user_id }: AuthUser,
+    AuthUser { id: user_id, .. }: AuthUser,
 ) -> Result<(StatusCode, Json<ListEvaluationsResponse>), AppError> {
     let total_count: (i64,) = sqlx::query_as(
         "SELECT COUNT(*) FROM evaluations WHERE user_id = $1"
@@ -82,7 +82,7 @@ pub struct ListEvaluationsResponse {
 /// Create draft evaluation
 pub async fn create_evaluation(
     State(db): State<PgPool>,
-    AuthUser { id: user_id }: AuthUser,
+    AuthUser { id: user_id, .. }: AuthUser,
     Json(req): Json<CreateEvaluationRequest>,
 ) -> Result<(StatusCode, Json<Evaluation>), AppError> {
     let id = Uuid::new_v4();
@@ -117,7 +117,7 @@ pub async fn create_evaluation(
 pub async fn get_evaluation(
     State(db): State<PgPool>,
     Path(eval_id): Path<Uuid>,
-    AuthUser { id: user_id }: AuthUser,
+    AuthUser { id: user_id, .. }: AuthUser,
 ) -> Result<(StatusCode, Json<EvaluationAccessResponse>), AppError> {
     let evaluation = sqlx::query_as::<_, Evaluation>(
         "SELECT * FROM evaluations WHERE id = $1"
@@ -222,7 +222,7 @@ pub struct QuestionDetail {
 pub async fn update_evaluation(
     State(db): State<PgPool>,
     Path(eval_id): Path<Uuid>,
-    AuthUser { id: user_id }: AuthUser,
+    AuthUser { id: user_id, .. }: AuthUser,
     Json(req): Json<UpdateEvaluationRequest>,
 ) -> Result<(StatusCode, Json<Evaluation>), AppError> {
     // Verify ownership and status is draft
@@ -292,7 +292,7 @@ pub async fn update_evaluation(
 pub async fn publish_evaluation(
     State(db): State<PgPool>,
     Path(eval_id): Path<Uuid>,
-    AuthUser { id: user_id }: AuthUser,
+    AuthUser { id: user_id, .. }: AuthUser,
     Json(req): Json<PublishEvaluationRequest>,
 ) -> Result<(StatusCode, Json<PublishResponse>), AppError> {
     // Verify ownership
@@ -387,7 +387,7 @@ pub struct PublicLinkModel {
 pub async fn close_evaluation(
     State(db): State<PgPool>,
     Path(eval_id): Path<Uuid>,
-    AuthUser { id: user_id }: AuthUser,
+    AuthUser { id: user_id, .. }: AuthUser,
 ) -> Result<(StatusCode, Json<serde_json::Value>), AppError> {
     // Verify ownership
     sqlx::query("SELECT id FROM evaluations WHERE id = $1 AND user_id = $2")

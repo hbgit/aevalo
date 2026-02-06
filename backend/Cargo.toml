@@ -4,19 +4,20 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-# Web Framework - Versões estáveis e modernas
+# Web Framework
 axum = "0.8" 
 tokio = { version = "1.43", features = ["full"] }
 tower = "0.5"
-tower-http = { version = "0.6", features = ["trace", "cors"] }
+tower-http = { version = "0.6", features = ["trace", "cors", "set-header"] }
 
-# Database - SQLx 0.8 com melhorias em performance e tipos
+# Database
 sqlx = { version = "0.8", features = ["runtime-tokio-native-tls", "postgres", "uuid", "chrono", "json"] }
 postgrest = "1.6" 
 
-# Authentication
+# Authentication & Security
 jsonwebtoken = "9.3"
 bcrypt = "0.16"
+async-trait = "0.1"
 
 # Serialization
 serde = { version = "1.0", features = ["derive"] }
@@ -33,17 +34,18 @@ tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 
 # Error Handling
 anyhow = "1.0"
-thiserror = "2.0" # Aproveitando as melhorias da v2.0
+thiserror = "2.0"
 
 # Utils
 regex = "1.11"
 validator = { version = "0.20", features = ["derive"] }
 
-# AI Integration (Gemini utiliza reqwest)
+# AI Integration
 reqwest = { version = "0.13", features = ["json", "stream"] }
 
 # Monitoring
 prometheus = "0.13"
+
 
 [dev-dependencies]
 tokio-test = "0.4"

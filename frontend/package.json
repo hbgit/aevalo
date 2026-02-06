@@ -17,7 +17,9 @@
     "@apollo/client": "^3.8",
     "graphql": "^16.8",
     "graphql-request": "^6.0",
-    "@supabase/supabase-js": "^2.38"
+    "@supabase/supabase-js": "^2.38",
+    "dompurify": "^3.0",
+    "js-sha256": "^0.11"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.5",
@@ -30,6 +32,9 @@
     "typescript": "^5.3",
     "eslint": "^8.54",
     "@typescript-eslint/eslint-plugin": "^6.13",
-    "@typescript-eslint/parser": "^6.13"
+    "@typescript-eslint/parser": "^6.13",
+    "vitest": "^1.0",
+    "@types/dompurify": "^3.0",
+    "@types/node": "^20.10"
   }
 }

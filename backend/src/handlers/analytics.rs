@@ -47,7 +47,7 @@ pub struct Statistics {
 pub async fn process_evaluation(
     State(db): State<PgPool>,
     Path(eval_id): Path<Uuid>,
-    AuthUser { id: user_id }: AuthUser,
+    AuthUser { id: user_id, .. }: AuthUser,
 ) -> Result<(StatusCode, Json<AnalyticsResult>), AppError> {
     // Verify ownership
     sqlx::query("SELECT id FROM evaluations WHERE id = $1 AND user_id = $2")
@@ -69,7 +69,7 @@ pub async fn process_evaluation(
 pub async fn get_results(
     State(db): State<PgPool>,
     Path(eval_id): Path<Uuid>,
-    AuthUser { id: user_id }: AuthUser,
+    AuthUser { id: user_id, .. }: AuthUser,
 ) -> Result<(StatusCode, Json<ResultsResponse>), AppError> {
     // Verify ownership
     sqlx::query("SELECT id FROM evaluations WHERE id = $1 AND user_id = $2")
