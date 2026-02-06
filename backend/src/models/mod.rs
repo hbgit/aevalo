@@ -1,6 +1,5 @@
 // Type definitions and models for database entities
 
-use async_graphql::{SimpleObject, Enum, InputObject, ID};
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 use sqlx::FromRow;
@@ -8,7 +7,7 @@ use uuid::Uuid;
 
 // ==================== ENUMERATIONS ====================
 
-#[derive(Debug, Clone, Copy, Serialize, Deserialize, Enum, Eq, PartialEq, sqlx::Type)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, Eq, PartialEq, sqlx::Type)]
 #[sqlx(type_name = "evaluation_status", rename_all = "UPPERCASE")]
 pub enum EvaluationStatus {
     Draft,
@@ -17,7 +16,7 @@ pub enum EvaluationStatus {
     Archived,
 }
 
-#[derive(Debug, Clone, Copy, Serialize, Deserialize, Enum, Eq, PartialEq, sqlx::Type)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, Eq, PartialEq, sqlx::Type)]
 #[sqlx(type_name = "scale_type", rename_all = "SCREAMING_SNAKE_CASE")]
 pub enum ScaleType {
     Likert,
@@ -26,7 +25,7 @@ pub enum ScaleType {
     FixedSum,
 }
 
-#[derive(Debug, Clone, Copy, Serialize, Deserialize, Enum, Eq, PartialEq, sqlx::Type)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, Eq, PartialEq, sqlx::Type)]
 #[sqlx(type_name = "collaborator_role", rename_all = "UPPERCASE")]
 pub enum CollaboratorRole {
     Owner,
@@ -36,18 +35,17 @@ pub enum CollaboratorRole {
 
 // ==================== CORE ENTITIES ====================
 
-#[derive(Debug, Clone, Serialize, Deserialize, SimpleObject, FromRow)]
+#[derive(Debug, Clone, Serialize, Deserialize, FromRow)]
 pub struct User {
     pub id: Uuid,
     pub email: String,
-    #[graphql(skip)]
     pub password_hash: String,
     pub name: String,
     pub created_at: DateTime<Utc>,
     pub updated_at: DateTime<Utc>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, SimpleObject, FromRow)]
+#[derive(Debug, Clone, Serialize, Deserialize, FromRow)]
 pub struct Category {
     pub id: Uuid,
     pub user_id: Uuid,
@@ -57,7 +55,7 @@ pub struct Category {
     pub created_at: DateTime<Utc>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, SimpleObject, FromRow)]
+#[derive(Debug, Clone, Serialize, Deserialize, FromRow)]
 pub struct Evaluation {
     pub id: Uuid,
     pub user_id: Uuid,
@@ -72,7 +70,7 @@ pub struct Evaluation {
     pub closed_at: Option<DateTime<Utc>>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, SimpleObject, FromRow)]
+#[derive(Debug, Clone, Serialize, Deserialize, FromRow)]
 pub struct Question {
     pub id: Uuid,
     pub evaluation_id: Uuid,
@@ -82,7 +80,7 @@ pub struct Question {
     pub metadata: sqlx::types::JsonValue,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, SimpleObject, FromRow)]
+#[derive(Debug, Clone, Serialize, Deserialize, FromRow)]
 pub struct Response {
     pub id: Uuid,
     pub question_id: Uuid,
@@ -94,7 +92,7 @@ pub struct Response {
 
 // ==================== COLLABORATION & ACCESS ====================
 
-#[derive(Debug, Clone, Serialize, Deserialize, SimpleObject, FromRow)]
+#[derive(Debug, Clone, Serialize, Deserialize, FromRow)]
 pub struct PublicLink {
     pub id: Uuid,
     pub evaluation_id: Uuid,
@@ -105,7 +103,7 @@ pub struct PublicLink {
     pub is_active: bool,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, SimpleObject, FromRow)]
+#[derive(Debug, Clone, Serialize, Deserialize, FromRow)]
 pub struct Collaborator {
     pub id: Uuid,
     pub evaluation_id: Uuid,
@@ -116,7 +114,7 @@ pub struct Collaborator {
 
 // ==================== TEMPLATES ====================
 
-#[derive(Debug, Clone, Serialize, Deserialize, SimpleObject, FromRow)]
+#[derive(Debug, Clone, Serialize, Deserialize, FromRow)]
 pub struct Template {
     pub id: Uuid,
     pub name: String,
@@ -128,7 +126,7 @@ pub struct Template {
 
 // ==================== ANALYTICS ====================
 
-#[derive(Debug, Clone, Serialize, Deserialize, SimpleObject, FromRow)]
+#[derive(Debug, Clone, Serialize, Deserialize, FromRow)]
 pub struct AnalyticsResult {
     pub id: Uuid,
     pub evaluation_id: Uuid,
@@ -139,7 +137,7 @@ pub struct AnalyticsResult {
     pub insights: Option<String>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, SimpleObject)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Statistics {
     pub mean: Option<f64>,
     pub median: Option<f64>,
@@ -152,25 +150,25 @@ pub struct Statistics {
 
 // ==================== SCALE TYPES ====================
 
-#[derive(Debug, Clone, Serialize, Deserialize, SimpleObject)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct LikertScale {
     pub min_value: i32,
     pub max_value: i32,
     pub labels: Vec<String>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, SimpleObject)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct FrequencyScale {
     pub categories: Vec<String>,
     pub frequency_type: String,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, SimpleObject)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct PairedComparisonScale {
     pub items: Vec<String>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, SimpleObject)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct FixedSumScale {
     pub total_sum: i32,
     pub items: Vec<String>,
@@ -178,45 +176,45 @@ pub struct FixedSumScale {
 
 // ==================== INPUT TYPES ====================
 
-#[derive(Debug, InputObject)]
+#[derive(Debug)]
 pub struct CreateUserInput {
     pub email: String,
     pub password: String,
     pub name: String,
 }
 
-#[derive(Debug, InputObject)]
+#[derive(Debug)]
 pub struct CreateCategoryInput {
     pub name: String,
     pub description: Option<String>,
     pub color: String,
 }
 
-#[derive(Debug, InputObject)]
+#[derive(Debug)]
 pub struct CreateEvaluationInput {
-    pub category_id: Option<ID>,
+    pub category_id: Option<String>,
     pub title: String,
     pub description: Option<String>,
     pub scale_type: ScaleType,
 }
 
-#[derive(Debug, InputObject)]
+#[derive(Debug)]
 pub struct CreateQuestionInput {
-    pub evaluation_id: ID,
+    pub evaluation_id: String,
     pub text: String,
     pub scale_type: ScaleType,
     pub metadata: String, // JSON as string
 }
 
-#[derive(Debug, InputObject)]
+#[derive(Debug)]
 pub struct CreateResponseInput {
-    pub question_id: ID,
-    pub evaluation_id: ID,
+    pub question_id: String,
+    pub evaluation_id: String,
     pub respondent_id: String,
     pub answer_value: String, // JSON as string
 }
 
-#[derive(Debug, InputObject)]
+#[derive(Debug)]
 pub struct LoginInput {
     pub email: String,
     pub password: String,

@@ -6,6 +6,8 @@ BASE_URL="http://localhost:3000"
 USER_ID="550e8400-e29b-41d4-a716-446655440000"
 EVAL_ID=""
 EVAL_UUID=""
+JWT_TOKEN=""
+REFRESH_TOKEN=""
 
 echo "🚀 Aevalo Backend API - Test Script"
 echo "===================================="
@@ -17,12 +19,38 @@ BLUE='\033[0;34m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
 
+# ==================== STEP 0: Login ====================
+echo -e "${BLUE}🔐 STEP 0: Login to get JWT token${NC}"
+echo "POST /auth/login"
+LOGIN_RESPONSE=$(curl -X POST "${BASE_URL}/auth/login" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "user 1@aevalo.dev",
+    "password": "Password123!"
+  }' \
+  -s)
+echo "$LOGIN_RESPONSE" | jq '.'
+JWT_TOKEN=$(echo "$LOGIN_RESPONSE" | jq -r '.token // empty' 2>/dev/null)
+REFRESH_TOKEN=$(echo "$LOGIN_RESPONSE" | jq -r '.refresh_token // empty' 2>/dev/null)
+
+if [ -z "$JWT_TOKEN" ]; then
+  ERROR_MSG=$(echo "$LOGIN_RESPONSE" | jq -r '.error // .message // "Unknown error"' 2>/dev/null)
+  echo -e "${YELLOW}⚠️  Login failed: $ERROR_MSG${NC}"
+  echo "Full response:"
+  echo "$LOGIN_RESPONSE" | jq '.'
+  exit 1
+fi
+
+echo -e "${GREEN}✓ Login successful${NC}"
+echo "Token: ${JWT_TOKEN:0:50}..."
+echo ""
+
 # ==================== STEP 1: List Evaluations ====================
 echo -e "${BLUE}📋 STEP 1: List evaluations (Dashboard)${NC}"
 echo "GET /evaluations"
 curl -X GET "${BASE_URL}/evaluations" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer fake-jwt-token" \
+  -H "Authorization: Bearer ${JWT_TOKEN}" \
   -s | jq '.'
 echo ""
 
@@ -31,7 +59,7 @@ echo -e "${BLUE}✏️  STEP 2: Create new evaluation (Draft)${NC}"
 echo "POST /evaluations"
 RESPONSE=$(curl -X POST "${BASE_URL}/evaluations" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer fake-jwt-token" \
+  -H "Authorization: Bearer ${JWT_TOKEN}" \
   -d '{
     "title": "Team Performance Q1 2025",
     "description": "Evaluate team member performance for Q1",
@@ -48,7 +76,7 @@ echo ""
 echo -e "${BLUE}🔍 STEP 3: Retrieve evaluation details${NC}"
 echo "GET /evaluations/{id}"
 curl -X GET "${BASE_URL}/evaluations/${EVAL_ID}" \
-  -H "Authorization: Bearer fake-jwt-token" \
+  -H "Authorization: Bearer ${JWT_TOKEN}" \
   -s | jq '.'
 echo ""
 
@@ -98,7 +126,7 @@ echo -e "${BLUE}📝 STEP 6: Customize evaluation${NC}"
 echo "PATCH /evaluations/{id}"
 curl -X PATCH "${BASE_URL}/evaluations/${EVAL_ID}" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer fake-jwt-token" \
+  -H "Authorization: Bearer ${JWT_TOKEN}" \
   -d '{
     "title": "Team Performance Q1 2025 - Updated",
     "description": "Updated evaluation",
@@ -116,7 +144,7 @@ echo -e "${BLUE}🚀 STEP 7: Publish evaluation and generate public link${NC}"
 echo "POST /evaluations/{id}/publish"
 PUBLISH_RESPONSE=$(curl -X POST "${BASE_URL}/evaluations/${EVAL_ID}/publish" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer fake-jwt-token" \
+  -H "Authorization: Bearer ${JWT_TOKEN}" \
   -d '{
     "items": [
       {"order": 1, "text": "Communication skills", "metadata": {}},
@@ -173,7 +201,7 @@ echo ""
 echo -e "${BLUE}📈 STEP 11: Monitor response progress${NC}"
 echo "GET /evaluations/{id}/stats"
 curl -X GET "${BASE_URL}/evaluations/${EVAL_ID}/stats" \
-  -H "Authorization: Bearer fake-jwt-token" \
+  -H "Authorization: Bearer ${JWT_TOKEN}" \
   -s | jq '.'
 echo ""
 
@@ -181,7 +209,7 @@ echo ""
 echo -e "${BLUE}🔒 STEP 12: Close evaluation${NC}"
 echo "POST /evaluations/{id}/close"
 curl -X POST "${BASE_URL}/evaluations/${EVAL_ID}/close" \
-  -H "Authorization: Bearer fake-jwt-token" \
+  -H "Authorization: Bearer ${JWT_TOKEN}" \
   -s | jq '.'
 echo ""
 
@@ -189,7 +217,7 @@ echo ""
 echo -e "${BLUE}⚙️  STEP 13: Process analytics${NC}"
 echo "POST /evaluations/{id}/process"
 curl -X POST "${BASE_URL}/evaluations/${EVAL_ID}/process" \
-  -H "Authorization: Bearer fake-jwt-token" \
+  -H "Authorization: Bearer ${JWT_TOKEN}" \
   -s | jq '.'
 echo ""
 
@@ -197,7 +225,7 @@ echo ""
 echo -e "${BLUE}📊 STEP 14: View final results${NC}"
 echo "GET /evaluations/{id}/results"
 curl -X GET "${BASE_URL}/evaluations/${EVAL_ID}/results" \
-  -H "Authorization: Bearer fake-jwt-token" \
+  -H "Authorization: Bearer ${JWT_TOKEN}" \
   -s | jq '.'
 echo ""
 

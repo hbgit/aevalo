@@ -1,5 +1,4 @@
 mod modules;
-mod graphql;
 mod models;
 mod db;
 mod error;
@@ -34,22 +33,22 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         // Evaluation endpoints
         .route("/evaluations", get(handlers::evaluations::list_evaluations)
             .post(handlers::evaluations::create_evaluation))
-        .route("/evaluations/:id", get(handlers::evaluations::get_evaluation)
+        .route("/evaluations/{id}", get(handlers::evaluations::get_evaluation)
             .patch(handlers::evaluations::update_evaluation))
-        .route("/evaluations/:id/publish", post(handlers::evaluations::publish_evaluation))
-        .route("/evaluations/:id/close", post(handlers::evaluations::close_evaluation))
+        .route("/evaluations/{id}/publish", post(handlers::evaluations::publish_evaluation))
+        .route("/evaluations/{id}/close", post(handlers::evaluations::close_evaluation))
 
         // AI Generation
         .route("/evaluations/generate", post(handlers::ai_generation::generate_items_ai))
         .route("/evaluations/validate", post(handlers::ai_generation::validate_items))
 
         // Responses (owner)
-        .route("/evaluations/:id/responses", get(handlers::responses::get_responses))
-        .route("/evaluations/:id/stats", get(handlers::responses::get_response_stats))
+        .route("/evaluations/{id}/responses", get(handlers::responses::get_responses))
+        .route("/evaluations/{id}/stats", get(handlers::responses::get_response_stats))
 
         // Analytics
-        .route("/evaluations/:id/process", post(handlers::analytics::process_evaluation))
-        .route("/evaluations/:id/results", get(handlers::analytics::get_results))
+        .route("/evaluations/{id}/process", post(handlers::analytics::process_evaluation))
+        .route("/evaluations/{id}/results", get(handlers::analytics::get_results))
 
         .layer(axum_middleware::from_fn_with_state(
             pool.clone(),
@@ -66,8 +65,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
         // Public endpoints (unauthenticated)
         .route("/responses", post(handlers::responses::submit_responses))
-        .route("/public/eval/:uuid", get(handlers::public::get_public_evaluation))
-        .route("/public/eval/:uuid/stats", get(handlers::public::get_public_stats))
+        .route("/public/eval/{uuid}", get(handlers::public::get_public_evaluation))
+        .route("/public/eval/{uuid}/stats", get(handlers::public::get_public_stats))
 
         // Protected endpoints
         .merge(protected_routes)

@@ -1,7 +1,7 @@
 [package]
 name = "aevalo-backend"
 version = "0.1.0"
-edition = "2024" # Agora você pode usar a nova edição!
+edition = "2021"
 
 [dependencies]
 # Web Framework - Versões estáveis e modernas
@@ -9,10 +9,6 @@ axum = "0.8"
 tokio = { version = "1.43", features = ["full"] }
 tower = "0.5"
 tower-http = { version = "0.6", features = ["trace", "cors"] }
-
-# GraphQL - Usando versão mais recente compatível com Edition 2024
-async-graphql = { version = "7.0", features = ["chrono", "uuid"] }
-async-graphql-axum = "7.0"
 
 # Database - SQLx 0.8 com melhorias em performance e tipos
 sqlx = { version = "0.8", features = ["runtime-tokio-native-tls", "postgres", "uuid", "chrono", "json"] }
