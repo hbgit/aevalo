@@ -61,6 +61,9 @@ import SearchBar from './components/SearchBar.vue'
 
 const route = useRoute()
 const isAuthLayout = computed(() => route.meta?.layout === 'auth')
+
+// Debug: log when component mounts
+console.log('App.vue mounted', { route: route.path })
 </script>
 
 <style scoped>
