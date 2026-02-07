@@ -32,9 +32,7 @@
               <path d="M11.983 1.5a1.5 1.5 0 00-2.966 0l-.168 1.008a5.507 5.507 0 00-1.392.803l-1.02-.417a1.5 1.5 0 00-1.97.868l-.5 1.207a1.5 1.5 0 00.616 1.882l.88.52a5.61 5.61 0 000 1.606l-.88.52a1.5 1.5 0 00-.616 1.882l.5 1.207a1.5 1.5 0 001.97.868l1.02-.417c.424.34.896.62 1.392.803l.168 1.008a1.5 1.5 0 002.966 0l.168-1.008a5.507 5.507 0 001.392-.803l1.02.417a1.5 1.5 0 001.97-.868l.5-1.207a1.5 1.5 0 00-.616-1.882l-.88-.52c.067-.53.067-1.076 0-1.606l.88-.52a1.5 1.5 0 00.616-1.882l-.5-1.207a1.5 1.5 0 00-1.97-.868l-1.02.417a5.507 5.507 0 00-1.392-.803l-.168-1.008zM10 13a3 3 0 110-6 3 3 0 010 6z" />
             </svg>
           </button>
-          <div class="h-9 w-9 rounded-full bg-gradient-to-br from-secondary to-orange-600 text-white font-semibold flex items-center justify-center">
-            JD
-          </div>
+          <UserDropdown />
         </div>
       </div>
       </header>
@@ -58,6 +56,7 @@
 import { RouterView, useRoute } from 'vue-router'
 import { computed } from 'vue'
 import SearchBar from './components/SearchBar.vue'
+import UserDropdown from './components/UserDropdown.vue'
 
 const route = useRoute()
 const isAuthLayout = computed(() => route.meta?.layout === 'auth')
