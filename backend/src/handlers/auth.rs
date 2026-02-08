@@ -195,15 +195,20 @@ pub async fn refresh_token(
 /// Get current user profile
 pub async fn get_user_profile(
     State(pool): State<PgPool>,
-    user_id: String,
+    Extension(auth_user): Extension<crate::modules::auth::AuthUser>,
 ) -> Result<Json<UserData>, AppError> {
-    let user_row: Option<(String, String, String)> = sqlx::query_as(
+    tracing::info!("get_user_profile called for user_id: {} (type: {:?})", auth_user.id, std::any::type_name_of_val(&auth_user.id));
+    
+    let user_row: Option<(Uuid, String, String)> = sqlx::query_as(
         "SELECT id, email, name FROM users WHERE id = $1 LIMIT 1"
     )
-    .bind(&user_id)
+    .bind(auth_user.id)
     .fetch_optional(&pool)
     .await
-    .map_err(|e| AppError::DatabaseError(e.to_string()))?;
+    .map_err(|e| {
+        tracing::error!("Error fetching user: {} (query: 'SELECT id, email, name FROM users WHERE id = $1 LIMIT 1', bind value: {})", e, auth_user.id);
+        AppError::DatabaseError(e.to_string())
+    })?;
 
     let (id, email, name) = user_row
         .ok_or_else(|| AppError::NotFound("User not found".to_string()))?;
@@ -211,17 +216,20 @@ pub async fn get_user_profile(
     let prefs: Option<(String, String, bool)> = sqlx::query_as(
         "SELECT theme, language, notifications_enabled FROM user_preferences WHERE user_id = $1"
     )
-    .bind(&user_id)
+    .bind(auth_user.id)
     .fetch_optional(&pool)
     .await
-    .map_err(|e| AppError::DatabaseError(e.to_string()))?;
+    .map_err(|e| {
+        tracing::error!("Error fetching preferences: {} (bind value: {})", e, auth_user.id);
+        AppError::DatabaseError(e.to_string())
+    })?;
 
     let (theme, language, notifications_enabled) = prefs.unwrap_or_else(|| {
         ("light".to_string(), "pt-BR".to_string(), true)
     });
 
     Ok(Json(UserData {
-        id,
+        id: id.to_string(),
         email,
         name,
         preferences: UserPreferences {

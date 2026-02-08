@@ -6,7 +6,8 @@
       <div class="flex flex-col xl:flex-row xl:items-start xl:justify-between gap-8">
         <div class="space-y-2">
           <p class="text-xs uppercase tracking-widest text-purple-200 font-medium">Avaliações Ativas</p>
-          <h1 class="text-3xl font-bold mt-2">Acompanhe suas avaliações em andamento</h1>
+          <h1 class="text-3xl font-bold mt-2">{{ dynamicGreeting }}</h1>
+          <p class="text-sm text-purple-100 mt-1">Acompanhe suas avaliações em andamento</p>
           <div class="flex flex-wrap gap-3 mt-6">
             <button class="px-4 py-2 rounded-lg bg-secondary text-white font-semibold shadow hover:shadow-md transition">
               + Nova Avaliação
@@ -88,9 +89,26 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
+import { useAuthStore } from '../stores/auth'
 import EvaluationList from '../components/EvaluationList.vue'
 import AnalyticsChart from '../components/AnalyticsChart.vue'
+
+const authStore = useAuthStore()
+
+// Computed property para saudação dinâmica baseada na hora do dia
+const dynamicGreeting = computed(() => {
+  const hour = new Date().getHours()
+  const userName = authStore.user?.name || authStore.userName || 'Usuário'
+  
+  if (hour >= 6 && hour < 12) {
+    return `Bom dia, ${userName}`
+  } else if (hour >= 12 && hour < 18) {
+    return `Boa tarde, ${userName}`
+  } else {
+    return `Boa noite, ${userName}`
+  }
+})
 
 const evaluations = ref([
   {
@@ -160,6 +178,11 @@ const analyticsData = ref({
 })
 
 onMounted(async () => {
+  // Garantir que os dados do usuário estejam carregados
+  if (!authStore.user) {
+    await authStore.fetchCurrentUser()
+  }
+  
   // TODO: Fetch dashboard metrics via GraphQL
 })
 </script>

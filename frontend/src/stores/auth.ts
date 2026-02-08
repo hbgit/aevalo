@@ -220,6 +220,34 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
+  /**
+   * Fetches current user data from backend
+   */
+  async function fetchCurrentUser(): Promise<void> {
+    if (!accessToken.value) {
+      return
+    }
+
+    try {
+      const response = await fetch('http://localhost:3000/user/profile', {
+        headers: {
+          'Authorization': `Bearer ${accessToken.value}`
+        }
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch user profile')
+      }
+
+      const userData = await response.json()
+      user.value = userData
+      localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(userData))
+    } catch (err) {
+      console.error('Error fetching user profile:', err)
+      // Don't clear session on profile fetch failure
+    }
+  }
+
   return {
     // State
     accessToken,
@@ -243,6 +271,7 @@ export const useAuthStore = defineStore('auth', () => {
     isSessionValid,
     restoreSession,
     updateUserProfile,
-    updateUserPreferences
+    updateUserPreferences,
+    fetchCurrentUser
   }
 })

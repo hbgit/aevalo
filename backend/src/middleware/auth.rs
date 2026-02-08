@@ -22,8 +22,7 @@ pub async fn require_auth(
         .map_err(|e| (StatusCode::UNAUTHORIZED, e.to_string()))?;
 
     // Add user to request extensions
-    req.extensions_mut().insert(user.id.to_string());
-    req.extensions_mut().insert(user.email.clone());
+    req.extensions_mut().insert(user.clone());
 
     // Set RLS context for row-level security
     sqlx::query("SELECT set_config('request.jwt.claim.sub', $1, true)")
@@ -42,8 +41,7 @@ pub async fn optional_auth(
     next: Next,
 ) -> Response {
     if let Ok(user) = auth_user_from_headers(req.headers()) {
-        req.extensions_mut().insert(user.id.to_string());
-        req.extensions_mut().insert(user.email);
+        req.extensions_mut().insert(user);
     }
 
     next.run(req).await
