@@ -9,6 +9,7 @@ use serde::{Deserialize, Serialize};
 use sqlx::PgPool;
 use uuid::Uuid;
 use chrono::Utc;
+use bcrypt::verify;
 
 use crate::error::AppError;
 use crate::modules::auth;
@@ -44,8 +45,6 @@ pub struct UserPreferences {
 
 /// POST /auth/login
 /// Authenticate user and return JWT token
-/// POST /auth/login
-/// Authenticate user and return JWT token
 pub async fn login(
     State(pool): State<PgPool>,
     Json(payload): Json<LoginRequest>,
@@ -55,18 +54,36 @@ pub async fn login(
         return Err(AppError::ValidationError("Email and password required".to_string()));
     }
 
-    // TODO: Authenticate with Supabase
-    // Query user from database
-    let user_row: Option<(String, String, String)> = sqlx::query_as(
-        "SELECT id, email, name FROM users WHERE email = $1 LIMIT 1"
+    // Query user from database with password hash
+    // Note: id is UUID, not String
+    let user_row: Option<(Uuid, String, String, String)> = sqlx::query_as(
+        "SELECT id, email, name, password_hash FROM users WHERE email = $1 LIMIT 1"
     )
     .bind(&payload.email)
     .fetch_optional(&pool)
     .await
-    .map_err(|e| AppError::DatabaseError(e.to_string()))?;
+    .map_err(|e| {
+        tracing::error!("Database error during user lookup: {}", e);
+        AppError::DatabaseError(e.to_string())
+    })?;
 
-    let (user_id, email, name) = user_row
-        .ok_or_else(|| AppError::AuthError("Invalid credentials".to_string()))?;
+    let (user_id, email, name, password_hash) = user_row
+        .ok_or_else(|| {
+            tracing::warn!("User not found for email: {}", payload.email);
+            AppError::AuthError("Invalid credentials".to_string())
+        })?;
+
+    // Verify password with bcrypt
+    let password_valid = verify(&payload.password, &password_hash)
+        .map_err(|e| {
+            tracing::error!("Password verification error: {}", e);
+            AppError::AuthError("Invalid credentials".to_string())
+        })?;
+
+    if !password_valid {
+        tracing::warn!("Invalid password for user: {}", email);
+        return Err(AppError::AuthError("Invalid credentials".to_string()));
+    }
 
     // Fetch user preferences
     let prefs: Option<(String, String, bool)> = sqlx::query_as(
@@ -75,14 +92,18 @@ pub async fn login(
     .bind(&user_id)
     .fetch_optional(&pool)
     .await
-    .map_err(|e| AppError::DatabaseError(e.to_string()))?;
+    .map_err(|e| {
+        tracing::error!("Error fetching user preferences: {}", e);
+        AppError::DatabaseError(e.to_string())
+    })?;
 
     let (theme, language, notifications_enabled) = prefs.unwrap_or_else(|| {
         ("light".to_string(), "pt-BR".to_string(), true)
     });
 
     // Generate session ID
-    let session_id = Uuid::new_v4().to_string();
+    // Generate session ID
+    let session_id = Uuid::new_v4();
 
     // Create session in database
     let expires_at = Utc::now() + chrono::Duration::days(30);
@@ -96,12 +117,21 @@ pub async fn login(
     .bind(expires_at)
     .execute(&pool)
     .await
-    .map_err(|e| AppError::DatabaseError(e.to_string()))?;
+    .map_err(|e| {
+        tracing::error!("Error creating session: {}", e);
+        AppError::DatabaseError(e.to_string())
+    })?;
 
     // Generate access token
-    let access_token = auth::generate_token(&user_id, &email)
-        .map_err(|e| AppError::InternalServerError { message: format!("Failed to generate token: {}", e) })?;
+    let access_token = auth::generate_token(&user_id.to_string(), &email)
+        .map_err(|e| {
+            tracing::error!("Token generation error: {}", e);
+            AppError::InternalServerError { message: format!("Failed to generate token: {}", e) }
+        })?;
+    
     let expires_in = 3600i64;
+
+    tracing::info!("User successfully logged in: {}", email);
 
     Ok((
         StatusCode::OK,
@@ -117,7 +147,7 @@ pub async fn login(
                     notifications_enabled,
                 },
             },
-            session_id,
+            session_id: session_id.to_string(),
             expires_in,
         }),
     ))

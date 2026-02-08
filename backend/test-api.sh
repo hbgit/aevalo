@@ -25,7 +25,7 @@ echo "POST /auth/login"
 LOGIN_RESPONSE=$(curl -X POST "${BASE_URL}/auth/login" \
   -H "Content-Type: application/json" \
   -d '{
-    "email": "user 1@aevalo.dev",
+    "email": "user1@aevalo.dev",
     "password": "Password123!"
   }' \
   -s)

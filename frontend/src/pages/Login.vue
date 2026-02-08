@@ -20,9 +20,32 @@
           <p class="text-sm text-slate-500 mt-1">Entre com suas credenciais para continuar</p>
         </div>
 
-        <!-- Error Message -->
-        <div v-if="errorMessage" class="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">
-          {{ errorMessage }}
+        <!-- Error Message with Icon -->
+        <div v-if="errorMessage" class="mt-4 p-4 rounded-lg text-sm flex gap-3" :class="errorStyles">
+          <span class="flex-shrink-0">{{ errorIcon }}</span>
+          <div class="flex-1">
+            <p class="font-medium">{{ errorMessage }}</p>
+            <p v-if="errorDetails" class="text-xs mt-1 opacity-90">{{ errorDetails }}</p>
+            <div v-if="showRetryCountdown && retryCountdown > 0" class="mt-2 flex items-center gap-2 text-xs">
+              <span>Tente novamente em {{ retryCountdown }}s</span>
+              <div class="w-16 h-1 bg-current/20 rounded-full overflow-hidden">
+                <div class="h-full bg-current transition-all" :style="{ width: (retryCountdown / 60) * 100 + '%' }"></div>
+              </div>
+            </div>
+            <div v-if="showRetryButton" class="mt-3 flex gap-2">
+              <button 
+                type="button"
+                @click="handleLogin"
+                :disabled="isLoading"
+                class="px-3 py-1 text-xs font-semibold rounded bg-current/20 hover:bg-current/30 disabled:opacity-50"
+              >
+                Tentar Novamente
+              </button>
+              <a v-if="statusPageUrl" :href="statusPageUrl" target="_blank" class="px-3 py-1 text-xs font-semibold rounded bg-current/20 hover:bg-current/30">
+                Ver Status
+              </a>
+            </div>
+          </div>
         </div>
 
         <form @submit.prevent="handleLogin" class="mt-6 space-y-4">
@@ -127,7 +150,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -138,15 +161,201 @@ const showPassword = ref(false)
 const rememberMe = ref(false)
 const isLoading = ref(false)
 const errorMessage = ref('')
+const errorDetails = ref('')
+const errorType = ref<'auth' | 'rate-limit' | 'server' | 'maintenance' | 'network' | null>(null)
+const retryCountdown = ref(0)
+const showRetryCountdown = ref(false)
+const showRetryButton = ref(false)
+const statusPageUrl = ref('')
+let retryTimer: number | null = null
 
+const errorStyles = computed(() => {
+  switch (errorType.value) {
+    case 'auth':
+      return 'bg-red-50 border border-red-200 text-red-700'
+    case 'rate-limit':
+      return 'bg-yellow-50 border border-yellow-200 text-yellow-700'
+    case 'server':
+    case 'maintenance':
+      return 'bg-orange-50 border border-orange-200 text-orange-700'
+    case 'network':
+      return 'bg-slate-50 border border-slate-200 text-slate-700'
+    default:
+      return 'bg-red-50 border border-red-200 text-red-700'
+  }
+})
+
+const errorIcon = computed(() => {
+  switch (errorType.value) {
+    case 'auth':
+      return '🔐'
+    case 'rate-limit':
+      return '⏱️'
+    case 'server':
+      return '⚠️'
+    case 'maintenance':
+      return '🔧'
+    case 'network':
+      return '📡'
+    default:
+      return '❌'
+  }
+})
+
+/**
+ * Limpa o countdown quando componente é desmontado
+ */
+onMounted(() => {
+  return () => {
+    if (retryTimer) clearInterval(retryTimer)
+  }
+})
+
+/**
+ * Inicia countdown de retry (429 - rate limit)
+ */
+const startRetryCountdown = (seconds: number = 60) => {
+  retryCountdown.value = seconds
+  showRetryCountdown.value = true
+  showRetryButton.value = false
+  
+  // Desabilita botão de login durante countdown
+  isLoading.value = true
+  
+  retryTimer = window.setInterval(() => {
+    retryCountdown.value--
+    if (retryCountdown.value <= 0) {
+      if (retryTimer) clearInterval(retryTimer)
+      showRetryCountdown.value = false
+      showRetryButton.value = true
+      isLoading.value = false
+    }
+  }, 1000)
+}
+
+/**
+ * Trata erro de resposta HTTP com códigos específicos
+ */
+const handleHttpError = async (response: Response, errorData: any) => {
+  switch (response.status) {
+    case 401:
+      // Credenciais inválidas
+      errorType.value = 'auth'
+      errorMessage.value = 'Email ou senha incorretos. Tente novamente.'
+      errorDetails.value = 'Verifique seus dados de acesso e tente novamente.'
+      password.value = '' // Limpa campo de senha
+      // Foca no campo de senha após erro
+      setTimeout(() => {
+        const passwordInput = document.querySelector('input[type="password"]')
+        passwordInput?.focus()
+      }, 100)
+      break
+
+    case 429:
+      // Rate limit - muitas tentativas
+      errorType.value = 'rate-limit'
+      errorMessage.value = 'Muitas tentativas de login. Por favor, aguarde.'
+      errorDetails.value = 'Sua conta foi temporariamente bloqueada por segurança.'
+      startRetryCountdown(60) // 60 segundos
+      break
+
+    case 500:
+      // Erro do servidor
+      errorType.value = 'server'
+      errorMessage.value = 'Nossos servidores estão temporariamente indisponíveis.'
+      errorDetails.value = 'Já estamos trabalhando para resolver o problema. Tente novamente em instantes.'
+      statusPageUrl.value = 'https://status.aevalo.app'
+      showRetryButton.value = true
+      break
+
+    case 503:
+      // Manutenção programada
+      errorType.value = 'maintenance'
+      errorMessage.value = 'Sistema em manutenção programada.'
+      errorDetails.value = 'Retornaremos em breve com melhorias. Obrigado pela paciência!'
+      showRetryButton.value = true
+      break
+
+    case 403:
+      // Conta bloqueada ou email não verificado
+      if (errorData?.code === 'EMAIL_NOT_VERIFIED') {
+        errorType.value = 'auth'
+        errorMessage.value = 'Email não verificado.'
+        errorDetails.value = 'Verifique seu email para ativar sua conta. Não encontrou? Clique para reenviar.'
+        showRetryButton.value = true
+      } else {
+        errorType.value = 'auth'
+        errorMessage.value = 'Sua conta foi temporariamente bloqueada por segurança.'
+        errorDetails.value = 'Verifique seu email para instruções de recuperação.'
+        showRetryButton.value = false
+      }
+      break
+
+    default:
+      // Erro desconhecido
+      errorType.value = null
+      errorMessage.value = errorData?.error || 'Erro ao fazer login'
+      errorDetails.value = `Código de erro: ${response.status}`
+      showRetryButton.value = true
+  }
+}
+
+/**
+ * Trata erro de rede
+ */
+const handleNetworkError = () => {
+  errorType.value = 'network'
+  errorMessage.value = 'Sem conexão com a internet.'
+  errorDetails.value = 'Verifique sua conexão de rede e tente novamente.'
+  showRetryButton.value = true
+}
+
+/**
+ * Validações antes do login
+ */
+const validateForm = (): boolean => {
+  if (!email.value) {
+    errorType.value = 'auth'
+    errorMessage.value = 'Email é obrigatório.'
+    errorDetails.value = ''
+    return false
+  }
+
+  if (!password.value) {
+    errorType.value = 'auth'
+    errorMessage.value = 'Senha é obrigatória.'
+    errorDetails.value = ''
+    return false
+  }
+
+  // Validação básica de email
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  if (!emailRegex.test(email.value)) {
+    errorType.value = 'auth'
+    errorMessage.value = 'Email inválido.'
+    errorDetails.value = 'Por favor, insira um email válido.'
+    return false
+  }
+
+  return true
+}
+
+/**
+ * Handler principal de login
+ */
 const handleLogin = async () => {
-  if (!email.value || !password.value) {
-    errorMessage.value = 'Por favor, preencha email e senha'
+  // Limpa erro anterior
+  errorMessage.value = ''
+  errorDetails.value = ''
+  errorType.value = null
+  showRetryButton.value = false
+
+  // Valida formulário
+  if (!validateForm()) {
     return
   }
 
   isLoading.value = true
-  errorMessage.value = ''
 
   try {
     const response = await fetch('http://localhost:3000/auth/login', {
@@ -157,19 +366,21 @@ const handleLogin = async () => {
       body: JSON.stringify({
         email: email.value,
         password: password.value
-      })
+      }),
+      signal: AbortSignal.timeout(10000) // 10 segundos de timeout
     })
-
-    if (!response.ok) {
-      const error = await response.json()
-      throw new Error(error.error || 'Erro ao fazer login')
-    }
 
     const data = await response.json()
 
-    // Armazenar tokens no localStorage
+    if (!response.ok) {
+      await handleHttpError(response, data)
+      return
+    }
+
+    // Sucesso - armazenar tokens
     localStorage.setItem('auth_token', data.token)
     localStorage.setItem('refresh_token', data.refresh_token)
+    localStorage.setItem('token_expires_at', data.expires_at || Date.now() + 3600000) // 1 hora
 
     // Armazenar preferência de "lembrar de mim"
     if (rememberMe.value) {
@@ -181,8 +392,24 @@ const handleLogin = async () => {
     // Redirecionar para dashboard
     await router.push('/dashboard')
   } catch (error) {
-    errorMessage.value = error instanceof Error ? error.message : 'Erro ao conectar com o servidor'
-    console.error('Login error:', error)
+    // Tratamento de erros
+    if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
+      // Erro de rede
+      handleNetworkError()
+    } else if (error instanceof DOMException && error.name === 'AbortError') {
+      // Timeout
+      errorType.value = 'server'
+      errorMessage.value = 'Conexão expirou. Tente novamente.'
+      errorDetails.value = 'A requisição demorou muito tempo. Verifique sua conexão.'
+      showRetryButton.value = true
+    } else {
+      // Erro genérico
+      console.error('Login error:', error)
+      errorType.value = null
+      errorMessage.value = 'Erro ao conectar com o servidor'
+      errorDetails.value = error instanceof Error ? error.message : 'Tente novamente'
+      showRetryButton.value = true
+    }
   } finally {
     isLoading.value = false
   }
