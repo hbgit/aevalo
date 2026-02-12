@@ -1,5 +1,8 @@
 <template>
   <div id="app" class="min-h-screen bg-slate-50">
+    <!-- Dev Menu (only in development) -->
+    <DevMenu />
+    
     <template v-if="!isAuthLayout">
       <header class="bg-white border-b border-slate-200 sticky top-0 z-10">
       <div class="max-w-7xl mx-auto px-4 py-3 flex items-center gap-6">
@@ -57,6 +60,7 @@ import { RouterView, useRoute } from 'vue-router'
 import { computed } from 'vue'
 import SearchBar from './components/SearchBar.vue'
 import UserDropdown from './components/UserDropdown.vue'
+import DevMenu from './components/DevMenu.vue'
 
 const route = useRoute()
 const isAuthLayout = computed(() => route.meta?.layout === 'auth')

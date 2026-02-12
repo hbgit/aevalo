@@ -7,7 +7,7 @@ Esta pasta contém todas as páginas de erro e status do sistema, conforme espec
 ```
 errors/
 ├── NotFound404.vue          # ✅ Implementado
-├── ServerError500.vue        # ⏳ TODO
+├── ServerError500.vue        # ✅ Implementado
 ├── ServiceUnavailable503.vue # ⏳ TODO
 ├── Unauthorized403.vue       # ⏳ TODO
 ├── StatusPage.vue           # ⏳ TODO (subdomain externo)
@@ -41,13 +41,62 @@ errors/
 - Sugestões contextuais
 - Feedback visual em todas as interações
 
-## ⏳ Próximas Implementações
+### ✅ ServerError500.vue (500 - Erro Interno do Servidor)
 
-### ServerError500.vue
-- ID de erro único para tracking
-- Envio automático para Sentry/logging
-- Link para status page
-- Auto-retry configurável
+**Rota:** Programaticamente ou via interceptor de erros
+
+**Características:**
+- Design responsivo com gradiente vermelho/laranja
+- Ilustração animada (engrenagem girando + explosão pulsando)
+- Código de erro 500 em destaque
+- **ID de erro único** gerado automaticamente
+- 4 botões de ação:
+  - Tentar Novamente (primário com loading state)
+  - Voltar (histórico do navegador)
+  - Status (abre página de status do sistema)
+  - Reportar (envia detalhes do erro)
+- **Card de Status do Sistema:**
+  - Status operacional (verde/vermelho)
+  - Número de servidores online
+  - Timestamp da última verificação
+  - Link para status detalhado
+- **Auto-retry configurável:**
+  - Countdown de 5 segundos
+  - Progress bar visual
+  - Máximo de 3 tentativas
+  - Desabilita após máx tentativas
+- Dark mode completo
+- Animações suaves
+
+**UX Features:**
+- Log automático para Sentry/tracking
+- ID único para referência em suporte
+- Auto-retry inteligente (5s delay)
+- Status do sistema em tempo real
+- Feedback visual durante retry
+- Email/form pré-preenchido para reportar
+
+**Comportamento Técnico:**
+```typescript
+// Geração de ID único
+#ERR-YYYY-MM-DD-XXXX
+
+// Auto-retry
+- Delay: 5 segundos
+- Max tentativas: 3
+- Ação após falha: Desabilita auto-retry
+
+// Logging
+{
+  errorId: string,
+  timestamp: ISO string,
+  path: string,
+  referrer: string,
+  userAgent: string
+}
+```
+
+## ⏳ Próximas Implementações
 
 ### ServiceUnavailable503.vue
 - Countdown timer em tempo real
@@ -161,7 +210,15 @@ http://localhost:5173/test/nested/404
   - [x] Dark mode
   - [x] Responsivo
   - [x] Analytics logging
-- [ ] ServerError500.vue
+- [x] ServerError500.vue
+  - [x] Wireframe implementado
+  - [x] ID de erro único
+  - [x] Auto-retry com countdown
+  - [x] Status do sistema
+  - [x] Animações (spin + pulse)
+  - [x] Dark mode
+  - [x] Responsivo
+  - [x] Error tracking logging
 - [ ] ServiceUnavailable503.vue
 - [ ] Unauthorized403.vue
 - [ ] StatusPage.vue

@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import DashboardPage from '../pages/Dashboard.vue'
-import { NotFound404 } from '../pages/errors'
+import { NotFound404, ServerError500 } from '../pages/errors'
 
 const routes = [
   {
@@ -29,6 +29,13 @@ const routes = [
     name: 'Register',
     component: () => import('../pages/Register.vue'),
     meta: { layout: 'auth' },
+  },
+  // Error pages (for testing and programmatic use)
+  {
+    path: '/error/500',
+    name: 'ServerError',
+    component: ServerError500,
+    meta: { layout: 'minimal' },
   },
   // 404 Catch-all route - must be last
   {

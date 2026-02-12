@@ -6,9 +6,9 @@
  */
 
 export { default as NotFound404 } from './NotFound404.vue'
+export { default as ServerError500 } from './ServerError500.vue'
 
 // TODO: Implement additional error pages as per interface_flow.md:
-// - ServerError500.vue (Internal Server Error)
 // - ServiceUnavailable503.vue (Maintenance Mode)
 // - Unauthorized403.vue (Access Denied)
 // - StatusPage.vue (System Status - external subdomain)
