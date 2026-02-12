@@ -94,6 +94,183 @@ Para este MicroSaaS, utilizaremos uma estética **"Modern Enterprise"** inspirad
 
 ## 🛣️ Fluxos Principais e Telas
 
+### 0. Landing Page Pública (Marketing)
+
+**URL:** `/` (Página inicial não autenticada)
+
+**Inspirado em:** Vercel, Linear, Notion landing pages
+
+#### 0.1 Estrutura Visual
+
+**Hero Section (Above the Fold):**
+```
+┌──────────────────────────────────────────────────────┐
+│  [Logo Aevalo]              [Recursos] [Preços]     │
+│                            [Docs] [Entrar] [Começar]│
+│                                                      │
+│           ✨ Avaliações Científicas                  │
+│              Alimentadas por IA                      │
+│                                                      │
+│   Crie pesquisas profissionais em minutos com       │
+│   escalas validadas cientificamente                 │
+│                                                      │
+│   [email@exemplo.com] [ Começar Grátis →]          │
+│                                                      │
+│   ✓ Gratuito por 14 dias  ✓ Sem cartão  ✓ IA inclusa│
+│                                                      │
+│              [Preview animado do produto]            │
+└──────────────────────────────────────────────────────┘
+```
+
+**Features Grid:**
+```
+┌─────────────────────────────────────────────┐
+│  Por que escolher Aevalo?                   │
+│  ──────────────────────────────────────     │
+│                                             │
+│  ┌──────────┬──────────┬──────────┐        │
+│  │ 🤖 IA    │ 📊 7 Tipos│ ⚡ Rápido│        │
+│  │          │          │          │        │
+│  │ Gere     │ Likert,  │ Publique │        │
+│  │ perguntas│ Fixed Sum│ em < 5min│        │
+│  │ em 30s   │ e mais   │          │        │
+│  └──────────┴──────────┴──────────┘        │
+│                                             │
+│  ┌──────────┬──────────┬──────────┐        │
+│  │ 📈 Real  │ 🔒 Seguro│ 🎨 Design│        │
+│  │ -Time    │          │          │        │
+│  │          │ SOC2     │ Moderno  │        │
+│  │ Veja     │ compliant│ e limpo  │        │
+│  │ respostas│          │          │        │
+│  └──────────┴──────────┴──────────┘        │
+└─────────────────────────────────────────────┘
+```
+
+**How It Works (3 Steps):**
+```
+┌───────────────────────────────────────────────┐
+│  Como funciona                                │
+│  ───────────────────────────────────────      │
+│                                               │
+│  1️⃣ Descreva          2️⃣ Customize          3️⃣ Compartilhe │
+│  ┌──────────┐      ┌──────────┐      ┌──────────┐ │
+│  │ "Pesquisa│      │ Edite    │      │ Link ou  │ │
+│  │  de NPS  │  →   │ perguntas│  →   │ QR Code  │ │
+│  │  B2B"    │      │ e escalas│      │          │ │
+│  └──────────┘      └──────────┘      └──────────┘ │
+│                                               │
+│         [ Ver Demo Interativo ]               │
+└───────────────────────────────────────────────┘
+```
+
+**Use Cases Section:**
+```
+┌────────────────────────────────────────────┐
+│  Casos de uso                              │
+│  ──────────────────────────────────────    │
+│                                            │
+│  👔 RH & People Ops                        │
+│  Pulse surveys, eNPS, clima organizacional │
+│                                            │
+│  🛍️ Produto & UX                          │
+│  Satisfação, usabilidade, feature requests │
+│                                            │
+│  📚 Educação & Pesquisa                    │
+│  Coleta de dados acadêmicos com rigor      │
+│                                            │
+│  🎯 Marketing                              │
+│  Brand awareness, NPS, customer journey    │
+└────────────────────────────────────────────┘
+```
+
+**Social Proof:**
+```
+┌────────────────────────────────────────────┐
+│  Confiado por equipes de                   │
+│  ────────────────────────────────────       │
+│                                            │
+│  [Logo] [Logo] [Logo] [Logo] [Logo]       │
+│                                            │
+│  "Reduzimos o tempo de criação de pesquisas│
+│   de 2 horas para 5 minutos com Aevalo."  │
+│   — Ana Silva, Head of UX @ TechCorp       │
+│                                            │
+│  ⭐⭐⭐⭐⭐ 4.9/5 de 200+ reviews           │
+└────────────────────────────────────────────┘
+```
+
+**Pricing Table:**
+```
+┌─────────────────────────────────────────────────────┐
+│  Planos simples e transparentes                     │
+│  ─────────────────────────────────────────────      │
+│                                                     │
+│  ┌──────────┬──────────┬──────────┐               │
+│  │ GRATUITO │ PRO      │ TEAM     │               │
+│  │          │          │          │               │
+│  │ R$ 0/mês │ R$ 49/mês│ R$ 149/mês│              │
+│  │          │          │          │               │
+│  │ 3 avaliações│ Ilimitado│ Ilimitado│            │
+│  │ 50 resp. │ 1000 resp│ 5000 resp│               │
+│  │ ✓ IA básica│ ✓ IA avançada│ ✓ Tudo PRO│        │
+│  │          │ ✓ Export │ ✓ White label│           │
+│  │          │ ✓ Analytics│ ✓ SSO      │           │
+│  │          │          │ ✓ Suporte  │            │
+│  │          │          │   prioritário│           │
+│  │          │          │          │               │
+│  │[Começar] │[Começar] │[Falar Vendas]│          │
+│  └──────────┴──────────┴──────────┘               │
+└─────────────────────────────────────────────────────┘
+```
+
+**FAQ Section:**
+```
+┌────────────────────────────────────────────┐
+│  Perguntas Frequentes                      │
+│  ──────────────────────────────────────    │
+│                                            │
+│  ▼ Preciso de cartão para testar?         │
+│  ▶ Como funciona a geração por IA?        │
+│  ▶ Posso exportar os dados?               │
+│  ▶ É compatível com LGPD/GDPR?            │
+│  ▶ Quanto tempo leva para criar?          │
+│  ▶ Vocês têm API?                         │
+└────────────────────────────────────────────┘
+```
+
+**Footer:**
+```
+┌────────────────────────────────────────────────────┐
+│  ┌──────────┬──────────┬──────────┬──────────┐   │
+│  │ Produto  │ Recursos │ Suporte  │ Empresa  │   │
+│  │          │          │          │          │   │
+│  │ Recursos │ Templates│ Docs     │ Sobre    │   │
+│  │ Preços   │ IA       │ Status   │ Blog     │   │
+│  │ Roadmap  │ Analytics│ Contato  │ Careers  │   │
+│  │ Changelog│ API      │ Comunidade│ Legal    │   │
+│  └──────────┴──────────┴──────────┴──────────┘   │
+│                                                    │
+│  © 2026 Aevalo. Todos os direitos reservados.    │
+│  [Twitter] [LinkedIn] [GitHub] [YouTube]          │
+└────────────────────────────────────────────────────┘
+```
+
+**Micro-interações:**
+* Scroll suave entre seções
+* Animação de fade-in conforme scroll
+* Hover nos cards de features (elevation + scale)
+* CTA buttons com gradient animado
+* Preview do produto com slideshow automático
+
+**Otimizações SEO:**
+* Meta tags completos (título, descrição, OG)
+* Schema.org markup (Product, Organization)
+* Alt text em todas as imagens
+* Sitemap.xml e robots.txt
+* Core Web Vitals otimizados (LCP < 2.5s)
+
+---
+
 ### 1. Autenticação e Onboarding
 
 #### 1.1 Tela de Login/Cadastro (Modo Toggle)
@@ -1098,6 +1275,1279 @@ Estado 2: Sucesso! ✅
    │                             │
    │  [ Baixar Tudo (.zip) ]     │
    └─────────────────────────────┘
+```
+
+---
+
+### 8. Biblioteca de Templates
+
+**URL:** `/templates`
+
+**Inspirado em:** Notion Templates, Typeform Templates, Figma Community
+
+#### 8.1 Página Principal de Templates
+
+**Header com Busca:**
+```
+┌──────────────────────────────────────────────────┐
+│  📋 Biblioteca de Templates                      │
+│  ──────────────────────────────────────────────  │
+│                                                  │
+│  [🔍 Buscar templates...]         [Filtros ▼]   │
+│                                                  │
+│  ✨ Destaque: Template da Semana                │
+│  ┌────────────────────────────────────────┐     │
+│  │  [Preview Image]                       │     │
+│  │  NPS para SaaS B2B                     │     │
+│  │  12 perguntas · Likert + Text          │     │
+│  │  ⭐ 4.8 · 1.2k usos                    │     │
+│  │  [ Usar Template ]                     │     │
+│  └────────────────────────────────────────┘     │
+└──────────────────────────────────────────────────┘
+```
+
+**Filtros Laterais:**
+```
+┌───────────────────────┐
+│ Filtros               │
+│ ─────────────────     │
+│                       │
+│ 📂 Categoria          │
+│ □ RH & People Ops (23)│
+│ □ UX & Produto (18)   │
+│ □ Marketing (15)      │
+│ □ Educação (12)       │
+│ □ Atendimento (9)     │
+│                       │
+│ 📊 Tipo de Escala     │
+│ □ Likert (45)         │
+│ □ Fixed Sum (12)      │
+│ □ Paired Comp. (8)    │
+│ □ Frequency (34)      │
+│                       │
+│ ⏱️ Duração            │
+│ □ Rápida (< 3 min)   │
+│ □ Média (3-7 min)    │
+│ □ Longa (> 7 min)    │
+│                       │
+│ 🏷️ Tags               │
+│ □ NPS (23)            │
+│ □ eNPS (18)           │
+│ □ CSAT (15)           │
+│ □ Onboarding (12)     │
+│                       │
+│ [ Limpar Filtros ]    │
+└───────────────────────┘
+```
+
+**Grid de Templates:**
+```
+┌────────────┬────────────┬────────────┐
+│ 📊 RH      │ 🎨 UX      │ 📈 Marketing│
+│            │            │            │
+│ eNPS Q1    │ Onboarding │ Brand      │
+│ 2026       │ Survey     │ Awareness  │
+│            │            │            │
+│ 8 perguntas│ 12 perguntas│ 10 perguntas│
+│ 3 min      │ 5 min      │ 4 min      │
+│ ⭐ 4.7 · 890│ ⭐ 4.9 · 1.5k│ ⭐ 4.6 · 450│
+│            │            │            │
+│ [Ver] [Usar]│ [Ver] [Usar]│ [Ver] [Usar]│
+└────────────┴────────────┴────────────┘
+```
+
+**Estados:**
+* **Loading:** Skeleton cards (6-9 cards pulsando)
+* **Empty Search:** "Nenhum template encontrado para '[termo]'"
+* **No Filters Match:** "Nenhum resultado com esses filtros. Tente remover alguns."
+
+#### 8.2 Preview de Template
+
+**URL:** `/templates/:id/preview`
+
+**Layout Split:**
+```
+┌────────────────────────────────────────────────────┐
+│  ← Voltar aos Templates                            │
+│  ──────────────────────────────────────────────────│
+│                                                    │
+│  ┌─────────────┐  NPS para SaaS B2B              │
+│  │  Preview    │                                   │
+│  │  Image      │  Por Aevalo Official              │
+│  └─────────────┘  ⭐ 4.8 (1.2k avaliações)        │
+│                                                    │
+│  📝 Descrição:                                     │
+│  Template completo para medir NPS em empresas      │
+│  SaaS B2B, incluindo perguntas de follow-up e      │
+│  segmentação por persona.                          │
+│                                                    │
+│  ✨ Destaque:                                      │
+│  • 12 perguntas otimizadas                         │
+│  • Mix de escalas (Likert + Text)                 │
+│  • Testado com 500+ clientes                       │
+│  • Tempo médio: 4 minutos                          │
+│                                                    │
+│  🏷️ Tags: NPS, B2B, SaaS, Customer Success        │
+│                                                    │
+│  ──────────────────────────────────────────────────│
+│                                                    │
+│  📋 Perguntas incluídas (12):                      │
+│                                                    │
+│  1. Em uma escala de 0-10, qual a probabilidade   │
+│     de recomendar nosso produto?                   │
+│     Tipo: NPS Scale (0-10)                         │
+│                                                    │
+│  2. Qual o principal motivo da sua nota?          │
+│     Tipo: Texto Aberto                             │
+│                                                    │
+│  3. Com que frequência você usa nosso produto?    │
+│     Tipo: Frequency Scale                          │
+│     (Diariamente → Raramente)                      │
+│                                                    │
+│  [... ver todas as 12 perguntas]                  │
+│                                                    │
+│  ──────────────────────────────────────────────────│
+│                                                    │
+│  💬 Reviews (87):                                  │
+│                                                    │
+│  ⭐⭐⭐⭐⭐ João Silva                              │
+│  "Excelente template, economizou horas de trabalho!"│
+│  há 2 dias                                         │
+│                                                    │
+│  ⭐⭐⭐⭐ Maria Santos                              │
+│  "Ótimo ponto de partida, personalizei para meu    │
+│   contexto facilmente."                            │
+│  há 1 semana                                       │
+│                                                    │
+│  [ Ver todas reviews ]                             │
+│                                                    │
+│  ──────────────────────────────────────────────────│
+│                                                    │
+│  [ ← Voltar ]  [ ✨ Usar Este Template ]          │
+└────────────────────────────────────────────────────┘
+```
+
+**Ação "Usar Template":**
+1. Redirect para `/evaluations/create`
+2. Wizard abre no Step 3 (edição)
+3. Perguntas pré-preenchidas do template
+4. Título sugere "[Template Name] - [Data]" (editável)
+5. Toast: "Template carregado! Customize e publique."
+
+---
+
+### 9. Assistente de IA
+
+**URL:** `/ai-assistant`
+
+**Inspirado em:** ChatGPT UI, Notion AI, GitHub Copilot Chat
+
+#### 9.1 Interface de Chat
+
+**Layout:**
+```
+┌────────────────────────────────────────────────────┐
+│  ✨ Assistente de IA                               │
+│  ──────────────────────────────────────────────────│
+│                                                    │
+│  Histórico                         [Nova Conversa]│
+│  ┌──────────────────┐                             │
+│  │ 📝 NPS para SaaS │             [Chat Area]     │
+│  │ há 2 horas       │                             │
+│  ├──────────────────┤  ┌────────────────────────┐│
+│  │ 🎯 Pesquisa UX   │  │ 🤖 Olá! Sou seu        ││
+│  │ ontem            │  │ assistente IA.         ││
+│  ├──────────────────┤  │                        ││
+│  │ 📊 eNPS Q1       │  │ Como posso ajudar a    ││
+│  │ há 3 dias        │  │ criar sua avaliação?   ││
+│  └──────────────────┘  └────────────────────────┘│
+│                                                    │
+│                         ┌────────────────────────┐│
+│                         │ 👤 Quero criar uma    ││
+│                         │ pesquisa de satisfação││
+│                         │ para clientes B2B     ││
+│                         └────────────────────────┘│
+│                                                    │
+│                         ┌────────────────────────┐│
+│                         │ 🤖 Ótimo! Vou criar   ││
+│                         │ perguntas focadas em: ││
+│                         │                        ││
+│                         │ 1. NPS Score           ││
+│                         │ 2. Satisfação com      ││
+│                         │    suporte             ││
+│                         │ 3. Qualidade do        ││
+│                         │    produto             ││
+│                         │                        ││
+│                         │ Quantas perguntas      ││
+│                         │ quer? (sugestão: 8-12)││
+│                         │                        ││
+│                         │ [Gerar 8] [Gerar 12]  ││
+│                         │ [Personalizar]         ││
+│                         └────────────────────────┘│
+│                                                    │
+│  ──────────────────────────────────────────────────│
+│  [Digite sua mensagem...]              [Enviar →] │
+│                                                    │
+│  💡 Sugestões:                                     │
+│  • "Crie uma avaliação de clima organizacional"   │
+│  • "Adicione perguntas sobre trabalho remoto"     │
+│  • "Gere um NPS para e-commerce"                  │
+└────────────────────────────────────────────────────┘
+```
+
+**Funcionalidades:**
+* **Histórico persistente:** Salva conversas anteriores
+* **Edição de mensagens:** Click para editar e reenviar
+* **Regenerar resposta:** Botão "🔄 Tentar novamente"
+* **Copiar código:** Botão para copiar perguntas geradas
+* **Usar resultado:** Botão "Criar Avaliação" insere no wizard
+* **Markdown support:** Formatação rich text nas respostas
+* **Code highlighting:** Se IA retornar JSON/code
+
+**Estados:**
+* **Typing indicator:** "IA está pensando..." com dots animados
+* **Error state:** "Erro ao processar. Tente reformular."
+* **Rate limit:** "Limite atingido. Aguarde 5 minutos."
+
+#### 9.2 Configurações da IA
+
+**URL:** `/ai-assistant/settings`
+
+```
+┌────────────────────────────────────────┐
+│  ⚙️ Configurações da IA                │
+│  ────────────────────────────────────  │
+│                                        │
+│  🎨 Tom das Perguntas                  │
+│  ○ Formal                              │
+│  ● Neutro (recomendado)                │
+│  ○ Casual                              │
+│                                        │
+│  📊 Número Padrão de Perguntas         │
+│  [8] (min: 3, max: 20)                │
+│                                        │
+│  🌍 Idioma de Geração                  │
+│  [Português (BR) ▼]                    │
+│                                        │
+│  ✨ Criatividade                       │
+│  Conservador ●─────○ Criativo          │
+│  (Temperature: 0.5)                    │
+│                                        │
+│  🔒 Histórico                          │
+│  ☑ Salvar conversas                    │
+│  ☑ Sincronizar entre dispositivos      │
+│                                        │
+│  [ Limpar Histórico ]                  │
+│  [ Restaurar Padrões ]                 │
+│                                        │
+│  [ Cancelar ]  [ Salvar Configurações ]│
+└────────────────────────────────────────┘
+```
+
+---
+
+### 10. Central de Notificações
+
+**URL:** `/notifications`
+
+**Inspirado em:** GitHub Notifications, Linear Inbox
+
+#### 10.1 Página Principal
+
+**Layout:**
+```
+┌──────────────────────────────────────────────────┐
+│  🔔 Notificações                    [⚙️ Config]  │
+│  ──────────────────────────────────────────────  │
+│                                                  │
+│  [ Todas ]  [ Não Lidas (5) ]  [ Arquivadas ]   │
+│                                                  │
+│  [ Marcar todas como lidas ]  [ Arquivar tudo ]  │
+│                                                  │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                                  │
+│  🟢 Nova resposta recebida            há 5 min  │
+│  "Avaliação NPS Q1 2026" recebeu nova resposta  │
+│  Total: 48 respostas                             │
+│  [ Ver Resultados ]  [ Arquivar ]                │
+│                                                  │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                                  │
+│  📊 Meta atingida!                   há 1 hora  │
+│  Parabéns! "Pesquisa de Onboarding" atingiu     │
+│  50 respostas completas                          │
+│  [ Ver Analytics ]  [ Compartilhar ]             │
+│                                                  │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                                  │
+│  ⚠️ Prazo próximo                   há 2 horas  │
+│  "Employee Satisfaction Q4" encerra em 3 dias    │
+│  Apenas 23 de 50 respostas recebidas            │
+│  [ Reenviar Convites ]  [ Estender Prazo ]       │
+│                                                  │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                                  │
+│  ✅ Avaliação encerrada              ontem      │
+│  "Customer Feedback Mar" foi encerrada           │
+│  automaticamente. Relatório disponível.          │
+│  [ Ver Relatório ]  [ Arquivar ]                 │
+│                                                  │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                                  │
+│  🔧 Manutenção programada            há 2 dias  │
+│  Sistema estará em manutenção dia 15/02 das     │
+│  02:00 às 04:00. Prepare-se.                     │
+│  [ Adicionar ao Calendário ]                     │
+│                                                  │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                                  │
+│  [ Carregar mais... ]                            │
+└──────────────────────────────────────────────────┘
+```
+
+**Tipos de Notificação:**
+
+| Ícone | Tipo | Trigger | Ações Disponíveis |
+|-------|------|---------|-------------------|
+| 🟢 | Nova resposta | A cada 10 respostas | Ver Resultados, Arquivar |
+| 📊 | Meta atingida | 25, 50, 100, 500 respostas | Ver Analytics, Compartilhar |
+| ⚠️ | Prazo próximo | 7, 3, 1 dia antes | Reenviar, Estender, Snooze |
+| ✅ | Avaliação encerrada | Automático ou manual | Ver Relatório, Arquivar |
+| 🔧 | Sistema | Manutenção, updates | Add ao calendário |
+| 🎉 | Conquista | Marcos especiais | Ver badge, Compartilhar |
+
+#### 10.2 Configurações de Notificações
+
+**URL:** `/notifications/settings`
+
+```
+┌────────────────────────────────────────────┐
+│  ⚙️ Configurações de Notificações          │
+│  ────────────────────────────────────────  │
+│                                            │
+│  📱 In-App (na plataforma)                 │
+│  ☑ Nova resposta recebida                  │
+│  ☑ Meta de respostas atingida              │
+│  ☑ Prazo se aproximando                    │
+│  ☑ Avaliação encerrada                     │
+│  ☑ Atualizações do sistema                 │
+│                                            │
+│  📧 Email                                   │
+│  ☑ Resumo diário (18:00)                   │
+│  ☐ Cada nova resposta (não recomendado)   │
+│  ☑ Alertas críticos apenas                 │
+│                                            │
+│  🔕 Não Perturbe                           │
+│  ☑ Ativar em horários específicos          │
+│  De [22:00] até [08:00]                    │
+│  ☑ Fins de semana                          │
+│                                            │
+│  🔔 Preferências de Push (futuro)          │
+│  ☐ Notificações push no navegador          │
+│                                            │
+│  [ Testar Notificação ]                    │
+│                                            │
+│  [ Cancelar ]  [ Salvar ]                  │
+└────────────────────────────────────────────┘
+```
+
+---
+
+### 11. Settings (Configurações)
+
+**URL Base:** `/settings`
+
+**Inspirado em:** Vercel Settings, Linear Settings, Notion Settings
+
+#### 11.1 Navegação Lateral
+
+```
+┌─────────────────┐
+│ ⚙️ Configurações│
+│ ─────────────── │
+│                 │
+│ 👤 Perfil       │  ← Ativa
+│ 🎨 Preferências │
+│ 🔐 Conta        │
+│ 👥 Equipe       │
+│ 🔌 Integrações  │
+│ 🛡️ Segurança    │
+└─────────────────┘
+```
+
+#### 11.2 Settings > Perfil
+
+**URL:** `/settings/profile`
+
+```
+┌──────────────────────────────────────────────┐
+│  👤 Perfil                                   │
+│  ──────────────────────────────────────────  │
+│                                              │
+│  Foto de Perfil                              │
+│  ┌──────┐                                    │
+│  │ [A] │  João Alves                         │
+│  └──────┘  [ Alterar Foto ]  [ Remover ]     │
+│                                              │
+│  Informações Pessoais                        │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                              │
+│  Nome Completo *                             │
+│  [João Alves Silva                        ]  │
+│                                              │
+│  Email *                                     │
+│  [joao.alves@empresa.com.br               ]  │
+│  ✅ Verificado                              │
+│                                              │
+│  Cargo / Função                              │
+│  [Product Manager                         ]  │
+│                                              │
+│  Empresa                                     │
+│  [TechCorp Brasil                         ]  │
+│                                              │
+│  Bio (Opcional)                              │
+│  [Textarea: Especialista em UX Research...] │
+│  250/500 caracteres                          │
+│                                              │
+│  Links Sociais (Opcional)                    │
+│  🐦 Twitter  [                            ]  │
+│  💼 LinkedIn [                            ]  │
+│  🌐 Website  [                            ]  │
+│                                              │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                              │
+│  Alterar Senha                               │
+│  [ Clique para alterar sua senha ]           │
+│                                              │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                              │
+│  [ Cancelar ]  [ Salvar Alterações ]         │
+└──────────────────────────────────────────────┘
+```
+
+**Validações:**
+* Nome: mínimo 3 caracteres
+* Email: formato válido + verificação via link
+* Foto: máx 2MB, formatos JPG/PNG/WebP
+
+#### 11.3 Settings > Preferências
+
+**URL:** `/settings/preferences`
+
+```
+┌──────────────────────────────────────────────┐
+│  🎨 Preferências                             │
+│  ──────────────────────────────────────────  │
+│                                              │
+│  Aparência                                   │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                              │
+│  Tema                                        │
+│  ┌────────┬────────┬────────┐              │
+│  │ ☀️ Claro│ 🌙 Escuro│ 🔄 Auto│              │
+│  │        │ [Ativo]│        │              │
+│  └────────┴────────┴────────┘              │
+│                                              │
+│  Densidade da Interface                      │
+│  ○ Compacta                                  │
+│  ● Confortável (padrão)                      │
+│  ○ Espaçosa                                  │
+│                                              │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                              │
+│  Idioma e Região                             │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                              │
+│  Idioma da Interface                         │
+│  [Português (Brasil) ▼]                      │
+│                                              │
+│  Fuso Horário                                │
+│  [America/Sao_Paulo (GMT-3) ▼]               │
+│                                              │
+│  Formato de Data                             │
+│  [DD/MM/YYYY ▼]                              │
+│                                              │
+│  Formato de Hora                             │
+│  ○ 24 horas  ● 12 horas (AM/PM)              │
+│                                              │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                              │
+│  Dashboard                                   │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                              │
+│  Vista Padrão de Avaliações                  │
+│  ○ Cards (Grid)  ● Lista                     │
+│                                              │
+│  Items por Página                            │
+│  [25 ▼]                                      │
+│                                              │
+│  Ordenação Padrão                            │
+│  [Mais Recentes ▼]                           │
+│                                              │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                              │
+│  Acessibilidade                              │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                              │
+│  ☑ Reduzir animações                         │
+│  ☑ Alto contraste                            │
+│  ☑ Aumentar tamanho de fonte (1.2x)          │
+│                                              │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                              │
+│  [ Restaurar Padrões ]  [ Salvar ]           │
+└──────────────────────────────────────────────┘
+```
+
+#### 11.4 Settings > Conta
+
+**URL:** `/settings/account`
+
+```
+┌──────────────────────────────────────────────┐
+│  🔐 Conta                                    │
+│  ──────────────────────────────────────────  │
+│                                              │
+│  Plano Atual                                 │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                              │
+│  ┌────────────────────────────────────┐     │
+│  │ 💼 PRO                             │     │
+│  │ R$ 49/mês · Faturamento mensal     │     │
+│  │                                    │     │
+│  │ Próximo pagamento: 08 Mar 2026     │     │
+│  │ Método: •••• 4532 (Visa)           │     │
+│  │                                    │     │
+│  │ [ Mudar Plano ] [ Alterar Pagamento]│    │
+│  └────────────────────────────────────┘     │
+│                                              │
+│  Uso e Limites                               │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                              │
+│  Avaliações criadas                          │
+│  ████████████████░░░░  47 de ∞              │
+│                                              │
+│  Respostas coletadas (mês atual)             │
+│  ██████████░░░░░░░░░░ 523 de 1000          │
+│                                              │
+│  Geração por IA (mês atual)                  │
+│  ████████░░░░░░░░░░░░  18 de 50            │
+│                                              │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                              │
+│  Faturamento                                 │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                              │
+│  Histórico de Pagamentos                     │
+│  ┌────────────────────────────────────┐     │
+│  │ 08 Fev 2026  R$ 49,00  ✅ Pago    │     │
+│  │ 08 Jan 2026  R$ 49,00  ✅ Pago    │     │
+│  │ 08 Dez 2025  R$ 49,00  ✅ Pago    │     │
+│  └────────────────────────────────────┘     │
+│  [ Ver todos ] [ Baixar Nota Fiscal ]        │
+│                                              │
+│  Método de Pagamento                         │
+│  💳 •••• 4532 (Visa)  Exp: 03/27            │
+│  [ Alterar Cartão ]  [ Adicionar Método ]    │
+│                                              │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                              │
+│  Zona de Perigo                              │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                              │
+│  Exportar Todos os Dados                     │
+│  [ Solicitar Exportação ]                    │
+│  (Conforme LGPD/GDPR)                        │
+│                                              │
+│  Pausar Conta                                │
+│  [ Pausar Temporariamente ]                  │
+│  (Mantém dados, suspende cobranças)          │
+│                                              │
+│  Excluir Conta Permanentemente               │
+│  [ Excluir Conta... ]                        │
+│  ⚠️ Esta ação é irreversível!               │
+└──────────────────────────────────────────────┘
+```
+
+**Modal de Exclusão de Conta:**
+```
+┌────────────────────────────────────────┐
+│  ⚠️ Excluir Conta Permanentemente?     │
+│  ────────────────────────────────────  │
+│                                        │
+│  Esta ação irá:                        │
+│  • Deletar todas as suas avaliações    │
+│  • Remover todas as respostas coletadas│
+│  • Cancelar sua assinatura             │
+│  • Apagar seus dados permanentemente   │
+│                                        │
+│  Esta ação NÃO pode ser desfeita!      │
+│                                        │
+│  Digite "EXCLUIR" para confirmar:      │
+│  [                                  ]  │
+│                                        │
+│  [ Cancelar ]  [ Excluir Definitivamente]│
+└────────────────────────────────────────┘
+```
+
+#### 11.5 Settings > Equipe
+
+**URL:** `/settings/team`
+
+```
+┌──────────────────────────────────────────────┐
+│  👥 Equipe                                   │
+│  ──────────────────────────────────────────  │
+│                                              │
+│  [ + Convidar Membro ]          [🔍 Buscar]  │
+│                                              │
+│  Membros Ativos (3)                          │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                              │
+│  ┌─────────────────────────────────────┐    │
+│  │ [JA] João Alves (Você)              │    │
+│  │ joao@empresa.com                    │    │
+│  │ 👑 Admin · Membro desde Jan 2026   │    │
+│  └─────────────────────────────────────┘    │
+│                                              │
+│  ┌─────────────────────────────────────┐    │
+│  │ [MS] Maria Silva                    │    │
+│  │ maria@empresa.com                   │    │
+│  │ ✏️ Editor · Membro desde Jan 2026   │    │
+│  │ [Alterar Permissão ▼] [Remover]     │    │
+│  └─────────────────────────────────────┘    │
+│                                              │
+│  ┌─────────────────────────────────────┐    │
+│  │ [PC] Pedro Costa                    │    │
+│  │ pedro@empresa.com                   │    │
+│  │ 👁️ Visualizador · Membro desde Fev  │    │
+│  │ [Alterar Permissão ▼] [Remover]     │    │
+│  └─────────────────────────────────────┘    │
+│                                              │
+│  Convites Pendentes (1)                      │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                              │
+│  📧 ana@empresa.com                          │
+│  Enviado há 2 dias · Editor                  │
+│  [ Reenviar Convite ]  [ Cancelar ]          │
+│                                              │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                              │
+│  Permissões                                  │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                              │
+│  | Ação                  | Admin | Editor | Viewer |
+│  |----------------------|-------|--------|--------|
+│  | Criar avaliações     |   ✅  |   ✅   |   ❌   |
+│  | Editar avaliações    |   ✅  |   ✅   |   ❌   |
+│  | Excluir avaliações   |   ✅  |   ❌   |   ❌   |
+│  | Ver respostas        |   ✅  |   ✅   |   ✅   |
+│  | Exportar dados       |   ✅  |   ✅   |   ❌   |
+│  | Gerenciar equipe     |   ✅  |   ❌   |   ❌   |
+│  | Alterar faturamento  |   ✅  |   ❌   |   ❌   |
+│                                              │
+└──────────────────────────────────────────────┘
+```
+
+**Modal de Convite:**
+```
+┌────────────────────────────────────────┐
+│  + Convidar Membro da Equipe           │
+│  ────────────────────────────────────  │
+│                                        │
+│  Email *                               │
+│  [ana@empresa.com                   ]  │
+│                                        │
+│  Permissão *                           │
+│  [Editor ▼]                            │
+│                                        │
+│  Mensagem Personalizada (Opcional)     │
+│  [Olá Ana, junte-se à nossa equipe!]  │
+│                                        │
+│  [ Cancelar ]  [ Enviar Convite ]      │
+└────────────────────────────────────────┘
+```
+
+#### 11.6 Settings > Integrações
+
+**URL:** `/settings/integrations`
+
+```
+┌──────────────────────────────────────────────┐
+│  🔌 Integrações                              │
+│  ──────────────────────────────────────────  │
+│                                              │
+│  Conecte Aevalo com suas ferramentas         │
+│  favoritas para automatizar workflows.       │
+│                                              │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                              │
+│  Webhooks                                    │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                              │
+│  Receba eventos em tempo real no seu servidor│
+│                                              │
+│  [ + Adicionar Webhook ]                     │
+│                                              │
+│  Webhooks ativos (1):                        │
+│  ┌────────────────────────────────────┐     │
+│  │ https://api.empresa.com/aevalo     │     │
+│  │ Eventos: new_response, evaluation_closed│
+│  │ Status: 🟢 Ativo · Última chamada: há 5min│
+│  │ [ Testar ] [ Editar ] [ Deletar ]  │     │
+│  └────────────────────────────────────┘     │
+│                                              │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                              │
+│  API Keys                                    │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                              │
+│  Use nossa API REST para integrar Aevalo    │
+│  com sistemas customizados.                  │
+│                                              │
+│  [ + Gerar Nova API Key ]                    │
+│                                              │
+│  Keys ativas (2):                            │
+│  ┌────────────────────────────────────┐     │
+│  │ Produção                           │     │
+│  │ aev_live_k8s9d7...  [Copiar]       │     │
+│  │ Criada: 15 Jan 2026 · Último uso: hoje│  │
+│  │ Permissões: read, write            │     │
+│  │ [ Ver Logs ] [ Revogar ]           │     │
+│  └────────────────────────────────────┘     │
+│                                              │
+│  ┌────────────────────────────────────┐     │
+│  │ Desenvolvimento                    │     │
+│  │ aev_test_m3n2k1...  [Copiar]       │     │
+│  │ Criada: 10 Jan 2026 · Último uso: ontem│ │
+│  │ Permissões: read                   │     │
+│  │ [ Ver Logs ] [ Revogar ]           │     │
+│  └────────────────────────────────────┘     │
+│                                              │
+│  [ 📖 Ver Documentação da API ]              │
+│                                              │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                              │
+│  Integrações de Terceiros (Em Breve)        │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                              │
+│  ┌────┬────┬────┬────┬────┐                │
+│  │Slack│Teams│Zapier│Make│Notion│            │
+│  │ Em │ Em │ Em │ Em │ Em │                │
+│  │Breve│Breve│Breve│Breve│Breve│            │
+│  └────┴────┴────┴────┴────┘                │
+└──────────────────────────────────────────────┘
+```
+
+#### 11.7 Settings > Segurança
+
+**URL:** `/settings/security`
+
+```
+┌──────────────────────────────────────────────┐
+│  🛡️ Segurança                                │
+│  ──────────────────────────────────────────  │
+│                                              │
+│  Autenticação de Dois Fatores (2FA)          │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                              │
+│  Status: ❌ Desativado                       │
+│                                              │
+│  Adicione uma camada extra de segurança      │
+│  usando um aplicativo autenticador.          │
+│                                              │
+│  [ Ativar 2FA ]                              │
+│                                              │
+│  Apps recomendados:                          │
+│  • Google Authenticator                      │
+│  • Authy                                     │
+│  • 1Password                                 │
+│                                              │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                              │
+│  Sessões Ativas                              │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                              │
+│  ┌────────────────────────────────────┐     │
+│  │ 💻 MacBook Pro                     │     │
+│  │ São Paulo, BR                      │     │
+│  │ Chrome 120 · Esta sessão          │     │
+│  │ Ativa agora                        │     │
+│  └────────────────────────────────────┘     │
+│                                              │
+│  ┌────────────────────────────────────┐     │
+│  │ 📱 iPhone 15                       │     │
+│  │ São Paulo, BR                      │     │
+│  │ Safari · iOS                       │     │
+│  │ Última atividade: há 2 horas       │     │
+│  │ [ Encerrar Sessão ]                │     │
+│  └────────────────────────────────────┘     │
+│                                              │
+│  [ Encerrar Todas as Outras Sessões ]        │
+│                                              │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                              │
+│  Log de Atividades                           │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                              │
+│  Últimas 10 atividades:                      │
+│                                              │
+│  🟢 Login bem-sucedido                       │
+│  11/02/2026 09:15 · São Paulo, BR            │
+│  Chrome 120 · IP: 192.168.1.10               │
+│                                              │
+│  🟢 Configurações alteradas                  │
+│  10/02/2026 18:32 · São Paulo, BR            │
+│  Chrome 120 · IP: 192.168.1.10               │
+│                                              │
+│  🟢 Avaliação criada                         │
+│  10/02/2026 14:20 · São Paulo, BR            │
+│  Chrome 120 · IP: 192.168.1.10               │
+│                                              │
+│  🔴 Tentativa de login falhou                │
+│  09/02/2026 22:15 · Rio de Janeiro, BR       │
+│  Firefox 115 · IP: 201.10.5.88               │
+│  ⚠️ Se não foi você, recomendamos trocar a senha│
+│                                              │
+│  [ Ver Log Completo ]                        │
+│                                              │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                              │
+│  Backups de Recuperação                      │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                              │
+│  ☑ Backup automático diário                  │
+│  Último backup: 11/02/2026 03:00             │
+│  Retenção: 30 dias                           │
+│                                              │
+│  [ Baixar Backup Mais Recente ]              │
+└──────────────────────────────────────────────┘
+```
+
+---
+
+### 12. Help Center (Central de Ajuda)
+
+**URL:** `/help`
+
+**Inspirado em:** Stripe Docs, Vercel Docs, Linear Help
+
+#### 12.1 Página Principal
+
+```
+┌──────────────────────────────────────────────────┐
+│  ❓ Como podemos ajudar?                         │
+│  ──────────────────────────────────────────────  │
+│                                                  │
+│  [🔍 Buscar na documentação...                ]  │
+│                                                  │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                                  │
+│  Tópicos Populares                               │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                                  │
+│  ┌──────────────┬──────────────┬──────────────┐│
+│  │ 🚀 Começando │ 🎨 Criando   │ 📊 Analytics ││
+│  │              │              │              ││
+│  │ • Primeiro   │ • Escolher   │ • Interpretar││
+│  │   login      │   escalas    │   resultados ││
+│  │ • Dashboard  │ • Usar IA    │ • Exportar   ││
+│  │ • Criar      │ • Templates  │   dados      ││
+│  │   avaliação  │ • Publicar   │ • Filtros    ││
+│  └──────────────┴──────────────┴──────────────┘│
+│                                                  │
+│  ┌──────────────┬──────────────┬──────────────┐│
+│  │ 🔗 Compartilhar│ ⚙️ Configurar│ 🛡️ Segurança││
+│  │              │              │              ││
+│  │ • Gerar link │ • Perfil     │ • 2FA        ││
+│  │ • QR Code    │ • Preferências│• Permissões ││
+│  │ • Embed      │ • Integrações│ • LGPD       ││
+│  └──────────────┴──────────────┴──────────────┘│
+│                                                  │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                                  │
+│  📚 Documentação Completa                        │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                                  │
+│  📖 Guias                                        │
+│  • Guia Completo de Escalas Científicas         │
+│  • Best Practices para Pesquisas                 │
+│  • Como Aumentar Taxa de Resposta               │
+│  • Análise Estatística de Resultados            │
+│                                                  │
+│  🎥 Tutoriais em Vídeo                          │
+│  • Criar sua primeira avaliação (3:45)           │
+│  • Usar geração por IA (2:15)                    │
+│  • Interpretar resultados (5:30)                 │
+│  • Configurar integrações (4:00)                 │
+│                                                  │
+│  ❓ FAQ (Perguntas Frequentes)                  │
+│  • Como funciona a geração por IA?               │
+│  • Quantas respostas posso coletar?              │
+│  • É compatível com LGPD/GDPR?                   │
+│  • Posso exportar os dados?                      │
+│  • Como cancelar minha assinatura?               │
+│  [ Ver todas as 45 perguntas ]                   │
+│                                                  │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                                  │
+│  💬 Ainda precisa de ajuda?                      │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                                  │
+│  [ 💬 Chat ao Vivo ]  [ 📧 Email Suporte ]       │
+│  [ 🎫 Abrir Ticket ]  [ 💼 Falar com Vendas ]    │
+│                                                  │
+│  Tempo médio de resposta: 2 horas                │
+└──────────────────────────────────────────────────┘
+```
+
+#### 12.2 Artigo de Documentação (Exemplo)
+
+**URL:** `/help/docs/escalas-cientificas`
+
+```
+┌──────────────────────────────────────────────────┐
+│  📖 Documentação > Escalas Científicas           │
+│  ──────────────────────────────────────────────  │
+│                                                  │
+│  [🔍 Buscar neste artigo...]                     │
+│                                                  │
+│  ┌─────────────────┐  ┌──────────────────────┐ │
+│  │ Nesta Página    │  │ [Conteúdo do artigo] │ │
+│  │ ─────────────── │  │                      │ │
+│  │                 │  │ # Escalas Científicas│ │
+│  │ • O que são     │  │                      │ │
+│  │ • Likert Scale  │  │ Aevalo suporta 7     │ │
+│  │ • Fixed Sum     │  │ tipos de escalas...  │ │
+│  │ • Paired Comp.  │  │                      │ │
+│  │ • Frequency     │  │ ## 1. Likert Scale   │ │
+│  │ • Rating        │  │ A escala Likert...   │ │
+│  │ • Semantic Diff.│  │                      │ │
+│  │ • Binary        │  │ [Código exemplo]     │ │
+│  │ • Quando usar   │  │ [Screenshot]         │ │
+│  │ • Best Practices│  │                      │ │
+│  └─────────────────┘  │ ## 2. Fixed Sum      │ │
+│                       │ Permite distribuir...│ │
+│                       │                      │ │
+│                       │ [... continua]       │ │
+│                       └──────────────────────┘ │
+│                                                  │
+│  ──────────────────────────────────────────────  │
+│                                                  │
+│  Este artigo foi útil?                           │
+│  [ 👍 Sim ]  [ 👎 Não ]                         │
+│                                                  │
+│  Última atualização: 05 Fev 2026                 │
+│  Tempo de leitura: 8 minutos                     │
+└──────────────────────────────────────────────────┘
+```
+
+---
+
+### 13. Área Administrativa
+
+**URL:** `/admin` (Acesso restrito)
+
+**Inspirado em:** Vercel Admin, Stripe Dashboard, Railway Admin
+
+#### 13.1 Admin Dashboard
+
+```
+┌──────────────────────────────────────────────────┐
+│  👑 Admin Dashboard                              │
+│  ──────────────────────────────────────────────  │
+│                                                  │
+│  Sistema Health                                  │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                                  │
+│  ┌──────────┬──────────┬──────────┬──────────┐ │
+│  │ Uptime   │ Requests │ Errors   │ Latência │ │
+│  │ 99.98%   │ 1.2M/dia │ 0.02%    │ 89ms     │ │
+│  │ 🟢       │ ↑ 12%    │ ↓ 0.5%   │ ↓ 5ms    │ │
+│  └──────────┴──────────┴──────────┴──────────┘ │
+│                                                  │
+│  Métricas de Negócio (Últimos 30 dias)           │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                                  │
+│  ┌──────────┬──────────┬──────────┬──────────┐ │
+│  │ Usuários │ Avaliações│ Respostas│ MRR      │ │
+│  │ 1,247    │ 3,891    │ 47,832   │ R$ 12.3k │ │
+│  │ ↑ 15%    │ ↑ 23%    │ ↑ 31%    │ ↑ 18%    │ │
+│  └──────────┴──────────┴──────────┴──────────┘ │
+│                                                  │
+│  [Gráfico de crescimento ao longo do tempo]      │
+│                                                  │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                                  │
+│  Últimas Atividades                              │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                                  │
+│  🟢 Novo usuário registrado                      │
+│  ana@techcorp.com · PRO Plan · há 5 min          │
+│                                                  │
+│  🔴 Erro crítico detectado                       │
+│  Gemini API timeout · Server 3 · há 12 min       │
+│  [ Ver Detalhes ]                                │
+│                                                  │
+│  🟢 Pagamento recebido                           │
+│  R$ 149,00 · TEAM Plan · TechCorp · há 1h        │
+│                                                  │
+│  [ Ver Log Completo ]                            │
+└──────────────────────────────────────────────────┘
+```
+
+#### 13.2 Admin > Usuários
+
+```
+┌──────────────────────────────────────────────────┐
+│  👥 Gestão de Usuários                           │
+│  ──────────────────────────────────────────────  │
+│                                                  │
+│  [🔍 Buscar usuários...]         [Filtros ▼]     │
+│                                                  │
+│  1,247 usuários · Exibindo 25 por página         │
+│                                                  │
+│  ┌────────────────────────────────────────────┐ │
+│  │ Nome           │ Email          │ Plano  │Status││
+│  ├────────────────────────────────────────────┤ │
+│  │ João Silva     │ joao@...       │ PRO    │🟢   ││
+│  │ Membro desde: 15 Jan 2026 · ID: usr_123   │ │
+│  │ Avaliações: 23 · Respostas: 1.2k          │ │
+│  │ [ Ver Perfil ] [ Editar ] [ Suspender ]   │ │
+│  ├────────────────────────────────────────────┤ │
+│  │ Maria Santos   │ maria@...      │ TEAM   │🟢   ││
+│  │ Membro desde: 03 Fev 2026 · ID: usr_456   │ │
+│  │ Avaliações: 8 · Respostas: 320            │ │
+│  │ [ Ver Perfil ] [ Editar ] [ Suspender ]   │ │
+│  └────────────────────────────────────────────┘ │
+│                                                  │
+│  [ ← Anterior ]  [ 1 2 3 ... 50 ]  [ Próxima →] │
+│                                                  │
+│  Ações em Massa:                                 │
+│  [ Exportar CSV ] [ Enviar Email ] [ Moderar ]   │
+└──────────────────────────────────────────────────┘
+```
+
+---
+
+### 14. Páginas de Erro e Sistema
+
+#### 14.1 Erro 404 (Página Não Encontrada)
+
+**URL:** Qualquer rota inválida
+
+```
+┌────────────────────────────────────────────┐
+│                                            │
+│         [Ilustração minimalista]           │
+│              🔍 ❓                         │
+│                                            │
+│            404                             │
+│       Página não encontrada                │
+│                                            │
+│   A página que você procura não existe     │
+│   ou foi movida para outro endereço.       │
+│                                            │
+│   Possíveis motivos:                       │
+│   • Link quebrado ou desatualizado         │
+│   • URL digitada incorretamente            │
+│   • Recurso foi removido                   │
+│                                            │
+│   Sugestões:                               │
+│   • [ ← Voltar ] para a página anterior    │
+│   • [ 🏠 Ir para Dashboard ]               │
+│   • [ 🔍 Buscar ] o que você precisa       │
+│   • [ 💬 Reportar ] este problema          │
+│                                            │
+│   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   │
+│                                            │
+│   Páginas populares:                       │
+│   • Dashboard                              │
+│   • Criar Nova Avaliação                   │
+│   • Templates                              │
+│   • Analytics                              │
+└────────────────────────────────────────────┘
+```
+
+**Comportamento:**
+* Preserva header/sidebar se usuário autenticado
+* Remove header se público (landing simples)
+* Log do erro para análise (URL tentada, referrer)
+* Sugestões contextuais baseadas em histórico
+
+#### 14.2 Erro 500 (Erro Interno do Servidor)
+
+**URL:** Trigger quando backend retorna 500
+
+```
+┌────────────────────────────────────────────┐
+│                                            │
+│         [Ilustração minimalista]           │
+│              ⚙️ 💥                         │
+│                                            │
+│            500                             │
+│       Algo deu errado                      │
+│                                            │
+│   Nossos servidores encontraram um erro    │
+│   inesperado. Já fomos notificados e       │
+│   estamos trabalhando na solução.          │
+│                                            │
+│   ID do Erro: #ERR-2026-02-11-1234         │
+│   (Guarde este código para referência)     │
+│                                            │
+│   O que você pode fazer:                   │
+│   • [ 🔄 Tentar Novamente ]                │
+│   • [ ← Voltar ] para página segura        │
+│   • [ 📊 Status ] do sistema               │
+│   • [ 💬 Reportar ] com detalhes           │
+│                                            │
+│   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   │
+│                                            │
+│   Status do Sistema: 🟢 Operacional        │
+│   Servidores: 3/3 online                   │
+│   Última verificação: há 30 segundos       │
+│                                            │
+│   [ Ver Status Detalhado → ]               │
+└────────────────────────────────────────────┘
+```
+
+**Comportamento:**
+* Envia erro para Sentry/logging automaticamente
+* Gera ID único para tracking
+* Mostra status page se disponível
+* Auto-retry depois de 5s (opcional, configurável)
+
+#### 14.3 Erro 503 (Serviço Indisponível / Manutenção)
+
+**URL:** Trigger durante manutenção programada
+
+```
+┌────────────────────────────────────────────┐
+│                                            │
+│         [Ilustração minimalista]           │
+│              🔧 ⏰                         │
+│                                            │
+│      Manutenção em Andamento               │
+│                                            │
+│   Estamos realizando melhorias no sistema  │
+│   para oferecer uma experiência ainda      │
+│   melhor.                                  │
+│                                            │
+│   📅 Início: 11 Fev 2026, 02:00 BRT        │
+│   ⏱️ Previsão de retorno: 04:00 BRT        │
+│   ⏳ Tempo restante: ~45 minutos           │
+│                                            │
+│   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   │
+│                                            │
+│   Durante a manutenção:                    │
+│   ✓ Upgrade de infraestrutura              │
+│   ✓ Melhorias de performance               │
+│   ✓ Novos recursos sendo implantados       │
+│                                            │
+│   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━   │
+│                                            │
+│   Fique por dentro:                        │
+│   [ 🐦 Twitter ]  [ 💬 Status Page ]       │
+│                                            │
+│   [ 🔄 Recarregar Página ]                 │
+│                                            │
+│   Obrigado pela compreensão!               │
+└────────────────────────────────────────────┘
+```
+
+**Comportamento:**
+* Auto-refresh a cada 60 segundos
+* Link para status page externa (status.aevalo.app)
+* Countdown timer atualizado
+* Notificações via email/push antes da manutenção
+
+#### 14.4 Unauthorized (403 - Sem Permissão)
+
+```
+┌────────────────────────────────────────────┐
+│                                            │
+│         [Ilustração minimalista]           │
+│              🔒 🚫                         │
+│                                            │
+│            403                             │
+│       Acesso Negado                        │
+│                                            │
+│   Você não tem permissão para acessar      │
+│   este recurso.                            │
+│                                            │
+│   Possíveis motivos:                       │
+│   • Recurso pertence a outro usuário       │
+│   • Sua função não permite esta ação       │
+│   • Avaliação foi arquivada ou deletada    │
+│                                            │
+│   O que fazer:                             │
+│   • [ ← Voltar ] para área segura          │
+│   • [ 🏠 Dashboard ] inicial               │
+│   • [ 💬 Falar ] com administrador         │
+│   • [ 📖 Ver ] permissões da sua conta     │
+│                                            │
+│   Se acredita que isso é um erro,          │
+│   [ 📧 Entre em contato ] conosco.         │
+└────────────────────────────────────────────┘
+```
+
+#### 14.5 Status Page (Sistema)
+
+**URL:** `status.aevalo.app` (Subdomain externo)
+
+```
+┌────────────────────────────────────────────────┐
+│  Aevalo System Status                          │
+│  ────────────────────────────────────────────  │
+│                                                │
+│  🟢 Todos os sistemas operacionais             │
+│  Última verificação: há 30 segundos            │
+│                                                │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                                │
+│  Componentes                                   │
+│                                                │
+│  🟢 API Principal            99.98% uptime     │
+│  🟢 Dashboard Frontend       100% uptime       │
+│  🟢 Database (Supabase)      99.99% uptime     │
+│  🟢 Gemini AI Integration    98.5% uptime      │
+│  🟢 Email Service            99.95% uptime     │
+│  🟢 Analytics Engine         100% uptime       │
+│                                                │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                                │
+│  Performance Metrics (24h)                     │
+│                                                │
+│  ⚡ Response Time (avg):     89ms              │
+│  📊 Requests Processed:     1.2M               │
+│  ❌ Error Rate:              0.02%             │
+│                                                │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                                │
+│  Histórico de Incidentes                       │
+│                                                │
+│  08 Fev 2026 · 🟢 Resolvido                   │
+│  Lentidão na geração por IA                    │
+│  Duração: 25 minutos · Impacto: Menor          │
+│  [ Ver Detalhes ]                              │
+│                                                │
+│  01 Fev 2026 · 🟢 Resolvido                   │
+│  Manutenção programada                         │
+│  Duração: 2 horas · Impacto: Total             │
+│  [ Ver Detalhes ]                              │
+│                                                │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                                │
+│  Manutenções Programadas                       │
+│                                                │
+│  15 Fev 2026, 02:00-04:00 BRT                  │
+│  Upgrade de infraestrutura                     │
+│  [ Adicionar ao Calendário ]                   │
+│                                                │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│                                                │
+│  [ 🔔 Assinar Updates ]  [ 📊 Ver Uptime ]     │
+└────────────────────────────────────────────────┘
 ```
 
 ---
