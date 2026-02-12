@@ -40,15 +40,13 @@
                   <span class="btn-icon">🔍</span>
                   <span class="btn-label">404 Error</span>
                 </button>
-                <button @click="navigateTo('/error/503')" class="menu-btn error-503" disabled>
+                <button @click="navigateTo('ServiceUnavailable')" class="menu-btn error-503">
                   <span class="btn-icon">🔧</span>
                   <span class="btn-label">503 Error</span>
-                  <span class="badge">Soon</span>
                 </button>
-                <button @click="navigateTo('/error/403')" class="menu-btn error-403" disabled>
+                <button @click="navigateTo('Unauthorized')" class="menu-btn error-403">
                   <span class="btn-icon">🔒</span>
                   <span class="btn-label">403 Error</span>
-                  <span class="badge">Soon</span>
                 </button>
               </div>
             </div>

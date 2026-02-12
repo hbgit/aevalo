@@ -8,8 +8,8 @@ Esta pasta contém todas as páginas de erro e status do sistema, conforme espec
 errors/
 ├── NotFound404.vue          # ✅ Implementado
 ├── ServerError500.vue        # ✅ Implementado
-├── ServiceUnavailable503.vue # ⏳ TODO
-├── Unauthorized403.vue       # ⏳ TODO
+├── ServiceUnavailable503.vue # ✅ Implementado
+├── Unauthorized403.vue       # ✅ Implementado
 ├── StatusPage.vue           # ⏳ TODO (subdomain externo)
 └── index.ts                 # Export centralizador
 ```
@@ -98,18 +98,94 @@ errors/
 
 ## ⏳ Próximas Implementações
 
-### ServiceUnavailable503.vue
-- Countdown timer em tempo real
-- Auto-refresh a cada 60s
-- Link para status page externa
-- Notificações pré-manutenção
+### ✅ ServiceUnavailable503.vue (503 - Serviço Indisponível)
 
-### Unauthorized403.vue
-- Explicação clara de permissões
-- Link para contato com admin
-- Visualização de permissões da conta
+**Rota:** Programaticamente ou durante janela de manutenção
 
-### StatusPage.vue
+**Características:**
+- Design responsivo com gradiente azul/turquesa
+- Ilustração animada (chave inglesa girando + relógio pulsando)
+- Título "Manutenção em Andamento"
+- Descrição clara do motivo
+- **Cronômetro em tempo real:**
+  - Início da manutenção
+  - Previsão de retorno
+  - Tempo restante atualizado a cada segundo
+- **Progress bar visual:**
+  - Mostra tempo decorrido
+  - Anima suavemente (transition 1s linear)
+  - Gradiente laranja → roxo
+- **Lista de atividades durante manutenção:**
+  - Upgrade de infraestrutura
+  - Melhorias de performance
+  - Novos recursos sendo implantados
+- **2 botões de ação:**
+  - Twitter (link externo)
+  - Status Page (status.aevalo.app)
+- **Botão de ação primária:**
+  - Recarregar Página (permite reload manual)
+- **Auto-reload automático:**
+  - A cada 60 segundos
+  - Com countdown visível
+  - Auto-refresh quando manutenção termina
+- Dark mode completo
+- Animações suaves
+
+**UX Features:**
+- Timestamp formatado para timezone local
+- Countdown preciso (atualizado a cada segundo)
+- Link clicável para Twitter e Status Page
+- Botão de manual reload para usuários impaciêntes
+- Auto-reload sem perder dados (páginas estáticas durante manutenção)
+- Suporte para email direto de contato
+
+**Comportamento Técnico:**
+```typescript
+// Auto-reload
+- Intervalo: 60 segundos
+- Verifica se manutenção terminou
+- Se terminou: location.reload()
+
+// Countdown
+- Atualizado: 1000ms
+- Formato: Xh Ym ou Xm Ys
+
+// Progress bar
+- Calcula: (endTime - now) / (endTime - startTime)
+- Transition: 1s ease-linear
+```
+
+### ✅ Unauthorized403.vue (403 - Acesso Negado)
+
+**Rota:** Programaticamente ou via erro de autorização
+
+**Características:**
+- Design responsivo com gradiente rosa/vermelho
+- Ilustração animada (cadeado + símbolo proibido pulsando)
+- Código de erro 403 em destaque (vermelho)
+- Título "Acesso Negado"
+- **Card de motivos possíveis:**
+  - Recurso pertence a outro usuário
+  - Sua função não permite esta ação
+  - Avaliação foi arquivada ou deletada
+- **4 botões de ação:**
+  - Voltar para área segura (histórico)
+  - Dashboard inicial
+  - Ver permissões da sua conta (modal)
+  - Falar com administrador (modal)
+- **Modais interativas:**
+  - Modal de contato com admin (email direto)
+  - Modal de permissões (links para settings)
+- **Seção de contato:**
+  - Link direto para suporte por email
+  - Estilo destacado em azul
+- **Informações de erro:**
+  - Exibição de path em modo dev
+  - Timestamp da tentativa
+- Dark mode completo
+- Animações suaves (fade in/out)
+
+### StatusPage.vue (Sistema - Subdomain externo)
 - Monitoramento de componentes
 - Uptime metrics
 - Performance metrics (24h)
@@ -219,7 +295,15 @@ http://localhost:5173/test/nested/404
   - [x] Dark mode
   - [x] Responsivo
   - [x] Error tracking logging
-- [ ] ServiceUnavailable503.vue
+- [x] ServiceUnavailable503.vue
+  - [x] Wireframe implementado
+  - [x] Countdown timer em tempo real
+  - [x] Auto-reload a cada 60s
+  - [x] Progress bar visual
+  - [x] Links para Twitter e Status Page
+  - [x] Animações (spin + pulse)
+  - [x] Dark mode
+  - [x] Responsivo
 - [ ] Unauthorized403.vue
 - [ ] StatusPage.vue
 
