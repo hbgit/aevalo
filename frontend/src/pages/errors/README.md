@@ -185,6 +185,42 @@ errors/
 - Dark mode completo
 - Animações suaves (fade in/out)
 
+### ✅ StatusPage.vue (Sistema - Status Monitoramento)
+
+**Rota:** `/status` · Acessível via DevMenu
+
+**Características:**
+- Status geral em tempo real (🟢 All Systems Operational)
+- **6 componentes do sistema monitorados:**
+  - API Principal (99.98%)
+  - Dashboard Frontend (100%)
+  - Database Supabase (99.99%)
+  - Gemini AI Integration (98.5%)
+  - Email Service (99.95%)
+  - Analytics Engine (100%)
+- **Performance Metrics (24h):**
+  - Response Time (avg): 89ms
+  - Requests Processed: 1.2M
+  - Error Rate: 0.02%
+- **Histórico de Incidentes:**
+  - Eventos com timestamps
+  - Status de resolução (🟢 Resolved)
+  - Duração e impacto
+  - Toggle para ver incidentes antigos
+- **Manutenções Programadas:**
+  - Data e hora em BRT
+  - Descrição detalhada
+  - Botão "Add to Calendar"
+- **Subscribe & Resources:**
+  - Modal de inscrição (Email, Slack, Push)
+  - Estatísticas de uptime
+  - Links para Help Center
+- **Dark mode completo**
+- **Uptime indicators com animação de pulso**
+- **Progress bars para cada componente**
+- Layout responsivo (mobile/tablet/desktop)
+- Last updated timestamp
+
 ### StatusPage.vue (Sistema - Subdomain externo)
 - Monitoramento de componentes
 - Uptime metrics

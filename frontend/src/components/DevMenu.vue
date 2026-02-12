@@ -48,6 +48,10 @@
                   <span class="btn-icon">🔒</span>
                   <span class="btn-label">403 Error</span>
                 </button>
+                <button @click="navigateTo('Status')" class="menu-btn status-page">
+                  <span class="btn-icon">📊</span>
+                  <span class="btn-label">Status Page</span>
+                </button>
               </div>
             </div>
 
@@ -442,6 +446,11 @@ const copyCurrentUrl = async () => {
 .error-403:hover:not(:disabled) {
   border-color: #ec4899;
   background: #fce7f3;
+}
+
+.status-page:hover:not(:disabled) {
+  border-color: #3b82f6;
+  background: #dbeafe;
 }
 
 /* Action Buttons */

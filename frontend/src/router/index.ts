@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import DashboardPage from '../pages/Dashboard.vue'
-import { NotFound404, ServerError500, ServiceUnavailable503, Unauthorized403 } from '../pages/errors'
+import { NotFound404, ServerError500, ServiceUnavailable503, Unauthorized403, StatusPage } from '../pages/errors'
 
 const routes = [
   {
@@ -47,6 +47,12 @@ const routes = [
     path: '/error/403',
     name: 'Unauthorized',
     component: Unauthorized403,
+    meta: { layout: 'minimal' },
+  },
+  {
+    path: '/status',
+    name: 'Status',
+    component: StatusPage,
     meta: { layout: 'minimal' },
   },
   // 404 Catch-all route - must be last
