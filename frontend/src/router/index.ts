@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import DashboardPage from '../pages/Dashboard.vue'
+import { NotFound404 } from '../pages/errors'
 
 const routes = [
   {
@@ -28,6 +29,13 @@ const routes = [
     name: 'Register',
     component: () => import('../pages/Register.vue'),
     meta: { layout: 'auth' },
+  },
+  // 404 Catch-all route - must be last
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    component: NotFound404,
+    meta: { layout: 'minimal' },
   },
 ]
 
