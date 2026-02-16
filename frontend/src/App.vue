@@ -58,9 +58,7 @@
 <script setup lang="ts">
 import { RouterView, useRoute } from 'vue-router'
 import { computed } from 'vue'
-import SearchBar from './components/SearchBar.vue'
-import UserDropdown from './components/UserDropdown.vue'
-import DevMenu from './components/DevMenu.vue'
+import { SearchBar, UserDropdown, DevMenu } from './components/shared'
 
 const route = useRoute()
 const isAuthLayout = computed(() => route.meta?.layout === 'auth')

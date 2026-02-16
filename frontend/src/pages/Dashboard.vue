@@ -91,8 +91,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useAuthStore } from '../stores/auth'
-import EvaluationList from '../components/EvaluationList.vue'
-import AnalyticsChart from '../components/AnalyticsChart.vue'
+import { EvaluationList, AnalyticsChart } from '../components/dashboard'
 
 const authStore = useAuthStore()
 

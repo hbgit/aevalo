@@ -21,7 +21,7 @@
     >
       <div
         v-show="isOpen"
-        class="absolute right-0 mt-2 w-56 rounded-lg shadow-lg bg-purple-700 text-white ring-1 ring-black ring-opacity-5 z-50"
+        class="absolute right-0 mt-2 w-56 rounded-lg shadow-lg bg-purple-700 dark:bg-slate-800 text-white ring-1 ring-black ring-opacity-5 z-50"
         role="menu"
         aria-orientation="vertical"
       >
@@ -30,7 +30,7 @@
           <a
             href="#"
             @click.prevent="handleSwitchAccount"
-            class="flex items-center gap-3 px-4 py-2.5 text-sm hover:bg-purple-600 transition-colors"
+            class="flex items-center gap-3 px-4 py-2.5 text-sm hover:bg-purple-600 dark:hover:bg-slate-700 transition-colors"
             role="menuitem"
           >
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -42,7 +42,7 @@
           <a
             href="#"
             @click.prevent="handleManageAccount"
-            class="flex items-center gap-3 px-4 py-2.5 text-sm hover:bg-purple-600 transition-colors"
+            class="flex items-center gap-3 px-4 py-2.5 text-sm hover:bg-purple-600 dark:hover:bg-slate-700 transition-colors"
             role="menuitem"
           >
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -52,13 +52,13 @@
           </a>
 
           <!-- Divisor -->
-          <hr class="border-white/20 my-1" />
+          <hr class="border-white/20 dark:border-slate-600 my-1" />
 
           <!-- Seção 2: Preferências -->
           <a
             href="#"
             @click.prevent="handleSettings"
-            class="flex items-center gap-3 px-4 py-2.5 text-sm hover:bg-purple-600 transition-colors"
+            class="flex items-center gap-3 px-4 py-2.5 text-sm hover:bg-purple-600 dark:hover:bg-slate-700 transition-colors"
             role="menuitem"
           >
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -70,7 +70,7 @@
 
           <button
             @click="handleToggleDarkMode"
-            class="w-full flex items-center gap-3 px-4 py-2.5 text-sm hover:bg-purple-600 transition-colors text-left"
+            class="w-full flex items-center gap-3 px-4 py-2.5 text-sm hover:bg-purple-600 dark:hover:bg-slate-700 transition-colors text-left"
             role="menuitem"
           >
             <svg v-if="!isDarkMode" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -83,12 +83,12 @@
           </button>
 
           <!-- Divisor -->
-          <hr class="border-white/20 my-1" />
+          <hr class="border-white/20 dark:border-slate-600 my-1" />
 
           <!-- Seção 3: Saída -->
           <button
             @click="handleLogout"
-            class="w-full flex items-center gap-3 px-4 py-2.5 text-sm hover:bg-red-600 transition-colors text-left"
+            class="w-full flex items-center gap-3 px-4 py-2.5 text-sm hover:bg-red-600 dark:hover:bg-red-700 transition-colors text-left"
             role="menuitem"
           >
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -105,10 +105,8 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { useAuthStore } from '../stores/auth'
 
 const router = useRouter()
-const authStore = useAuthStore()
 
 // State
 const isOpen = ref(false)
@@ -117,16 +115,14 @@ const dropdownRef = ref<HTMLElement | null>(null)
 
 // Computed
 const userInitials = computed(() => {
-  const user = authStore.user
-  if (user?.name) {
-    return user.name
-      .split(' ')
-      .map(word => word[0])
-      .slice(0, 2)
-      .join('')
-      .toUpperCase()
-  }
-  return 'JD'
+  // Get from store or localStorage if available
+  const userName = localStorage.getItem('userName') || 'JD'
+  return userName
+    .split(' ')
+    .map(word => word[0])
+    .slice(0, 2)
+    .join('')
+    .toUpperCase()
 })
 
 // Methods
@@ -147,7 +143,7 @@ const handleSwitchAccount = () => {
 const handleManageAccount = () => {
   console.log('Gerenciar conta')
   closeDropdown()
-  router.push('/account')
+  router.push('/settings/account')
 }
 
 const handleSettings = () => {
@@ -158,15 +154,13 @@ const handleSettings = () => {
 
 const handleToggleDarkMode = () => {
   isDarkMode.value = !isDarkMode.value
-  console.log('Modo Dark:', isDarkMode.value)
-  // TODO: Implementar lógica de dark mode
-  // document.documentElement.classList.toggle('dark', isDarkMode.value)
+  document.documentElement.classList.toggle('dark', isDarkMode.value)
 }
 
 const handleLogout = async () => {
   console.log('Sair')
   closeDropdown()
-  await authStore.logout()
+  localStorage.removeItem('token')
   router.push('/login')
 }
 
@@ -180,6 +174,7 @@ const handleClickOutside = (event: MouseEvent) => {
 // Lifecycle
 onMounted(() => {
   document.addEventListener('click', handleClickOutside)
+  isDarkMode.value = document.documentElement.classList.contains('dark')
 })
 
 onUnmounted(() => {

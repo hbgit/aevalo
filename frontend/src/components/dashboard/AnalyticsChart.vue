@@ -1,10 +1,9 @@
-<!-- Analytics Chart Component -->
 <template>
   <div class="space-y-4">
-    <div class="rounded-2xl border border-slate-200 bg-white p-6">
+    <div class="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-6">
       <div class="flex items-center justify-between mb-4">
-        <h2 class="text-sm font-bold text-slate-900">Avaliações por Categoria</h2>
-        <span class="text-xs text-slate-500">Últimos 30 dias</span>
+        <h2 class="text-sm font-bold text-slate-900 dark:text-white">Avaliações por Categoria</h2>
+        <span class="text-xs text-slate-500 dark:text-slate-400">Últimos 30 dias</span>
       </div>
       <div class="mt-6 h-48 flex items-end gap-3">
         <div v-for="item in data.categories" :key="item.label" class="flex-1 flex flex-col items-center gap-2">
@@ -15,20 +14,20 @@
               :style="{ height: `${(item.value / maxCategory) * 100}%` }"
             ></div>
           </div>
-          <span class="text-xs font-medium text-slate-700">{{ item.label }}</span>
+          <span class="text-xs font-medium text-slate-700 dark:text-slate-300">{{ item.label }}</span>
         </div>
       </div>
     </div>
 
-    <div class="rounded-2xl border border-slate-200 bg-white p-6">
-      <h2 class="text-sm font-bold text-slate-900 mb-4">Distribuição por Status</h2>
+    <div class="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-6">
+      <h2 class="text-sm font-bold text-slate-900 dark:text-white mb-4">Distribuição por Status</h2>
       <div class="space-y-4">
         <div v-for="item in data.statuses" :key="item.label" class="space-y-2">
           <div class="flex items-center justify-between text-xs">
-            <span class="font-medium text-slate-700">{{ item.label }}</span>
-            <span class="text-slate-500">{{ item.value }} ({{ getPercent(item.value, item.total) }}%)</span>
+            <span class="font-medium text-slate-700 dark:text-slate-300">{{ item.label }}</span>
+            <span class="text-slate-500 dark:text-slate-400">{{ item.value }} ({{ getPercent(item.value, item.total) }}%)</span>
           </div>
-          <div class="h-2.5 rounded-full bg-slate-100">
+          <div class="h-2.5 rounded-full bg-slate-100 dark:bg-slate-700">
             <div
               class="h-2.5 rounded-full transition-all"
               :class="item.color"
@@ -39,7 +38,7 @@
       </div>
     </div>
 
-    <div class="rounded-2xl border border-orange-200 bg-orange-50 p-5">
+    <div class="rounded-2xl border border-orange-200 dark:border-orange-900/30 bg-orange-50 dark:bg-orange-900/20 p-5">
       <div class="flex items-start gap-3">
         <div class="h-9 w-9 rounded-lg bg-secondary text-white flex items-center justify-center flex-shrink-0">
           <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -47,8 +46,8 @@
           </svg>
         </div>
         <div>
-          <p class="text-sm font-bold text-orange-700">Dica Inteligente</p>
-          <p class="text-xs text-orange-700/90 mt-1">{{ data.insight }}</p>
+          <p class="text-sm font-bold text-orange-700 dark:text-orange-300">Dica Inteligente</p>
+          <p class="text-xs text-orange-700/90 dark:text-orange-200/90 mt-1">{{ data.insight }}</p>
         </div>
       </div>
     </div>
