@@ -5,6 +5,12 @@ import { NotFound404, ServerError500, ServiceUnavailable503, Unauthorized403, St
 const routes = [
   {
     path: '/',
+    name: 'Landing',
+    component: () => import('../pages/Landing.vue'),
+    meta: { layout: 'landing' },
+  },
+  {
+    path: '/dashboard',
     name: 'Dashboard',
     component: DashboardPage,
   },
