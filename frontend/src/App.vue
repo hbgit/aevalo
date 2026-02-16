@@ -8,6 +8,13 @@
       <RouterView />
     </template>
 
+    <template v-else-if="isAdminLayout">
+      <!-- Admin layout with sidebar -->
+      <AdminLayout>
+        <RouterView />
+      </AdminLayout>
+    </template>
+
     <template v-else-if="!isAuthLayout">
       <!-- Default authenticated layout with header -->
       <header class="bg-white border-b border-slate-200 sticky top-0 z-10">
@@ -66,10 +73,12 @@
 import { RouterView, useRoute } from 'vue-router'
 import { computed } from 'vue'
 import { SearchBar, UserDropdown, DevMenu } from './components/shared'
+import AdminLayout from './components/layouts/AdminLayout.vue'
 
 const route = useRoute()
 const isAuthLayout = computed(() => route.meta?.layout === 'auth')
 const isLandingLayout = computed(() => route.meta?.layout === 'landing')
+const isAdminLayout = computed(() => route.meta?.layout === 'admin')
 
 // Debug: log when component mounts
 console.log('App.vue mounted', { route: route.path })

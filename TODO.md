@@ -18,6 +18,26 @@
 
 ---
 
+## Admin
+
+**Admin Dashboard**: `http://localhost:5173/admin`
+
+### Phase 2 (Optional)
+1. [ ] Connect to Backend APIs
+2. [ ] Implement Route Guards
+3. [ ] Add Real-time Updates
+4. [ ] Implement Actions (Delete, Update)
+5. [ ] Add Export Functionality
+
+### Phase 3 (Optional)
+1. [ ] Advanced Filtering
+2. [ ] User Impersonation
+3. [ ] Audit Logs
+4. [ ] Custom Reports
+5. [ ] Dark Mode Full Support
+
+---
+
 ## 🎬 Próximas Etapas Landing Page Pública
 
 ### Priority 1: Funcionalidade
