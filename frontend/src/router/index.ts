@@ -22,7 +22,7 @@ const routes = [
   {
     path: '/create',
     name: 'CreateEvaluation',
-    component: () => import('../pages/CreateEvaluation.vue'),
+    component: () => import('../pages/EvaluationWizard.vue'),
   },
   {
     path: '/login',

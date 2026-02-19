@@ -18,6 +18,32 @@
 
 ---
 
+## 🔄 Próximos Passos (Screen)
+
+- [X] interface_flow.md - Seção 1
+- [X] interface_flow.md - Seção 2
+- [X] interface_flow.md - Seção 3 - parcial, bug no editor
+- [X] interface_flow.md - Seção 4
+- [ ] interface_flow.md - Seção 5
+- [ ] interface_flow.md - Seção 6
+- [ ] interface_flow.md - Seção 7
+- [ ] interface_flow.md - Seção 8
+- [ ] interface_flow.md - Seção 9
+- [ ] interface_flow.md - Seção 10
+- [ ] interface_flow.md - Seção 11
+- [ ] interface_flow.md - Seção 12
+- [X] interface_flow.md - Seção 13
+- [X] interface_flow.md - Seção 14
+- [ ] Revisão das telas criadas
+- [ ] Implementação do fluxo de telas 
+
+---
+## Testes
+## 🧪 Testes de Usabilidade
+- [ ] Ver interface_flow.md
+
+---
+
 ## Admin
 
 **Admin Dashboard**: `http://localhost:5173/admin`
