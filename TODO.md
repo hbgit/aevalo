@@ -22,7 +22,7 @@
 
 - [X] interface_flow.md - Seção 1
 - [X] interface_flow.md - Seção 2
-- [X] interface_flow.md - Seção 3 - parcial, bug no editor
+- [X] interface_flow.md - Seção 3
 - [X] interface_flow.md - Seção 4
 - [ ] interface_flow.md - Seção 5
 - [ ] interface_flow.md - Seção 6
@@ -36,6 +36,11 @@
 - [X] interface_flow.md - Seção 14
 - [ ] Revisão das telas criadas
 - [ ] Implementação do fluxo de telas 
+
+---
+## 🔄 Próximos Passos (Banco de Dados)
+- [ ] Atualizar de acordo com as funções de admin
+---
 
 ---
 ## Testes

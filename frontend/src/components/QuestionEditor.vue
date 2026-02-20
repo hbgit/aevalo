@@ -188,12 +188,11 @@ interface Emits {
   (e: 'update:question', value: Question): void
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
 
 const emit = defineEmits<Emits>()
 
 const updateQuestion = (field: string, value: any) => {
-  const props = defineProps<Props>()
   const updated = {
     ...props.question,
     [field]: value

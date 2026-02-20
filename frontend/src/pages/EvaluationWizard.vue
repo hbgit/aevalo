@@ -387,10 +387,9 @@
                         ? 'border-primary bg-slate-800'
                         : 'border-slate-600 bg-slate-800/50 hover:border-slate-500 cursor-pointer'
                     ]"
-                    @click="editingQuestionIndex = editingQuestionIndex === index ? null : index"
                   >
                     <!-- Summary View (when not editing) -->
-                    <div v-if="editingQuestionIndex !== index" class="p-4 flex items-start gap-3">
+                    <div v-if="editingQuestionIndex !== index" class="p-4 flex items-start gap-3" @click.stop="editingQuestionIndex = index">
                       <div class="drag-handle text-slate-500 hover:text-slate-300 mt-1 cursor-move">⋮⋮</div>
                       <div class="flex-1 min-w-0">
                         <p class="font-medium text-white truncate">{{ index + 1 }}. {{ question.text || '[Pergunta sem título]' }}</p>
