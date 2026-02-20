@@ -20,6 +20,11 @@ const routes = [
     component: () => import('../pages/EvaluationDetail.vue'),
   },
   {
+    path: '/evaluation/:id/results',
+    name: 'EvaluationResults',
+    component: () => import('../pages/EvaluationResults.vue'),
+  },
+  {
     path: '/create',
     name: 'CreateEvaluation',
     component: () => import('../pages/EvaluationWizard.vue'),
@@ -91,6 +96,13 @@ const routes = [
     name: 'AdminSettings',
     component: () => import('../pages/AdminSettings.vue'),
     meta: { layout: 'admin', requiresAuth: true, requiresAdmin: true },
+  },
+  // Public Evaluation Link
+  {
+    path: '/e/:id',
+    name: 'PublicEvaluation',
+    component: () => import('../pages/PublicEvaluation.vue'),
+    meta: { layout: 'minimal' },
   },
   // 404 Catch-all route - must be last
   {

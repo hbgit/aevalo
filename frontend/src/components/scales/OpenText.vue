@@ -33,7 +33,7 @@ interface Emits {
   (e: 'update:modelValue', value: string): void
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   modelValue: '',
   maxLength: 500,
   placeholder: 'Digite sua resposta aqui...',
@@ -41,8 +41,6 @@ withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<Emits>()
-
-const props = defineProps<Props>()
 
 const currentLength = computed(() => (props.modelValue || '').length)
 

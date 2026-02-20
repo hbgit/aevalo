@@ -46,14 +46,12 @@ interface Emits {
   (e: 'update:modelValue', value: string): void
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   modelValue: null,
   options: () => ['Opção 1', 'Opção 2', 'Opção 3']
 })
 
 const emit = defineEmits<Emits>()
-
-const props = defineProps<Props>()
 
 const localOptions = ref(props.options)
 

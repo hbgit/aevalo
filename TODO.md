@@ -24,7 +24,7 @@
 - [X] interface_flow.md - Seção 2
 - [X] interface_flow.md - Seção 3
 - [X] interface_flow.md - Seção 4
-- [ ] interface_flow.md - Seção 5
+- [X] interface_flow.md - Seção 5
 - [ ] interface_flow.md - Seção 6
 - [ ] interface_flow.md - Seção 7
 - [ ] interface_flow.md - Seção 8
