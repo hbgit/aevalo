@@ -64,22 +64,26 @@
             <td class="py-4 px-1 text-slate-700 dark:text-slate-300">{{ formatDate(evaluation.createdAt) }}</td>
             <td class="py-4 px-1">
               <div class="flex items-center gap-3 text-slate-400 dark:text-slate-500">
-                <RouterLink :to="`/evaluation/${evaluation.id}`" class="hover:text-primary dark:hover:text-primary transition">
+                <RouterLink :to="`/evaluation/${evaluation.id}`" class="hover:text-primary dark:hover:text-primary transition" title="Ver detalhes">
                   <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M17 3a2 2 0 00-2-2H5a2 2 0 00-2 2v14l4-3h8a2 2 0 002-2V3z" />
                   </svg>
                 </RouterLink>
-                <button class="hover:text-primary dark:hover:text-primary transition">
+                <button
+                  v-if="evaluation.status === 'Aberto' || evaluation.status === 'open'"
+                  @click="openShare(evaluation)"
+                  class="hover:text-purple-400 dark:hover:text-purple-400 transition"
+                  title="Compartilhar"
+                >
                   <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M2.003 9.25l7.071-7.071a3 3 0 114.242 4.243L6.243 13.493 2 14l.503-4.75z" />
-                    <path d="M12 5l3 3" />
+                    <path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z" />
                   </svg>
                 </button>
-                <button class="hover:text-primary dark:hover:text-primary transition">
+                <RouterLink :to="`/evaluation/${evaluation.id}/results`" class="hover:text-primary dark:hover:text-primary transition" title="Resultados">
                   <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M6 10a2 2 0 114 0 2 2 0 01-4 0zm6-2a2 2 0 100 4 2 2 0 000-4zm-2 2a2 2 0 114 0 2 2 0 01-4 0z" />
+                    <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zm6-4a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zm6-3a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
                   </svg>
-                </button>
+                </RouterLink>
               </div>
             </td>
           </tr>
@@ -98,16 +102,32 @@
       </div>
     </div>
   </div>
+
+  <!-- Share Modal -->
+  <ShareModal
+    v-if="shareTarget"
+    :evaluation-id="String(shareTarget.id)"
+    :evaluation-title="shareTarget.title"
+    @close="shareTarget = null"
+  />
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
+import { RouterLink } from 'vue-router'
+import ShareModal from '@/components/modals/ShareModal.vue'
 interface Evaluation {
-  id: number
+  id: number | string
   title: string
   category: string
-  status: 'open' | 'closed' | 'draft' | 'archived'
+  status: string
   responses: number
   createdAt: string
+}
+
+const shareTarget = ref<Evaluation | null>(null)
+const openShare = (evaluation: Evaluation) => {
+  shareTarget.value = evaluation
 }
 
 const props = withDefaults(

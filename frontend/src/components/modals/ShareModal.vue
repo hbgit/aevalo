@@ -43,10 +43,11 @@
           <div class="space-y-3">
             <label class="block text-sm font-semibold text-slate-200">Código QR</label>
             <div class="flex justify-center p-4 bg-slate-700/50 rounded-lg border border-slate-600">
-              <div
-                class="w-48 h-48 bg-white p-4 rounded-lg flex items-center justify-center"
-                v-html="qrCode"
-              ></div>
+              <img
+                :src="qrCodeUrl"
+                alt="QR Code da avaliação"
+                class="w-40 h-40 rounded-lg bg-white p-1"
+              />
             </div>
             <div class="flex gap-2 justify-center">
               <button
@@ -203,10 +204,9 @@ const publicLink = computed(() => {
   return `${window.location.origin}/e/${props.evaluationId}`
 })
 
-const qrCode = computed(() => {
-  // Placeholder for QR code generation
-  // In production, use a library like qrcode.vue
-  return '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><rect width="200" height="200" fill="white"/><text x="100" y="100" text-anchor="middle" font-size="12" fill="black">QR Code</text></svg>'
+const qrCodeUrl = computed(() => {
+  const url = encodeURIComponent(publicLink.value)
+  return `https://api.qrserver.com/v1/create-qr-code/?size=200x200&format=png&data=${url}`
 })
 
 const embedCode = computed(() => {
@@ -225,9 +225,21 @@ const copyToClipboard = async (text: string) => {
   }
 }
 
-const downloadQR = (format: 'png' | 'svg') => {
-  // Implement QR code download
-  console.log(`Downloading QR code as ${format}`)
+const downloadQR = async (format: 'png' | 'svg') => {
+  const url = encodeURIComponent(publicLink.value)
+  const apiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&format=${format}&data=${url}`
+  try {
+    const res = await fetch(apiUrl)
+    const blob = await res.blob()
+    const objectUrl = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = objectUrl
+    a.download = `qr-${props.evaluationId}.${format}`
+    a.click()
+    URL.revokeObjectURL(objectUrl)
+  } catch {
+    window.open(apiUrl, '_blank')
+  }
 }
 
 const shareVia = (method: string) => {
