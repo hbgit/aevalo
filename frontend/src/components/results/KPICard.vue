@@ -1,5 +1,8 @@
 <template>
-  <div class="bg-slate-700/30 border border-slate-600 rounded-xl p-6">
+  <div
+    class="rounded-xl p-6 border"
+    :class="highlight ? 'bg-purple-700/20 border-purple-500/50' : 'bg-slate-700/30 border-slate-600'"
+  >
     <p class="text-sm text-slate-400 mb-2">{{ title }}</p>
     <div class="flex items-end gap-3">
       <span class="text-4xl font-bold text-white">{{ value }}</span>

@@ -84,6 +84,34 @@
       </div>
     </div>
 
+    <!-- Paired Comparison Analysis -->
+    <div v-else-if="question.type === 'paired'" class="space-y-4">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div class="p-4 bg-slate-700/30 rounded-lg border border-slate-600/40">
+          <p class="text-sm font-semibold text-slate-200 mb-3">Ranking de Preferência</p>
+          <div class="space-y-2">
+            <div
+              v-for="(item, idx) in getPairedRanking()"
+              :key="item.option"
+              class="flex items-center justify-between text-sm"
+            >
+              <span class="text-slate-300">{{ idx + 1 }}º {{ item.option }}</span>
+              <span class="text-slate-400">{{ item.wins }} vitórias</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-4 bg-slate-700/30 rounded-lg border border-slate-600/40">
+          <p class="text-sm font-semibold text-slate-200 mb-3">Resumo da Matriz</p>
+          <div class="space-y-2 text-sm text-slate-300">
+            <p>Total de comparações: <span class="text-white font-semibold">{{ props.responses.length }}</span></p>
+            <p>Empates: <span class="text-white font-semibold">{{ getPairedTieCount() }}</span></p>
+            <p>Opção líder: <span class="text-emerald-400 font-semibold">{{ getPairedRanking()[0]?.option || '--' }}</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Open Text Analysis -->
     <div v-else-if="question.type === 'text'" class="space-y-4">
       <!-- Word Cloud -->
@@ -158,6 +186,8 @@ const getBarChartData = () => {
   const counts: Record<number, number> = {}
   const total = props.responses.length
 
+  if (total === 0) return []
+
   props.responses.forEach(r => {
     const value = parseInt(r.value)
     counts[value] = (counts[value] || 0) + 1
@@ -202,6 +232,10 @@ const getChoiceData = () => {
   const counts: Record<string, number> = {}
   const total = props.responses.length
 
+  if (total === 0) {
+    return (props.question.options || []).map(opt => ({ option: opt, count: 0, percentage: 0 }))
+  }
+
   props.responses.forEach(r => {
     if (Array.isArray(r.value)) {
       r.value.forEach((choice: string) => {
@@ -217,6 +251,38 @@ const getChoiceData = () => {
     count: counts[opt] || 0,
     percentage: Math.round(((counts[opt] || 0) / total) * 100)
   }))
+}
+
+const getPairedRanking = () => {
+  const wins: Record<string, number> = {}
+
+  props.responses.forEach(r => {
+    if (typeof r.value === 'string') {
+      if (r.value.toLowerCase() === 'tie' || r.value.toLowerCase() === 'empate') return
+      wins[r.value] = (wins[r.value] || 0) + 1
+    }
+
+    if (r.value && typeof r.value === 'object' && typeof r.value.winner === 'string') {
+      wins[r.value.winner] = (wins[r.value.winner] || 0) + 1
+    }
+  })
+
+  return Object.entries(wins)
+    .map(([option, count]) => ({ option, wins: count }))
+    .sort((a, b) => b.wins - a.wins)
+}
+
+const getPairedTieCount = () => {
+  return props.responses.filter((response) => {
+    if (typeof response.value === 'string') {
+      const value = response.value.toLowerCase()
+      return value === 'tie' || value === 'empate'
+    }
+    if (response.value && typeof response.value === 'object') {
+      return Boolean(response.value.tie)
+    }
+    return false
+  }).length
 }
 
 const getStatistics = () => {
